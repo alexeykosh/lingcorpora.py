@@ -1,6 +1,6 @@
 import urllib.request
-import re
-
+from lxml import html
+import requests
 
 
 def create_request():
@@ -9,14 +9,16 @@ def create_request():
     return request
 
 
-def search_data(x):
-    url = 'http://search2.ruscorpora.ru/search.xml?env=alpha&mycorp=&mysent=&mysize=&mysentsize=&mydocsize=&dpp=&spp=&spd=&text=lexform&mode=paper&sort=gr_tagging&lang=ru&req=%s' %x
-    print(url)
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req) as response:
-        html = response.read().decode('windows-1251')
-    download_smth = re.findall(r'<a href="(\/download-excel.*?)\" onclick.*?', html)
-    url_dwnld = (download_smth[0])
+def search_word(x):
+    url = 'http://search2.ruscorpora.ru/search.xml?env=alpha&mycorp=&mysent=&mysize=&mysentsize=&mydocsize=&spd=&text=lexgramm&mode=main&sort=gr_tagging&lang=ru&nodia=1&parent1=0&level1=0&lex1=%s&gramm1=&sem1=&sem-mod1=sem&sem-mod1=sem2&flags1=&m1=&parent2=0&level2=0&min2=1&max2=1&lex2=&gramm2=&sem2=&sem-mod2=sem&sem-mod2=sem2&flags2=&m2=&out=kwic' %x
+    return url
+
+def final_result (url):
+    page = requests.get(url)
+    tree = html.fromstring(page.content)
+    left_part = tree.xpath('/table/tr/td[1]|/table/tr/td[3]')
+    print(left_part)
+
 
 
 def main():
