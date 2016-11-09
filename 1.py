@@ -11,7 +11,7 @@ def inputs(): #здесь входные данные
     request = urllib.request.quote(word.encode('windows-1251'))
     needs.append(request)
     case = input("грамм признаки: ")  # типа через запятую %2
-    case = case.replace("", "%2C")
+    case = case.replace(",", "%2C")
     needs.append(case)
     return needs
 
