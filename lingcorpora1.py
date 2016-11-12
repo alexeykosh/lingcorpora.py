@@ -30,7 +30,7 @@ def get_page_numbers(common_url): #тут я получаю количество
     common_url=common_url.replace('=kwic','')
     where_to_find = urllib.request.urlopen(common_url)
     text = where_to_find.read().decode('windows-1251')
-    q_regex = r'Найдено <span class="stat-number">(\d+[ ]?[\d+]?)'
+    q_regex = r'Найдено <span class="stat-number">(\d+ \d+|\d+[ ]?[\d+]?)'
     num_of_pages = re.findall(q_regex, text)
     num_of_pages = str(num_of_pages)
     num_of_pages = num_of_pages.replace(' ', '')
