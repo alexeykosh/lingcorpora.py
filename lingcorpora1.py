@@ -1,22 +1,8 @@
-import urllib.request
+import urllib.request, re, argparse, sys
 from bs4 import BeautifulSoup
-import re
 
 
-def inputs(): #здесь входные данные
-    needs = []
-    corpora = input("корпус: ")
-    needs.append(corpora)
-    word = input("слово: ")
-    request = urllib.request.quote(word.encode('windows-1251'))
-    needs.append(request)
-    case = input("грамм признаки: ")  # типа через запятую %2
-    case = case.replace(",", "%2C")
-    needs.append(case)
-    return needs
-
-
-def create_request(needs): #создаем ссылку поиска
+def create_request(needs): # создаем ссылку поиска
     corpora = needs[0]
     request = needs[1]
     case = needs[2]
@@ -26,7 +12,7 @@ def create_request(needs): #создаем ссылку поиска
     return common_url
 
 
-def get_page_numbers(common_url): #тут я получаю количество страниц
+def get_page_numbers(common_url): # тут я получаю количество страниц
     common_url=common_url.replace('=kwic','')
     where_to_find = urllib.request.urlopen(common_url)
     text = where_to_find.read().decode('windows-1251')
@@ -41,7 +27,7 @@ def get_page_numbers(common_url): #тут я получаю количество
     print(num_of_pages)
 
 
-def get_all_pages(common_url): #тут у нас ссылки на все страницы
+def get_all_pages(common_url): # тут у нас ссылки на все страницы
     k = 0
     massive_of_links = []
     while k < 10:
@@ -51,7 +37,7 @@ def get_all_pages(common_url): #тут у нас ссылки на все стр
     return massive_of_links
 
 
-def get_table(urls): #тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
+def get_table(urls): # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
     html_file = open("table.html", "w")
     for url in urls:
         soup_url = urllib.request.urlopen(url)
@@ -62,13 +48,25 @@ def get_table(urls): #тут вытаскиваем таблицу (сделал
     html_file.close()
 
 
-def main():
-    common_ur = create_request(inputs())
+def main(args):
+    print(args)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('corpora', type=str)
+    parser.add_argument('word', type=str)
+    parser.add_argument('case', type=str)
+    args = parser.parse_args(args)
+    needs = [args.corpora]
+    request = urllib.request.quote(args.word.encode('windows-1251'))
+    needs.append(request)
+    case = args.case.replace(",", "%2C")
+    needs.append(case)
+    common_ur = create_request(needs)
     get_page_numbers(common_ur)
     get_table(get_all_pages(common_ur))
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
+
 
 
