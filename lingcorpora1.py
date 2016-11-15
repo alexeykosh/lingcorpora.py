@@ -8,7 +8,7 @@ def create_request(needs): # создаем ссылку поиска
     case = needs[2]
     url = 'http://search2.ruscorpora.ru/search.xml?env=alpha&mycorp=&mysent=&mysize=&mysentsize=&mydocsize=&spd=&text=lexgramm&mode=%s&sort=gr_tagging&lang=ru&nodia=1&parent1=0&level1=0&lex1=%s&gramm1=%s&sem1=&sem-mod1=sem&sem-mod1=sem2&flags1=&m1=&parent2=0&level2=0&min2=1&max2=1&lex2=&gramm2=&sem2=&sem-mod2=sem&sem-mod2=sem2&flags2=&m2=&out=%s'
     common_url = url % (corpora, request, case, 'kwic') #&p= что-то там
-    print("ссылка:", common_url)
+    print("url", common_url)
     return common_url
 
 
@@ -24,7 +24,7 @@ def get_page_numbers(common_url): # тут я получаю количеств�
     num_of_pages = num_of_pages.replace('[', '')
     num_of_pages = num_of_pages.replace(']', '')
     num_of_pages = int(num_of_pages) // 10 + 1
-    print(num_of_pages)
+    print("pages", num_of_pages)
 
 
 def get_all_pages(common_url): # тут у нас ссылки на все страницы
@@ -37,8 +37,8 @@ def get_all_pages(common_url): # тут у нас ссылки на все ст�
     return massive_of_links
 
 
-def get_table(urls): # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
-    html_file = open("table.html", "w")
+def get_table(urls):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
+    html_file = open("table.html", "w")  # если множественные запросы чтобы создавал несколько фыайлов пока хз как сделать
     for url in urls:
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
@@ -49,7 +49,6 @@ def get_table(urls): # тут вытаскиваем таблицу (сдела�
 
 
 def main(args):
-    print(args)
     parser = argparse.ArgumentParser()
     parser.add_argument('corpora', type=str)
     parser.add_argument('word', type=str)
