@@ -1,4 +1,4 @@
-import urllib.request, re, argparse, sys
+import urllib.request, re, argparse, sys, os
 from bs4 import BeautifulSoup
 
 
@@ -38,7 +38,12 @@ def get_all_pages(common_url): # тут у нас ссылки на все ст�
 
 
 def get_table(urls):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
-    html_file = open("table.html", "w")  # если множественные запросы чтобы создавал несколько фыайлов пока хз как сделать
+    n = 1
+    if os.path.exists("table.html"): #тут как-то научится вытаскивать количество файлов из названия
+        html_file = open("table" + str(n) + ".html", "w")  # если множественные запросы чтобы создавал несколько фыайлов пока хз как сделать
+        n += 1
+    else:
+        html_file = open("table.html", "w")
     for url in urls:
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
