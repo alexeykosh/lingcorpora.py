@@ -89,7 +89,7 @@ if __name__ == "__main__":
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
     parser.add_argument('tag', type=str)
-    parser.add_argument('tag', type=str)
+    parser.add_argument('n_results', type=int)
     args = parser.parse_args(args)
     main(corpus, query, tag, n_results)
 
