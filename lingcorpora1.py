@@ -8,12 +8,12 @@ def create_request(needs): # создаем ссылку поиска
     request = needs[1]
     case = needs[2]
     url = 'http://search2.ruscorpora.ru/search.xml?env=alpha&mycorp=&mysent=&mysize=&mysentsize=&mydocsize=&spd=&text=lexgramm&mode=%s&sort=gr_tagging&lang=ru&nodia=1&parent1=0&level1=0&lex1=%s&gramm1=%s&sem1=&sem-mod1=sem&sem-mod1=sem2&flags1=&m1=&parent2=0&level2=0&min2=1&max2=1&lex2=&gramm2=&sem2=&sem-mod2=sem&sem-mod2=sem2&flags2=&m2=&out=%s'
-    common_url = url % (corpora, request, case, 'kwic') #&p= что-то там
-    print("url", common_url)
+    common_url = url % (corpora, request, case, 'kwic')  # &p= что-то там
+    print("url", common_url)  # здесь можно подумать над методом рекуест так как можно будет сделать более удобным метод запроса
     return common_url
 
 
-def get_page_numbers(common_url): # тут я получаю количество страниц
+def get_page_numbers(common_url):  # тут я получаю количество страниц
     common_url=common_url.replace('=kwic','')
     where_to_find = urllib.request.urlopen(common_url)
     text = where_to_find.read().decode('windows-1251')
@@ -31,7 +31,7 @@ def get_page_numbers(common_url): # тут я получаю количеств�
 def get_all_pages(common_url): # тут у нас ссылки на все страницы
     k = 0
     massive_of_links = []
-    while k < 1:
+    while k < 2:
         page = common_url + '&p=' + str(k)
         massive_of_links.append(page)
         k += 1
@@ -39,16 +39,14 @@ def get_all_pages(common_url): # тут у нас ссылки на все ст�
 
 
 def get_table(urls):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
-    html_file = open("table.html", "w")
+    center_list = []  # если вынести то проблемы видимо с тем что элемент каждый второй подумать как исправить
+    right_list = []
+    left_list = []
+    normal_left_list = []
     for url in urls:
-        right_part = []
-        center =[]
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
         table = soup.findAll('table')[1]
-        center_list = []
-        right_list = []
-        left_list = []
         for row2 in table.find_all("span", {"class": "b-wrd-expl g-em"}):
             center = row2.text
             center_list.append(center)
@@ -59,12 +57,16 @@ def get_table(urls):  # тут вытаскиваем таблицу (сдела
             for row3 in row.find_all("nobr"):
                 left_part = row3.text
                 left_list.append(left_part)
-        left_list = left_list[1::2] #убрать закорючки
-        normal_left_list = [s[:-9]for s in left_list]
-        d = {"center" : center_list, "left" : right_list, "right" : normal_left_list}
-        s = pd.DataFrame(d, columns=["left", "center", "right"])
-        print(s)
-# columns=['left', 'center'])
+        normal_left_list = left_list[1::2]  # вот тут главная проблема научиться нормально выделять правую (левую) часть
+    print(len(center_list)) #он иногда может быть длинее тк что-то происходит неясное
+    print(len(right_list))
+    print(len(left_list))
+    print(len(normal_left_list))
+    normal_left_list = [s[:-9]for s in normal_left_list]
+    d = {"center" : center_list, "left" : right_list, "right" : normal_left_list}
+    s = pd.DataFrame(d, columns=["left", "center", "right"])
+    print(s)
+
 
 def main(corpus, query, tag):
     needs = [corpus]
