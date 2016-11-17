@@ -1,5 +1,6 @@
-import urllib.request, re, argparse, sys, os
+import urllib.request, re, argparse, sys, os, csv
 from bs4 import BeautifulSoup
+import pandas as pd
 
 
 def create_request(needs): # создаем ссылку поиска
@@ -30,7 +31,7 @@ def get_page_numbers(common_url): # тут я получаю количеств�
 def get_all_pages(common_url): # тут у нас ссылки на все страницы
     k = 0
     massive_of_links = []
-    while k < 10:
+    while k < 1:
         page = common_url + '&p=' + str(k)
         massive_of_links.append(page)
         k += 1
@@ -38,31 +39,38 @@ def get_all_pages(common_url): # тут у нас ссылки на все ст�
 
 
 def get_table(urls):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
-    n = 1
-    if os.path.exists("table.html"): #тут как-то научится вытаскивать количество файлов из названия
-        html_file = open("table" + str(n) + ".html", "w")  # если множественные запросы чтобы создавал несколько фыайлов пока хз как сделать
-        n += 1
-    else:
-        html_file = open("table.html", "w")
+    html_file = open("table.html", "w")
     for url in urls:
+        right_part = []
+        center =[]
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
-        res = soup.findAll("table")[1]
-        res = str(res)
-        html_file.write(res)
-    html_file.close()
+        table = soup.findAll('table')[1]
+        center_list = []
+        right_list = []
+        left_list = []
+        for row2 in table.find_all("span", {"class": "b-wrd-expl g-em"}):
+            center = row2.text
+            center_list.append(center)
+        for row in table.find_all("table", {"style": "table-layout:fixed"}):
+            for row1 in row.find_all("div", {"align": "right"}):
+                right_part = row1.text
+                right_list.append(right_part)
+            for row3 in row.find_all("nobr"):
+                left_part = row3.text
+                left_list.append(left_part)
+        left_list = left_list[1::2] #убрать закорючки
+        normal_left_list = [s[:-9]for s in left_list]
+        d = {"center" : center_list, "left" : right_list, "right" : normal_left_list}
+        s = pd.DataFrame(d, columns=["left", "center", "right"])
+        print(s)
+# columns=['left', 'center'])
 
-
-def main(args):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('corpora', type=str)
-    parser.add_argument('word', type=str)
-    parser.add_argument('case', type=str)
-    args = parser.parse_args(args)
-    needs = [args.corpora]
-    request = urllib.request.quote(args.word.encode('windows-1251'))
+def main(corpus, query, tag):
+    needs = [corpus]
+    request = urllib.request.quote(query.encode('windows-1251'))
     needs.append(request)
-    case = args.case.replace(",", "%2C")
+    case = tag.replace(",", "%2C")
     needs.append(case)
     common_ur = create_request(needs)
     get_page_numbers(common_ur)
@@ -70,7 +78,13 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    args = sys.argv[1:]
+    parser = argparse.ArgumentParser()  # ru_corpora(corpora = 'main')
+    parser.add_argument('corpus', type=str)
+    parser.add_argument('query', type=str)
+    parser.add_argument('tag', type=str)
+    args = parser.parse_args(args)
+    main(corpus, query, tag)
 
 
 
