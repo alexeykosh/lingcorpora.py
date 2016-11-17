@@ -31,14 +31,14 @@ def get_page_numbers(common_url):  # тут я получаю количеств
 def get_all_pages(common_url): # тут у нас ссылки на все страницы
     k = 0
     massive_of_links = []
-    while k < 2:
+    while k < 5:
         page = common_url + '&p=' + str(k)
         massive_of_links.append(page)
         k += 1
     return massive_of_links
 
 
-def get_table(urls):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
+def get_table(urls, n_results):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
     center_list = []  # если вынести то проблемы видимо с тем что элемент каждый второй подумать как исправить
     right_list = []
     left_list = []
@@ -58,25 +58,29 @@ def get_table(urls):  # тут вытаскиваем таблицу (сдела
                 left_part = row3.text
                 left_list.append(left_part)
         normal_left_list = left_list[1::2]  # вот тут главная проблема научиться нормально выделять правую (левую) часть
-    print(len(center_list)) #он иногда может быть длинее тк что-то происходит неясное
+    print(len(center_list)) #он иногда может быть длинее тк в одной строке может быть два искомых слова (что с этим делать я не понимаю)
     print(len(right_list))
     print(len(left_list))
     print(len(normal_left_list))
     normal_left_list = [s[:-9]for s in normal_left_list]
-    d = {"center" : center_list, "left" : right_list, "right" : normal_left_list}
+    if n_results == '':
+        n_results = int(len(right_list))
+    d = {"center" : center_list[:n_results], "left" : right_list[:n_results], "right" : normal_left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
     print(s)
+    file = open('table.csv', 'w')
+    s.to_csv(file)
 
 
-def main(corpus, query, tag):
+def main(corpus, query, tag, n_results):
     needs = [corpus]
-    request = urllib.request.quote(query.encode('windows-1251'))
+    request = urllib.request.quote(query.encode('windows-1251')) #  тут надо как-то научится кодировать еще и скобочки и прочее
     needs.append(request)
     case = tag.replace(",", "%2C")
     needs.append(case)
     common_ur = create_request(needs)
     get_page_numbers(common_ur)
-    get_table(get_all_pages(common_ur))
+    get_table(get_all_pages(common_ur), n_results)
 
 
 if __name__ == "__main__":
@@ -85,8 +89,9 @@ if __name__ == "__main__":
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
     parser.add_argument('tag', type=str)
+    parser.add_argument('tag', type=str)
     args = parser.parse_args(args)
-    main(corpus, query, tag)
+    main(corpus, query, tag, n_results)
 
 
 
