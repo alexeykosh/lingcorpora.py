@@ -47,9 +47,10 @@ def get_table(urls, n_results):  # тут вытаскиваем таблицу 
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
         table = soup.findAll('table')[1]
-        for row1 in table.find_all("span", {"class": "b-wrd-expl g-em"}):
-            center = row1.text
-            center_list.append(center)
+        for row0 in table.find_all("td", {"align": "left"}):
+            for row1 in row0.find_all("span", {"class": "b-wrd-expl g-em"}):
+                center = row1.text
+                center_list.append(center)
         for row2 in table.find_all("table", {"style": "table-layout:fixed"}):
             for row3 in row2.find_all("div", {"align": "right"}):
                 right_part = row3.text
