@@ -47,15 +47,15 @@ def get_table(urls, n_results):  # тут вытаскиваем таблицу 
         soup_url = urllib.request.urlopen(url)
         soup = BeautifulSoup(soup_url, 'lxml')
         table = soup.findAll('table')[1]
-        for row2 in table.find_all("span", {"class": "b-wrd-expl g-em"}):
-            center = row2.text
+        for row1 in table.find_all("span", {"class": "b-wrd-expl g-em"}):
+            center = row1.text
             center_list.append(center)
-        for row in table.find_all("table", {"style": "table-layout:fixed"}):
-            for row1 in row.find_all("div", {"align": "right"}):
-                right_part = row1.text
+        for row2 in table.find_all("table", {"style": "table-layout:fixed"}):
+            for row3 in row2.find_all("div", {"align": "right"}):
+                right_part = row3.text
                 right_list.append(right_part)
-            for row3 in row.find_all("nobr"):
-                left_part = row3.text
+            for row4 in row2.find_all("nobr"):
+                left_part = row4.text
                 left_list.append(left_part)
         normal_left_list = left_list[1::2]  # вот тут главная проблема научиться нормально выделять правую (левую) часть
     print(len(center_list)) #он иногда может быть длинее тк в одной строке может быть два искомых слова (что с этим делать я не понимаю)
@@ -65,18 +65,19 @@ def get_table(urls, n_results):  # тут вытаскиваем таблицу 
     normal_left_list = [s[:-9]for s in normal_left_list]
     if n_results == '':
         n_results = int(len(right_list))
-    d = {"center" : center_list[:n_results], "left" : right_list[:n_results], "right" : normal_left_list[:n_results]}
+    d = {"center": center_list[:n_results], "left": right_list[:n_results], "right": normal_left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
     print(s)
-    file = open('table.csv', 'w')
-    s.to_csv(file)
+    file = open('table.csv', 'w')  # попробовать придумать что-то в духе если в центре или левой и правой части есть одинаковые фхождения удалять нахер
+    s.to_csv(file, encoding='utf-8')
+    file.close()
 
 
-def main(corpus, query, tag, n_results):
+def main(query, corpus='main', tag='', n_results=10):
     needs = [corpus]
     request = urllib.request.quote(query.encode('windows-1251')) #  тут надо как-то научится кодировать еще и скобочки и прочее
     needs.append(request)
-    case = tag.replace(",", "%2C")
+    case = urllib.request.quote(tag.encode('windows-1251'))
     needs.append(case)
     common_ur = create_request(needs)
     get_page_numbers(common_ur)
