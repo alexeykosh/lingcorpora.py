@@ -96,7 +96,7 @@ if __name__ == "__main__":
     parser.add_argument('n_results', type=int)
     parser.add_argument('csv', type=bool)
     args = parser.parse_args(args)
-    main(corpus, query, tag, n_results, csv)
+    main(corpus, query, tag, n_results, write)
 
 
 

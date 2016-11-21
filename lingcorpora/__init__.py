@@ -1,1 +1,1 @@
-from .lingcorpora1 import main
+from .lingcorpora import main
