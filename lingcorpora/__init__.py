@@ -1,2 +1,2 @@
-from .lingcorpora import main as search
+from .lingcorpora import main as ru_search
 
