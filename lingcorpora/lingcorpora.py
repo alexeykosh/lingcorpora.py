@@ -63,7 +63,6 @@ def get_table(urls, n_results, write):  # тут вытаскиваем табл
         n_results = int(len(right_list))
     d = {"center": center_list[:n_results], "left": right_list[:n_results], "right": normal_left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
-    print(s)
     if write == True:
         file = open('table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
