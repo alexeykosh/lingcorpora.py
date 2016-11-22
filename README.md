@@ -16,3 +16,4 @@ For import it in your project, tap:
 ```
 import lingcorpora
 ```
+R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
