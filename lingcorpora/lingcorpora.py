@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
+def f(x):
+    return x[0] + x[1] + x[2]
+
 def create_request(needs): # создаем ссылку поиска
     corpora = needs[0]
     request = needs[1]
@@ -37,7 +40,7 @@ def get_all_pages(common_url, results): # тут у нас ссылки на в�
     return massive_of_links
 
 
-def get_table(urls, n_results, write):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
+def get_table(urls, n_results, write, kwic):  # тут вытаскиваем таблицу (сделал до 10 страниц чтобы не нагружать корпус)
     center_list = []  # если вынести то проблемы видимо с тем что элемент каждый второй подумать как исправить
     right_list = []
     left_list = []
@@ -69,10 +72,15 @@ def get_table(urls, n_results, write):  # тут вытаскиваем табл
         file.close()
     else:
         pass
+    if kwic == False:
+        s = s.apply(f, axis=1)
+        s.to_csv('table.csv')
+    else:
+        pass
     return s
 
 
-def main(query, corpus='main', tag='', n_results=10, write=False):
+def main(query, corpus='main', tag='', n_results=10, write=False, kwic = True):
     needs = [corpus]
     request = urllib.request.quote(query.encode('windows-1251')) #  тут надо как-то научится кодировать еще и скобочки и прочее
     needs.append(request)
@@ -80,7 +88,7 @@ def main(query, corpus='main', tag='', n_results=10, write=False):
     needs.append(case)
     common_ur = create_request(needs)
     get_page_numbers(common_ur)
-    return get_table(get_all_pages(common_ur, n_results), n_results, write)
+    return get_table(get_all_pages(common_ur, n_results), n_results, write, kwic)
 
 
 if __name__ == "__main__":
@@ -90,9 +98,10 @@ if __name__ == "__main__":
     parser.add_argument('query', type=str)
     parser.add_argument('tag', type=str)
     parser.add_argument('n_results', type=int)
-    parser.add_argument('csv', type=bool)
+    parser.add_argument('write', type=bool)
+    parser.add_argument('kwic', type=bool)
     args = parser.parse_args(args)
-    main(corpus, query, tag, n_results, write)
+    main(corpus, query, tag, n_results, write, kwic)
 
 
 

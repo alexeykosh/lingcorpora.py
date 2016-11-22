@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f47a9d22-e75c-4236-b599-5109117ac3db" name="Default" comment="" />
+    <list default="true" id="f47a9d22-e75c-4236-b599-5109117ac3db" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lingcorpora/lingcorpora.py" afterPath="$PROJECT_DIR$/lingcorpora/lingcorpora.py" />
+    </list>
     <ignored path="lingcorpora.py.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lingcorpora.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lingcorpora.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lingcorpora/lingcorpora.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+            <state relative-caret-position="255">
+              <caret line="78" column="12" selection-start-line="78" selection-start-column="12" selection-end-line="78" selection-end-column="12" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -32,7 +34,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lingcorpora/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -67,8 +69,8 @@
         <option value="$PROJECT_DIR$/try.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/../try.py" />
-        <option value="$PROJECT_DIR$/lingcorpora/lingcorpora.py" />
         <option value="$PROJECT_DIR$/lingcorpora/__init__.py" />
+        <option value="$PROJECT_DIR$/lingcorpora/lingcorpora.py" />
       </list>
     </option>
   </component>
@@ -359,7 +361,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="832" extended-state="1" />
+    <frame x="0" y="23" width="1440" height="832" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -474,21 +476,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../try.py" />
     <entry file="file://$PROJECT_DIR$/try.py" />
-    <entry file="file://$PROJECT_DIR$/lingcorpora/lingcorpora.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lingcorpora/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="42" selection-start-line="0" selection-start-column="42" selection-end-line="0" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lingcorpora/lingcorpora.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="78" column="12" selection-start-line="78" selection-start-column="12" selection-end-line="78" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
