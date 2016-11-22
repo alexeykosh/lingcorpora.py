@@ -1,1 +1,2 @@
-from .lingcorpora import main
+from .lingcorpora import main as search
+
