@@ -74,7 +74,7 @@ def get_table(urls, n_results, write, kwic):  # тут вытаскиваем т
         pass
     if kwic == False:
         s = s.apply(f, axis=1)
-        s.to_csv('table.csv')
+        s.to_csv(file, encoding='utf-8')
     else:
         pass
     return s
