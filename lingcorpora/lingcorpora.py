@@ -1,9 +1,6 @@
 import urllib.request, re, argparse, sys, os, csv
 from bs4 import BeautifulSoup
 import pandas as pd
-import time
-
-start_time = time.time()
 
 
 def create_request(needs): # создаем ссылку поиска
@@ -73,6 +70,7 @@ def get_table(urls, n_results, write):  # тут вытаскиваем табл
         file.close()
     else:
         pass
+    return s
 
 
 def main(query, corpus='main', tag='', n_results=10, write=False):
@@ -83,8 +81,7 @@ def main(query, corpus='main', tag='', n_results=10, write=False):
     needs.append(case)
     common_ur = create_request(needs)
     get_page_numbers(common_ur)
-    get_table(get_all_pages(common_ur, n_results), n_results, write)
-    print("--- %s seconds ---" % (time.time() - start_time))
+    return get_table(get_all_pages(common_ur, n_results), n_results, write)
 
 
 if __name__ == "__main__":
