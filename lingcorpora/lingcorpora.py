@@ -66,13 +66,14 @@ def get_table(urls, n_results, write, kwic):  # тут вытаскиваем т
         n_results = int(len(right_list))
     d = {"center": center_list[:n_results], "left": right_list[:n_results], "right": normal_left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
-    if write == True:
+    if write is True:
         file = open('table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
         file.close()
     else:
         pass
-    if kwic == False:
+    if kwic is False:
+        file = open('table.csv', 'w')
         s = s.apply(f, axis=1)
         s.to_csv(file, encoding='utf-8')
     else:
@@ -80,7 +81,7 @@ def get_table(urls, n_results, write, kwic):  # тут вытаскиваем т
     return s
 
 
-def main(query, corpus='main', tag='', n_results=10, write=False, kwic = True):
+def main(query, corpus='main', tag='', n_results=10, write=False, kwic=True):
     needs = [corpus]
     request = urllib.request.quote(query.encode('windows-1251')) #  тут надо как-то научится кодировать еще и скобочки и прочее
     needs.append(request)
