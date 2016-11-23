@@ -70,12 +70,12 @@ def get_table(urls, n_results, write, kwic):  # тут вытаскиваем т
         file = open('table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
         file.close()
-        if kwic is False:
-            file = open('table.csv', 'w')
-            s = s.apply(f, axis=1)
-            s.to_csv(file, encoding='utf-8')
-        else:
-            pass
+    else:
+        pass
+    if kwic is False:
+        file = open('table.csv', 'w')
+        s = s.apply(f, axis=1)
+        s.to_csv(file, encoding='utf-8')
     else:
         pass
     return s
