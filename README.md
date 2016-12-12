@@ -2,10 +2,11 @@
 
 This package includes API for 
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
+* [National Corpus of Polish](http://nkjp.pl)
 
 ## Instalation
 
-If you want to install our package, pleas tap the following command in Terminal:
+If you want to install our package, please tap the following command in Terminal:
 
 ```
 pip install git+https://github.com/alexeykosh/lingcorpora.py
