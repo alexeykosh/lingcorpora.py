@@ -8,4 +8,5 @@ setup(name='lingcorpora',
       license='MIT',
       author_email='alexeykochevoy@gmail.com',
       packages=['lingcorpora'],
-      zip_safe=False)
+      zip_safe=False,
+      install_requires=['bs4', 'requests', 'pandas'])
