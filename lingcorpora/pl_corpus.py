@@ -47,7 +47,6 @@ def kwic_results(page, write, kwic):
         right_list.append(right.text)
     left_list = [s.strip('\n') for s in left_list]
     center_list = [s.strip('\n') for s in center_list]
-    center_list = [re.sub(re.compile('[.*]', s)) for s in center_list]
     center_list = [re.sub(re.compile('\[.+\]'), '', s) for s in center_list]
     right_list = [s.strip('\n') for s in right_list][1::2]
     d = {"center": center_list, "left": left_list, "right": right_list}
