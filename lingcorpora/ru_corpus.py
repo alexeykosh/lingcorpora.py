@@ -67,13 +67,13 @@ def get_table(urls, n_results, write, kwic):  # тут вытаскиваем т
     d = {"center": center_list[:n_results], "left": right_list[:n_results], "right": normal_left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
     if write is True:
-        file = open('table.csv', 'w')
+        file = open('ru_table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
         file.close()
     else:
         pass
     if kwic is False:
-        file = open('table.csv', 'w')
+        file = open('ru_table.csv', 'w')
         s = s.apply(f, axis=1)
         s.to_csv(file, encoding='utf-8')
     else:
