@@ -63,6 +63,7 @@ def kwic_results(page, write, kwic):
         s.to_csv(file, encoding='utf-8')
     else:
         pass
+    print(len(center_list), len(left_list), len(right_list))
     return s
 
 
