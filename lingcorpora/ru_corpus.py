@@ -35,6 +35,7 @@ def get_all_pages(common_url, results):
 
 def get_table(urls, n_results, write, kwic):
     center_right_list = []
+    gram_list =[]
     center_list = []
     right_list = []
     left_list = []

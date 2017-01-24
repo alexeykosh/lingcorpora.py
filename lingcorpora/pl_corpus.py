@@ -37,24 +37,25 @@ def get_results(query, corpus, n_results, tag):
 
 
 def kwic_results(page, write, kwic):
-    a = 1
     left_list = []
     right_list = []
     center_list = []
     soup = BeautifulSoup(page.text, 'lxml')
-    table = soup.findAll('table')[0]
-    for left in table.select('.left'):
+    for left in soup.select('.left'):
         left_list.append(left.text)
-    for center in table.select('span > a'):
+    for center in soup.select('span > a'):
         center_list.append(center.text)
-    for right in table.select('.right'):
+    for right in soup.select('.right'):
         right_list.append(right.text)
     left_list = [s.strip('\n') for s in left_list]
     center_list = [s.strip('\n') for s in center_list]
     center_list = [re.sub(re.compile('\[.+\]'), '', s) for s in center_list]
     right_list = [s.strip('\n') for s in right_list][1::2]
     d = {"center": center_list, "left": left_list, "right": right_list}
-    s = pd.DataFrame(d, columns=["left", "center", "right"])
+    try:
+        s = pd.DataFrame(d, columns=["left", "center", "right"])
+    except ValueError:
+        print('Please try later again!')
     if write is True:
         file = open('pl_table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
