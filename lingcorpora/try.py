@@ -1,3 +1,3 @@
 import lingcorpora
 
-print(lingcorpora.ru_search('вася'))
+print(lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
