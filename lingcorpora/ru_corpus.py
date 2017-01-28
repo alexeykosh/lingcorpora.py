@@ -34,8 +34,8 @@ def get_all_pages(common_url, results):
 
 
 def get_table(urls, n_results, write, kwic):
+    new_right_list = []
     center_right_list = []
-    gram_list =[]
     center_list = []
     right_list = []
     left_list = []
@@ -48,9 +48,12 @@ def get_table(urls, n_results, write, kwic):
             left_list.append(left.text)
     center_list = center_right_list[0::2]
     right_list = center_right_list[1::2]
+    for element in right_list:
+        element = element[:-7]
+        new_right_list.append(element)
     if n_results == '':
         n_results = int(len(right_list))
-    d = {"center": center_list[:n_results], "right": right_list[:n_results], "left": left_list[:n_results]}
+    d = {"center": center_list[:n_results], "right": new_right_list[:n_results], "left": left_list[:n_results]}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
     if write is True:
         file = open('ru_table.csv', 'w')
