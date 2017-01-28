@@ -12,6 +12,25 @@ If you want to install our package, please tap the following command in Terminal
 pip install git+https://github.com/alexeykosh/lingcorpora.py
 ```
 
+Or:
+
+```bash
+sudo pip install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+If you had Python 3 and Python 2, tap:
+
+```bash
+pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+Or:
+
+```bash
+sudo pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+
 For import it in your project, tap:
 
 ```python
