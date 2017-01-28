@@ -42,10 +42,10 @@ R version of this package by George Moroz is located [here](https://github.com/a
 All these functions are using the following arguments:
 * query – the actual query (wordform, or regular expression, if corpus supports it)
 * corpus - the subcorpus where you want to search (it differs from corpora to corpora)
-* tag - ```python True or False ``` by default it is ```python False```, when it is ```python True```, it shows you morphological tags
+* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags
 * n_results - the actual quantity of the results (by default it is 10)
-* kwic - ```python True or False ```, shows in kwic format (by default it is ```python True```)
-* write - ```python True or False ```, writes results to an csv file (by default it is ```python False```)
+* kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
+* write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
 
 ###### Rus_search function
 ```python
