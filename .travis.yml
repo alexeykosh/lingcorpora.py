@@ -1,0 +1,8 @@
+language: python
+sudo: required
+cache: packages
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
