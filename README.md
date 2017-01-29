@@ -4,6 +4,8 @@ This package includes API for
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
 * [National Corpus of Polish](http://nkjp.pl)
 
+R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
+
 ## Instalation
 
 If you want to install our package, please tap the following command in Terminal:
@@ -12,18 +14,72 @@ If you want to install our package, please tap the following command in Terminal
 pip install git+https://github.com/alexeykosh/lingcorpora.py
 ```
 
+Or:
+
+```bash
+sudo pip install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+If you had Python 3 and Python 2, tap:
+
+```bash
+pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+Or:
+
+```bash
+sudo pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+```
+
+
 For import it in your project, tap:
 
 ```python
 import lingcorpora
 ```
-R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
 
 ## Usage
+All these functions are using the following arguments:
+* query – the actual query (wordform, or regular expression, if corpus supports it)
+* corpus - the subcorpus where you want to search (it differs from corpora to corpora)
+* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags
+* n_results - the actual quantity of the results (by default it is 10)
+* kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
+* write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
+
+###### Rus_search function
+```python
+>>> print(lingcorpora.rus_search('дядя'))
+                                                left  center  \
+0                                Ой какие нехорошие    дяди    
+1                    Её работа (Елена Андреевна) в "   Дяде    
+2                                      Когда войдёт    дядя    
+3                       и К. Раппопорт в спектакле "   Дядя    
+4                   Во-первых, нет уверенности, что    дядя    
+5           Коляем Коляичем с пистолетом.  (Смотри "   Дядю    
+6            из ваших близких, например двоюродного    дяди    
+7          земским врачам.  "Надо быть милосердным,    дядя    
+8                                        Мои отец и    дядя    
+9  волновавшейся о неизвестном местонахождении св...   дяди    
+
+                                          right  
+0                   позвали их на баррикады.     
+1             Ване" Льва Додина, без сомнения    
+2                    Ваня с осенними розами и    
+3                    Ваня" ― К. Раппопорт и С    
+4             Вася, съевший собаку на ремонте    
+5            Ваню")  . Автор уверяет, что его    
+6                , до 40 лет был тромбофлебит    
+7         …"   Дача― деревянная, но крепкая.     
+8  , правда, всегда говорили, что обязательно    
+9      ", пришлась к новогоднему столу ложкой    
+
+```
+
 ###### Pol_search function
 
 ```python
->>> import lingcorpora
 >>> print(lingcorpora.pol_search('tata'))
                                 left  center  \
 0      pieczołowicie, jak kiedyś mój   tata    
@@ -51,7 +107,6 @@ R version of this package by George Moroz is located [here](https://github.com/a
 ```
 
 ```python
->>> import lingcorpora
 >>> print(lingcorpora.pl_search('powstanie' , tag=True, n_results=100))
                                                 left       center  \
 0   . [.:interp] Aż [aż:qub] na [na:prep:acc] siłę...   powstanie    
