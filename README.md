@@ -4,6 +4,8 @@ This package includes API for
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
 * [National Corpus of Polish](http://nkjp.pl)
 
+R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
+
 ## Instalation
 
 If you want to install our package, please tap the following command in Terminal:
@@ -36,7 +38,6 @@ For import it in your project, tap:
 ```python
 import lingcorpora
 ```
-R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
 
 ## Usage
 All these functions are using the following arguments:
