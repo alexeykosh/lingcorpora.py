@@ -8,7 +8,6 @@ python:
 install:
   - pip install -r requirements.txt
 before_script:
-  - cython termformat.pyx
   - python setup.py build_ext --inplace
 script:
   - nosetests
