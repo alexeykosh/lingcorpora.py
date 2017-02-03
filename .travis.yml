@@ -1,11 +1,14 @@
 language: python
-sudo: required
-cache: packages
-notifications:
-  email:
-    on_success: never
-    on_failure: always
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "pypy"
 install:
-  - pip install bs4
-  - pip install requests
-  - pip install pandas
+  - pip install -r requirements.txt
+before_script:
+  - cython termformat.pyx
+  - python setup.py build_ext --inplace
+script:
+  - nosetests
