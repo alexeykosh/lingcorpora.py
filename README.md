@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py)
+
 # Lingcorpora
 
 This package includes API for 
