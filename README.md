@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py)
-
-# Lingcorpora
+# Lingcorpora [![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py) 
 
 This package includes API for 
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
