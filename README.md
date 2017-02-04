@@ -26,7 +26,7 @@ If you had Python 3 and Python 2, tap:
 pip3 install git+https://github.com/alexeykosh/lingcorpora.py
 ```
 
-Or:
+Or (for Linux users):
 
 ```bash
 sudo pip3 install git+https://github.com/alexeykosh/lingcorpora.py
