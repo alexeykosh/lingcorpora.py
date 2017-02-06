@@ -26,17 +26,17 @@ def get_results():
               'shuffle': '1',
               'word': '',
               'wpos': ''}
-    user_agent = {'Accept':	'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                  'Accept-Encoding': 'gzip, deflate, br',
-                  'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-                  'Connection': 'keep-alive',
-                  'Cookie': 'kontextsid=09d6b61955f36432b6a48c4fb988edf6e60f26bc',
-                  'Host': 'kontext.korpus.cz',
-                  'Referer': 'https://kontext.korpus.cz/first_form',
-                  'Upgrade-Insecure-Request': '1',
-                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:51.0) Gecko/20100101 Firefox/51.0'}
-    post1 = get(url='https://kontext.korpus.cz/', headers=user_agent, data=params)
-    print(post1.url)
+#    user_agent = {'Accept':	'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+#                  'Accept-Encoding': 'gzip, deflate, br',
+#                  'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
+#                  'Connection': 'keep-alive',
+#                  'Cookie': 'kontextsid=09d6b61955f36432b6a48c4fb988edf6e60f26bc',
+#                  'Host': 'kontext.korpus.cz',
+#                  'Referer': 'https://kontext.korpus.cz/first_form',
+#                  'Upgrade-Insecure-Request': '1',
+#                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:51.0) Gecko/20100101 Firefox/51.0'}
+    post1 = get(url='https://kontext.korpus.cz/' ,data=params)
+    print(post1.text)
 
 
 def main():

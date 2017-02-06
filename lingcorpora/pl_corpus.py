@@ -72,9 +72,12 @@ def kwic_results(page, write, kwic):
 
 
 def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
-    page = get_results(query, corpus, n_results, tag)
-    results = kwic_results(page, write, kwic)
-    return results
+    try:
+        page = get_results(query, corpus, n_results, tag)
+        results = kwic_results(page, write, kwic)
+        return results
+    except ValueError:
+        print('An error occurred. Please try again later!')
 
 
 if __name__ == '__main__':
