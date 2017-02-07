@@ -1,3 +1,3 @@
 import lingcorpora
 
-print(lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
+print(lingcorpora.pol_search(query ='powstanie', n_results=1000))
