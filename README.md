@@ -1,4 +1,4 @@
-# Lingcorpora
+# Lingcorpora [![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py) 
 
 This package includes API for 
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
@@ -26,7 +26,7 @@ If you had Python 3 and Python 2, tap:
 pip3 install git+https://github.com/alexeykosh/lingcorpora.py
 ```
 
-Or:
+Or (for Linux users):
 
 ```bash
 sudo pip3 install git+https://github.com/alexeykosh/lingcorpora.py
