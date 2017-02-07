@@ -14,15 +14,6 @@ def get_results(query, corpus, n_results, tag):
         tag_variable = 'slt'
     else:
         tag_variable = 's'
-    user_agent = {'Host': 'nkjp.pl',
-                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:51.0) Gecko/20100101 Firefox/51.0',
-                  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                  'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-                  'Accept-Encoding': 'gzip, deflate',
-                  'Referer': 'http://nkjp.pl/poliqarp',
-                  'Cookie': 'sessionid=ed9335bf0618179aba643804de00bfa4',
-                  'Connection': 'keep-alive',
-                  'Upgrade-Insecure-Requests': '1'}
     settings_params = {'show_in_match': tag_variable,
                        'show_in_context': tag_variable,
                        'left_context_width': '5',
@@ -30,7 +21,16 @@ def get_results(query, corpus, n_results, tag):
                        'wide_context_width': '50',
                        'results_per_page': n_results,
                        'next': '/poliqarp/' + corpus + '/query/'}
-    post(url='http://nkjp.pl/poliqarp/settings/', headers=user_agent, data=settings_params)
+    s = post(url='http://nkjp.pl/poliqarp/settings/', data=settings_params)
+    user_agent = {'Host': 'nkjp.pl',
+                  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:51.0) Gecko/20100101 Firefox/51.0',
+                  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                  'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
+                  'Accept-Encoding': 'gzip, deflate',
+                  'Referer': 'http://nkjp.pl/poliqarp',
+                  'Cookie': 'sessionid=' + str(s.cookies.get('sessionid')),
+                  'Connection': 'keep-alive',
+                  'Upgrade-Insecure-Requests': '1'}
     post(url='http://nkjp.pl/poliqarp/query/', headers=user_agent, data={'query': query, 'corpus': 'nkjp300'})
     r = get(url='http://nkjp.pl/poliqarp/nkjp300/query/', headers=user_agent)
     return r
