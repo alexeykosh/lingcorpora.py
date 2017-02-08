@@ -64,7 +64,10 @@ def kwic_results(page, write, kwic):
         s.to_csv(file, encoding='utf-8')
     else:
         pass
-    return s
+    if s.empty:
+        print('Something went wrong: please try again!')
+    else:
+        return s
 
 
 def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
