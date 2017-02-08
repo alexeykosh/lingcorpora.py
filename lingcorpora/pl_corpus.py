@@ -52,16 +52,14 @@ def kwic_results(page, write, kwic):
     right_list = [s.strip('\n') for s in right_list][1::2]
     d = {"center": center_list, "left": left_list, "right": right_list}
     s = pd.DataFrame(d, columns=["left", "center", "right"])
+    if kwic is False:
+        s = s.apply(not_kwic, axis=1)
+    else:
+        pass
     if write is True:
         file = open('table.csv', 'w')
         s.to_csv(file, encoding='utf-8')
         file.close()
-    else:
-        pass
-    if kwic is False:
-        file = open('table.csv', 'w')
-        s = s.apply(not_kwic, axis=1)
-        s.to_csv(file, encoding='utf-8')
     else:
         pass
     if s.empty:
