@@ -76,7 +76,7 @@ def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=Fals
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    parser = argparse.ArgumentParser()  # ru_corpora(corpora = 'main')
+    parser = argparse.ArgumentParser()
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
     parser.add_argument('n_results', type=int)
