@@ -20,7 +20,13 @@ environment:
 
 install:
   # We need wheel installed to build wheels
-  - "%PYTHON%\\python.exe -r requirements.txt"
+  - "%PYTHON%\\python.exe -m pip install wheel"
+  - "%PYTHON%\\python.exe -m pip install pandas"
+  - "%PYTHON%\\python.exe -m pip install bs4"
+  - "%PYTHON%\\python.exe -m pip install requests"
+
+
+
 
 build: off
 
