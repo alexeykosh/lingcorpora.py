@@ -17,9 +17,9 @@ def get_page(query, corpus, n_results):
               'genre': 'Belletristik',
               'genre': 'Wissenschaft',
               'genre': 'Gebrauchsliteratur',
-              'genre': query,
+              'genre': 'Zeitung',
               'limit': n_results,
-              'q': 'Kind',
+              'q': query,
               'sort':	'date_asc'}
     s = post('https://www.dwds.de/r', params=params)
     return s
