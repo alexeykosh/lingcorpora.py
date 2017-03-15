@@ -49,7 +49,7 @@ All these functions are using the following arguments:
 * kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
 * write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
 
-###### Rus_search function
+###### rus_search function
 ```python
 >>> print(lingcorpora.rus_search('дядя'))
                                                 left  center  \
@@ -78,7 +78,7 @@ All these functions are using the following arguments:
 
 ```
 
-###### Pol_search function
+###### pol_search function
 
 ```python
 >>> print(lingcorpora.pol_search('tata'))
@@ -108,7 +108,7 @@ All these functions are using the following arguments:
 ```
 
 ```python
->>> print(lingcorpora.pl_search('powstanie' , tag=True, n_results=100))
+>>> print(lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
                                                 left       center  \
 0   . [.:interp] Aż [aż:qub] na [na:prep:acc] siłę...   powstanie    
 1    czy [czy:qub] taki [taki:adj:sg:nom:m3:pos] k...   powstanie    
@@ -143,3 +143,31 @@ All these functions are using the following arguments:
 13  ? [?:interp] Albo [albo:conj] za [za:prep:acc]...  
 14   na [na:prep:acc] deskach [deska:subst:pl:loc:...  
 ```
+
+###### deu_search function
+
+```python
+>>> print(lingcorpora.deu_search(query='Muther'))
+                                                left   center  \
+0       Die in verschiedene Tagesblätter übergega...   Kinder
+1       Ebenso stellt sich die durch verschiedene...  Kindern
+2       Damit erwirbt sie auch die rechten Anscha...   Kinder
+3       Die Begehrlichkeit und die Naschhaftigkei...  Kindern
+4       Die Begehrlichkeit und die Naschhaftigkei...  Kindern
+5       Die Begehrlichkeit und die Naschhaftigkei...   Kinder
+6       Der Baum, so musterhaft gewachsen und fei...  Kindern
+7       Nun stellte der Fürst dem Gaste noch sein...   Kinder
+8       Die Staatsanwaltschaft lässt zum Beispiel...   Kinder
+9       Ein aus gleichem Anlasse verhafteter Arbe...     Kind
+
+                                               right
+0       von Zeit zu Zeit sehen zu dürfen, ist, wi...
+1       an einem vom König zu bestimmenden Ort zu...
+2      , und sie wird ihren Söhnen bei deren Hera...
+3       geweckt und dauernd angeregt, der Sparsin...
+4       mühsam zu wecken suchen, wird untergraben...
+5        geradezu zu Betrugsversuchen angereizt.
+6       im Verhältniß zu dem greifbaren Eigenthum...
+7       vor und setzte dann das politische Gesprä...
+8       als einzige Zeugen gegen die Eltern vorla...
+9       verhungern, muss warten und brummen, »dam...
