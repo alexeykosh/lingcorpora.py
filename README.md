@@ -3,6 +3,7 @@
 This package includes API for 
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
 * [National Corpus of Polish](http://nkjp.pl)
+* [Das Wortauskunftssystem zur deutschen Sprache in Geschichte und Gegenwart](https://www.dwds.de/r)
 
 R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
 
