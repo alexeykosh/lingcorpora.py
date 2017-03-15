@@ -150,7 +150,7 @@ All these functions are using the following arguments:
 >>> print(lingcorpora.deu_search(query='M'))
                                                 left  center  \
 0       Da meint er schon etwas Großes zu thun, w...  Muther
-1                        Dann wird der Mann, der\n    Muther
+1                        Dann wird der Mann, der      Muther
 2       Und schon sehe ich den Besten, der seit l...  Muther
 3       Wer von den Lesern, die neulich den Schar...  Muther
 4       Vor wenigen Tagen hat nun auch der Kunstw...  Muther
@@ -163,9 +163,9 @@ All these functions are using the following arguments:
                                                right
 0       - in dessen in jungen Jahren geschaffenem...
 1       als Plagiator missachtet, zum - Plagiator...
-2                   , sich hier acclimatisieren.\n
+2                   , sich hier acclimatisieren.
 3       aus den Bildern eines jungen Herrn Schles...
-4                           , Ruskin »gefeiert«.\n
+4                           , Ruskin »gefeiert«.
 5       herausgegebenen Sammlung illustrirter Mon...
 6       zum Gegenstande einer geistvollen Untersu...
 7      , die Künstlergenossenschaft schlecht beha...
