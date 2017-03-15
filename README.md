@@ -12,25 +12,25 @@ R version of this package by George Moroz is located [here](https://github.com/a
 If you want to install our package, please tap the following command in Terminal:
 
 ```bash
-pip install git+https://github.com/alexeykosh/lingcorpora.py
+pip install lingcorpora
 ```
 
 Or:
 
 ```bash
-sudo pip install git+https://github.com/alexeykosh/lingcorpora.py
+sudo pip install lingcorpora
 ```
 
 If you had Python 3 and Python 2, tap:
 
 ```bash
-pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+pip3 install lingcorpora
 ```
 
 Or (for Linux users):
 
 ```bash
-sudo pip3 install git+https://github.com/alexeykosh/lingcorpora.py
+sudo pip3 install lingcorpora
 ```
 
 
