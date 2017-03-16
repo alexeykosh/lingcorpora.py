@@ -46,6 +46,7 @@ def _driver_init(driver_type='Chrome'):
     driver.get(CORP_URL)
     return driver
 
+
 def main():
     get_page_src('tata','Basic')
 

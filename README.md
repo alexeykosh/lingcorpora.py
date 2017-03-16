@@ -147,7 +147,7 @@ All these functions are using the following arguments:
 ###### deu_search function
 
 ```python
->>> print(lingcorpora.deu_search(query='M'))
+>>> print(lingcorpora.deu_search(query='Muther'))
                                                 left  center  \
 0       Da meint er schon etwas Großes zu thun, w...  Muther
 1                        Dann wird der Mann, der      Muther
