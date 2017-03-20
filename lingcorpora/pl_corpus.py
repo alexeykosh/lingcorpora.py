@@ -32,11 +32,11 @@ def get_results(query, corpus, n_results, tag):  # the request part: here we are
                   'Connection': 'keep-alive',
                   'Upgrade-Insecure-Requests': '1'}
     post(url='http://nkjp.pl/poliqarp/query/', headers=user_agent, data={'query': query, 'corpus': 'nkjp300'})
-    r = get(url='http://nkjp.pl/poliqarp/nkjp300/query/', headers=user_agent)  # getting the final results
+    r = get(url='http://nkjp.pl/poliqarp/nkjp300/query/', headers=user_agent) # getting the final results
     return r
 
 
-def kwic_results(page, write, kwic):  # results parse
+def kwic_results(page, write, kwic, query):  # results parse
     left_list = []
     right_list = []
     center_list = []
@@ -57,20 +57,20 @@ def kwic_results(page, write, kwic):  # results parse
     else:
         pass
     if write is True:
-        file = open('table.csv', 'w')
+        file = open('table' + str(query) + '.csv', 'w')
         s.to_csv(file, encoding='utf-8')
         file.close()
     else:
         pass
     if s.empty:
-        print('Something went wrong: please try again!')
+        print('Something went wrong with' + str(query) + ': please try again!')
     else:
         return s
 
 
 def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
     page = get_results(query, corpus, n_results, tag)
-    results = kwic_results(page, write, kwic)
+    results = kwic_results(page, write, kwic, query)
     return results
 
 
