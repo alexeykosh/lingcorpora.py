@@ -15,3 +15,5 @@ try.py
 *.csv
 
 *.cfg
+
+czh_corpus.py
