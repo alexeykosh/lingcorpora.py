@@ -5,6 +5,7 @@ This package includes API for
 * [National Corpus of Russian Language](http://www.ruscorpora.ru)
 * [National Corpus of Polish](http://nkjp.pl)
 * [Das Wortauskunftssystem zur deutschen Sprache in Geschichte und Gegenwart](https://www.dwds.de/r)
+* [Center of Chinese Linguistics corpus](http://ccl.pku.edu.cn:8080/ccl_corpus/index.jsp)
 
 R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
 
@@ -22,7 +23,7 @@ Or:
 sudo pip install lingcorpora
 ```
 
-If you had Python 3 and Python 2, tap:
+If you had Python 3 and Python 2, type:
 
 ```bash
 pip3 install lingcorpora
@@ -35,13 +36,15 @@ sudo pip3 install lingcorpora
 ```
 
 
-For import it in your project, tap:
+For import it in your project, type:
 
 ```python
 import lingcorpora
 ```
 
 ## Usage
+
+### rus_search, pol_search, deu_search
 All these functions are using the following arguments:
 * query – the actual query (wordform, or regular expression, if corpus supports it)
 * corpus - the subcorpus where you want to search (it differs from corpora to corpora)
@@ -172,4 +175,45 @@ All these functions are using the following arguments:
 7      , die Künstlergenossenschaft schlecht beha...
 8       , Hauptleute Lannert , Nachtigall u. Majo...
 9       . Weitere viel besprochene Prozesse betra...
+```
 
+### zho_search
+This function has the following arguments:
+
+* query - a query to search by (regular expressions are supported, read instructions in the corpus (in Chinese))
+* corpus - 'xiandai' (modern Chinese, by default) or 'dugai' (ancient Chinese)
+* mode - 'simple' (default) or 'pattern' (they differ in syntax, read instructions in the corpus (in Chinese))
+* n_results - desired number of results (10 by default)
+* n_left - length of left context (in chars, max = 40, 30 by default)
+* n_right - length of right context (in chars, max = 40, 30 by default)
+* write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
+* kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
+
+##### zho_search function
+
+```python
+>>> print(lingcorpora.zho_search('古代汉语'))
+                                                        left     center  \
+0  ...词汇语义学"不同。中国的词汇学，主要来源于中国传统的训诂学（    古代汉语   
+1  ...学科，是广义语言学的一个重要分支。音韵学也称声韵学，它是研究   古代汉语   
+2  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
+3  ...包括古音学、今音学、等韵学等学科。音韵学也称声韵学，它是研究   古代汉语   
+4  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
+5                             音韵学是研究   古代汉语   
+6  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
+7  ...统性，以便更好地掌握现代汉语的语音，有利于语言实践。我们研究   古代汉语   
+8  ...因为它是与汉语史有密切关系的一个语言学部门。必须先深入研究了   古代汉语   
+9  ...的人愈来愈多。为了继承祖国的历史遗产，我们不少人还要专门学习   古代汉语   
+
+                                                         right  
+0  词汇学）和现代汉语语法部分中的词法学（现代汉语词汇学）。当然，...  
+1  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
+2                          的一个重要组成部分。  
+3  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
+4  的一个重要组成部分。在研究方法上，传统音韵学主要使用的是系联法...  
+5  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
+6  的一个重要组成部分，就像现代汉语语音是现代汉语的重要组成部分一...  
+7  音韵学，因为它是与汉语史有密切关系的一个语言学部门。必须先深入...  
+8  音韵学，然后有可能研究汉语语音发展的历史。其作用是多方面的，我...  
+9  。本族语（包括古语）的学习，外语学习，以及外国人学汉语，做好翻...
+```
