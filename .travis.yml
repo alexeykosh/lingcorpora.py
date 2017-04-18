@@ -1,4 +1,5 @@
 language: python
+
 python:
   - "3.5"
 
@@ -14,5 +15,5 @@ script:
   - coverage run pl_corpus.py
 
 after_success:
-  - codecov
+  - codecov --token=<daf0f956-0ddc-4546-bba4-d287455ad247>
 
