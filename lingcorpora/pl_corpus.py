@@ -69,7 +69,7 @@ def kwic_results(page, write, kwic, query):  # results parse
         return s
 
 
-class ParseNameTestCase(unittest.TestCase):
+class TestMethods(unittest.TestCase):
     def test1(self):
         self.assertEqual(('<Response [200]>'), str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
 
