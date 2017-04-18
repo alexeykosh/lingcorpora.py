@@ -73,6 +73,11 @@ class ParseNameTestCase(unittest.TestCase):
     def test1(self):
         self.assertEqual(('<Response [200]>'), str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
 
+    def test2(self):
+        self.assertEqual(("<class 'pandas.core.frame.DataFrame'>"), str(type(kwic_results(page=get_results(query='tata',
+                                                                    corpus='nkjp300', n_results=10, tag=True),
+                                                                    write=False, kwic=True, query='tata'))))
+
 
 def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
     page = get_results(query, corpus, n_results, tag)
