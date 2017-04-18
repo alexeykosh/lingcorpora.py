@@ -11,7 +11,7 @@ before_script:
 
 script:
   - nosetests
-  - coverage run tests.py
+  - coverage run pl_corpus.py
 
 after_success:
   - codecov
