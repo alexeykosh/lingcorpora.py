@@ -34,7 +34,11 @@ def parse_page(page,first=False):
     find results (and total number of results) in the page code
     """
     soup = BeautifulSoup(page, 'lxml')
-    res = soup.find('table',align='center').find_all('tr')
+    res = soup.find('table',align='center')
+    if res:
+        res = res.find_all('tr')
+    else:
+        return [],0
     if first:
         num_res = int(soup.find('td',class_='totalright').find('b').text)
         return res, num_res
@@ -76,9 +80,12 @@ def write_results(query,results,n_results,kwic,write):
     """
     not_allowed = '/\\?%*:|"<>'
     if kwic:
-        d = {"center": [x[1] for x in results[:n_results]],
-             "left": [x[0] for x in results[:n_results]],
-             "right": [x[2] for x in results[:n_results]]}
+        if not results:
+            d = {key:[] for key in ["left","center","right"]}
+        else:
+            d = {"left": [x[0] for x in results[:n_results]],
+                 "center": [x[1] for x in results[:n_results]],
+                 "right": [x[2] for x in results[:n_results]]}
         s = pd.DataFrame(d, columns=["left", "center", "right"])
     else:
         not_kwic = [''.join(x) for x in results[:n_results]]
