@@ -12,6 +12,7 @@ before_script:
 script:
   - nosetests
   - coverage run lingcorpora/pl_corpus.py
+  - coverage run lingcorpora/ger_corpus.py
 
 
 after_success:
