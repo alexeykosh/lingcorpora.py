@@ -4,21 +4,19 @@ import argparse
 import sys
 from bs4 import BeautifulSoup
 import pandas as pd
+import unittest
 
 
 def f(x):
     return x[0] + x[1] + x[2]
 
 
-def create_request(needs):
-    corpora = needs[0]
-    request = needs[1]
-    case = needs[2]
+def create_request(corpus, request, case):
     url = 'http://search2.ruscorpora.ru/search.xml?env=alpha&mycorp=&mysent=&mysize=&mysentsize=&mydocsize=&spd=&' \
           'text=lexgramm&mode=%s&sort=gr_tagging&lang=ru&nodia=1&parent1=0&level1=0&lex1=%s&gramm1=%s&sem1=&sem-m' \
           'od1=sem&sem-mod1=sem2&flags1=&m1=&parent2=0&level2=0&min2=1&max2=1&lex2=&gramm2=&sem2=&sem-mod2=sem&se' \
           'm-mod2=sem2&flags2=&m2=&out=%s'
-    common_url = url % (corpora, request, case, 'kwic')
+    common_url = url % (corpus, request, case, 'kwic')
     return common_url
 
 
@@ -71,12 +69,9 @@ def get_table(urls, n_results, write, kwic):
 
 
 def main(query, corpus='main', tag='', n_results=10, write=False, kwic=True):
-    needs = [corpus]
     request = urllib.request.quote(query.encode('windows-1251'))
-    needs.append(request)
     case = urllib.request.quote(tag.encode('windows-1251'))
-    needs.append(case)
-    common_ur = create_request(needs)
+    common_ur = create_request(corpus, request, case)
     return get_table(get_all_pages(common_ur, n_results), n_results, write, kwic)
 
 
