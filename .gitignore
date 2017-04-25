@@ -19,3 +19,5 @@ try.py
 czh_corpus.py
 
 .coverage
+
+dist
