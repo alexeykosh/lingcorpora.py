@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import sys
 import argparse
+import unittest
 
 
 def not_kwic(x):
@@ -68,6 +69,16 @@ def kwic_results(page, write, kwic, query):  # results parse
         return s
 
 
+class TestMethods(unittest.TestCase):
+    def test1(self):
+        self.assertEqual(('<Response [200]>'), str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
+
+    def test2(self):
+        self.assertEqual(("<class 'pandas.core.frame.DataFrame'>"), str(type(kwic_results(page=get_results(query='tata',
+                                                                    corpus='nkjp300', n_results=10, tag=True),
+                                                                    write=False, kwic=True, query='tata'))))
+
+
 def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
     page = get_results(query, corpus, n_results, tag)
     results = kwic_results(page, write, kwic, query)
@@ -75,6 +86,7 @@ def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=Fals
 
 
 if __name__ == '__main__':
+    unittest.main()
     args = sys.argv[1:]
     parser = argparse.ArgumentParser()
     parser.add_argument('corpus', type=str)

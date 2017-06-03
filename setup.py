@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='lingcorpora',
-      version='0.1',
+      version='0.2',
       description='API for National Corpus of Russian Language',
       url='https://github.com/alexeykosh/lingcorpora.py',
       author='Alexey Koshevoy',
