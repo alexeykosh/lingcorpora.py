@@ -45,7 +45,7 @@ def parse_results(results,tags):
         for kw in kws:
             tag = kw.select('div.aline')
             tag = '; '.join([x.text.strip() for x in tag if x.text.strip()])
-            if tags:
+            if tags and tag:
                 text_kw = kw.select('span.nott')[0].text.strip() +' ('+tag+')'
             else:
                 text_kw = kw.select('span.nott')[0].text.strip()
