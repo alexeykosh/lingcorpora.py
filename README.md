@@ -12,7 +12,7 @@ R version of this package by George Moroz is located [here](https://github.com/a
 
 ## Instalation
 
-If you want to install our package, please tap the following command in Terminal:
+If you want to install our package, please type the following command in Terminal:
 
 ```bash
 pip install lingcorpora
@@ -45,7 +45,7 @@ import lingcorpora
 
 ## Usage
 
-### rus_search, pol_search, deu_search
+### rus_search, pol_search, deu_search, bam_search
 All these functions are using the following arguments:
 * query – the actual query (wordform, or regular expression, if corpus supports it)
 * corpus - the subcorpus where you want to search (it differs from corpora to corpora)
@@ -176,6 +176,72 @@ All these functions are using the following arguments:
 7      , die Künstlergenossenschaft schlecht beha...
 8       , Hauptleute Lannert , Nachtigall u. Majo...
 9       . Weitere viel besprochene Prozesse betra...
+```
+##### bam_search function
+'Simple search' which is used here gives various wordforms if a lemma was passed to the corpus.
+```python
+>>> print(lingcorpora.bam_search(query='sungurun'))
+                                            left        center  \
+0                n y' a bila sunguru dɔ de kan .       sunguru   
+1      ale bɛ den nin minɛ k' a ɲimi , k' o bɛna  sungurunninw   
+2                           bɛ kasi ka taga so .     sungurunw   
+3       la ka taga tulon kɛ dugu wɛrɛ la , sisan      sungurun   
+4    ntɛnɛ sɔrɔ » . diya bɛ ban . ni fɛn wɛrɛ ma    sungurunya   
+5        ma bilakoroba faga joona , a bolo na da      sungurun   
+6        subaga boloɲɛ fɔlɔ tɛ mɔgɔɲumandun ye .    sungurunba   
+7      musokɔrɔnin ye wɔlɔgɛn na , o y' a sɔrɔ a    sungurunma   
+8    hali sa , i ma a ɲɛdɔn de ? kamalenba de bɛ    sungurunba   
+9  laminɛ kɔrɔ dɔn . mɔgɔ t' a fɔ waliden ma « i    sungurunba   
+
+                                         right  
+0       nin tɛ foyi kɛ , n' a wulila a bɛ taga  
+1      lɔgɔbɛ o kana sɔn ka taga tulon kɛ dugu  
+2      tɛ sɔn ka bɔ o ka dugu la ka taga tulon  
+3      dɔw , o bɛ don mobili la ka taga jamana  
+4       sa , sijɛtigiya na a sa . tile banbali  
+5      sin na . « ni Ala ma n sonya , ne si na  
+6  boloɲɛ fɔlɔ tɛ mɔgɔɲumandun ye . kuma kelen  
+7     de ye dɔ minɛ . o ye sirakwama ye , a tɛ  
+8     siyɔrɔ dɔn . kanu bɛ npogotigi deli cɛko  
+9      ! » , i ta bɛ i bolo , i t' o laban dɔn 
+```
+```python
+>>> print(lingcorpora.bam_search(query='jamana',tag=True))
+                                               left  \
+0          sar' a ye . kɔnɔnin tagara ɲɔ kumu caman   
+1         sungurun dɔw , o bɛ don mobili la ka taga   
+2          a bila bi la , ja ye tiɲɛni min kɛ an ka   
+3  baganmarajamana ye . o kama , ni ja in ma kɛlɛ ,   
+4          k' o bila kɔlɔn kɔnɔ , a ko : « an taara   
+5       kɔrɔ a biɲɛ ye . daga bɛɛ ni a galama don .   
+6          , mɔgɔninfinya bɛnnen ka fisa a bɛɛ ye .   
+7           denjugu wolo , i ye ku bɔ , ni a fakura   
+8          a ma ko Nkalannin Cɛnnege . Nkalannin bɛ   
+9           marakaw tun bɛ tɛmɛ . fɛn o fɛn ni o bɛ   
+
+                                              center  \
+0  jamana (jamana|jamani; n; pays; jamana; jàman...   
+1  jamana (jamana|jamani; n; pays; jamana; jàman...   
+2  jamana (jamana|jamani; n; pays; jamana; jàman...   
+3  jamana (jamana|jamani; n; pays; jamana; jàman...   
+4  jamana (jamana|jamani; n; pays; jàmànà; jà...   
+5  jamani (jamani|jamana; n; pays; Jàmàni; jàm...   
+6  jamana (jamana|jamani; n; pays; Jàmàna; jàm...   
+7  jamana (jamana|jamani; n; pays; jàmàna; jàm...   
+8  jamani (jamani|jamana; n; pays; jamani; jàman...   
+9  jamani (jamani|jamana; n; pays; jamani; jàman...   
+
+                                          right  
+0        jan dɔ la . a nana min kɛ a ye den nin  
+1        wɛrɛ la ka dɔn kɛ yen ka sɔrɔ ka segin  
+2       kɔnɔ , bɛɛ b' a dɔn . ja in kɛra sababu  
+3                             tɛ se ka yiriwa .  
+4    kura la » . ntamanin kun-kelen-fɔ , a diya  
+5      bɛɛ ni a ka laada don . dugubila ka fisa  
+6      fila bɛ bɛn ni sodansow tɛ . masakɛ fila  
+7  fan o fan , i tɔgɔ bɛ yen . « ku tɛ banannin  
+8        min na sa , a bɛ yɔrɔ o yɔrɔ , ne kɔni  
+9    sɔtigɛ ni taama ye , u bɛ tɛmɛ-tɛmɛ siraba  
 ```
 
 ### zho_search
