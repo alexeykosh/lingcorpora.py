@@ -17,3 +17,7 @@ try.py
 *.cfg
 
 czh_corpus.py
+
+.coverage
+
+dist
