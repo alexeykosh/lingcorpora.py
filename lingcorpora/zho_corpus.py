@@ -93,7 +93,7 @@ def write_results(query,results,n_results,kwic,write):
         print(s.head())
     if write:
         query = ''.join([x if x not in not_allowed else 'na' for x in query])
-        with open('ch_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
+        with open('zho_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
             s.to_csv(f,sep=';')
     return s
 
