@@ -48,7 +48,7 @@ def get_results(page, write, kwic, query, n_results):
         pass
     if write is True:
         file = open('table' + str(query) + str(n_results) + '.csv', 'w')
-        s.to_csv(file, encoding='utf-8')
+        s.to_csv(file, encoding='utf-8', sep=';')
         file.close()
     else:
         pass

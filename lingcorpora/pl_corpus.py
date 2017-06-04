@@ -37,7 +37,7 @@ def get_results(query, corpus, n_results, tag):  # the request part: here we are
     return r
 
 
-def kwic_results(page, write, kwic, query):  # results parse
+def kwic_results(page, write, kwic, query):# results parse
     left_list = []
     right_list = []
     center_list = []
@@ -59,12 +59,12 @@ def kwic_results(page, write, kwic, query):  # results parse
         pass
     if write is True:
         file = open('table' + str(query) + '.csv', 'w')
-        s.to_csv(file, encoding='utf-8')
+        s.to_csv(file, encoding='utf-8', sep=';')
         file.close()
     else:
         pass
     if s.empty:
-        print('Something went wrong with' + str(query) + ': please try again!')
+        print('Something went wrong with ' + str(query) + ': please try again!')
     else:
         return s
 
