@@ -52,21 +52,20 @@ def get_table(urls, n_results, write, kwic):
     s = pd.DataFrame(d, columns=["left", "center", "right"])
     if write is True:
         file = open('ru_table.csv', 'w')
-        s.to_csv(file, encoding='utf-8')
+        s.to_csv(file, encoding='utf-8', sep=';')
         file.close()
     else:
         pass
     if kwic is False:
         file = open('ru_table.csv', 'w')
         s = s.apply(f, axis=1)
-        s.to_csv(file, encoding='utf-8')
+        s.to_csv(file, encoding='utf-8', sep=';')
     else:
         pass
     if s.empty:
         print('Something went wrong: please try again!')
     else:
         return s
-
 
 def main(query, corpus='main', tag='', n_results=10, write=False, kwic=True):
     request = urllib.request.quote(query.encode('windows-1251'))
