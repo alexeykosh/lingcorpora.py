@@ -1,9 +1,9 @@
 from requests import get
 from bs4 import BeautifulSoup
-import pandas as pd
 import sys
 import argparse
 from html import unescape
+import csv
 
 
 def get_results(query,start,n,lang,mode,n_left,n_right):
@@ -73,29 +73,18 @@ def download_all(query,results_wanted,n_left,n_right,lang,mode):
     return all_res
 
 
-def write_results(query,results,n_results,kwic,write):
+def write_results(query,results,cols):
     """
-    get results ready for output - pandas DataFrame
-    and csv file if needed
+    write csv
     """
     not_allowed = '/\\?%*:|"<>'
-    if kwic:
-        if not results:
-            d = {key:[] for key in ["left","center","right"]}
-        else:
-            d = {"left": [x[0] for x in results[:n_results]],
-                 "center": [x[1] for x in results[:n_results]],
-                 "right": [x[2] for x in results[:n_results]]}
-        s = pd.DataFrame(d, columns=["left", "center", "right"])
-    else:
-        not_kwic = [''.join(x) for x in results[:n_results]]
-        s = pd.DataFrame({"result":not_kwic}, columns=["result"])
-        print(s.head())
-    if write:
-        query = ''.join([x if x not in not_allowed else 'na' for x in query])
-        with open('zho_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
-            s.to_csv(f,sep=';')
-    return s
+    query = ''.join([x if x not in not_allowed else 'na' for x in query])
+    with open('zho_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
+        writer = csv.writer(f, delimiter=';', quotechar='"',
+                            quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+        writer.writerow(cols)
+        for i,x in enumerate(results):
+            writer.writerow([i]+x)
 
     
 def main(query,corpus='xiandai',mode='simple',n_results=10,
@@ -115,13 +104,19 @@ def main(query,corpus='xiandai',mode='simple',n_results=10,
         kwic: whether to write into file in kwic format or not
 
     Return:
-        pandas DataFrame and csv file is written if specified
+        list of row lists and csv file is written if specified
     """
     if not query:
         return 'Empty query'
-    results = download_all(query,n_results,n_left,n_right,corpus,mode)
-    res_df = write_results(query,results,n_results,kwic,write)
-    return res_df
+    results = download_all(query,n_results,n_left,n_right,corpus,mode)[:n_results]
+    if kwic:
+        cols = ['index','left','center','right']
+    else:
+        results = [[''.join(x)] for x in results]
+        cols = ['index','result']
+    if write:
+        write_results(query,results,cols)
+    return results
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -136,4 +131,3 @@ if __name__ == '__main__':
     parser.add_argument('kwic', type=int)
     args = parser.parse_args(args)
     main(query, corpus, mode, n_results, n_left, n_right, write, kwic)
-    
