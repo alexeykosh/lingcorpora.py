@@ -1,9 +1,9 @@
 from requests import get
 from bs4 import BeautifulSoup
-import pandas as pd
 import sys
 import argparse
 from html import unescape
+import csv
 
 
 def get_results(query,corpus,page):
@@ -77,20 +77,16 @@ def download_all(query,num_res,corpus,tags):
     return results
 
 
-def write_results(query,results,kwic,write):
+def write_results(query,results,cols):
     """
-    get results ready for output - pandas DataFrame
-    and csv file if needed
+    write csv
     """
-    if kwic:
-        res_table = pd.DataFrame(results,columns=['left','center','right'])
-    else:
-        results = [[' '.join(x)] for x in results]
-        res_table = pd.DataFrame(results,columns=['results'])
-    if write:
-        with open('bam_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
-            res_table.to_csv(f,sep=';')
-    return res_table
+    with open('bam_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
+        writer = csv.writer(f, delimiter=';', quotechar='"',
+                            quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+        writer.writerow(cols)
+        for i,x in enumerate(results):
+            writer.writerow([i]+x)
 
 
 def main(query,corpus='corbama-net-non-tonal',tag=False,
@@ -107,14 +103,20 @@ def main(query,corpus='corbama-net-non-tonal',tag=False,
         write: whether to write into csv file or not
         
     Return:
-        pandas DataFrame and csv file is written if specified
+        list of row lists and csv file is written if specified
         
     """
     results = download_all(query,n_results,corpus,tag)
     if results is None:
         results = [['','nothing found','']]
-    res_df = write_results(query,results,kwic,write)
-    return res_df
+    if kwic:
+        cols = ['index','left','center','right']
+    else:
+        results = [[''.join(x)] for x in results]
+        cols = ['index','result']
+    if write:
+        write_results(query,results,cols)
+    return results
 
 
 if __name__ == '__main__':
