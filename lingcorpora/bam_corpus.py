@@ -4,6 +4,7 @@ import sys
 import argparse
 from html import unescape
 import csv
+import unittest
 
 
 def get_results(query,corpus,page):
@@ -58,13 +59,13 @@ def parse_results(results,tags):
 def download_all(query,num_res,corpus,tags):
     """
     get information and hits from first page and iterate until
-    all hits are collected or maximum set by user is achieved
+    all hits are collected or the maximum set by user is achieved
     """
     per_page = 20
     try:
         first,total = parse_page(get_results(query,corpus,1),first=True)
     except:
-        return None
+        return []
     results = parse_results(first,tags)
     final_total = min(total,num_res)
     pages_to_get = len(list(range(per_page+1,final_total+1,per_page)))
@@ -81,6 +82,8 @@ def write_results(query,results,cols):
     """
     write csv
     """
+    not_allowed = '/\\?%*:|"<>'
+    query = ''.join([x if x not in not_allowed else '_na_' for x in query])
     with open('bam_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
@@ -107,8 +110,8 @@ def main(query,corpus='corbama-net-non-tonal',tag=False,
         
     """
     results = download_all(query,n_results,corpus,tag)
-    if results is None:
-        results = [['','nothing found','']]
+    if not results:
+        print ('bam_search: nothing found for "%s"' % (query))
     if kwic:
         cols = ['index','left','center','right']
     else:
@@ -119,7 +122,15 @@ def main(query,corpus='corbama-net-non-tonal',tag=False,
     return results
 
 
+class TestMethods(unittest.TestCase):
+    def test1(self):
+        self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+
+    def test2(self):
+        self.assertFalse(download_all(query='gfjsjfjsdl',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+
 if __name__ == '__main__':
+    unittest.main()
     args = sys.argv[1:]
     parser = argparse.ArgumentParser()
     parser.add_argument('query', type=str)

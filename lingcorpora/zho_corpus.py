@@ -4,6 +4,7 @@ import sys
 import argparse
 from html import unescape
 import csv
+import unittest
 
 
 def get_results(query,start,n,lang,mode,n_left,n_right):
@@ -78,7 +79,7 @@ def write_results(query,results,cols):
     write csv
     """
     not_allowed = '/\\?%*:|"<>'
-    query = ''.join([x if x not in not_allowed else 'na' for x in query])
+    query = ''.join([x if x not in not_allowed else '_na_' for x in query])
     with open('zho_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
@@ -109,6 +110,8 @@ def main(query,corpus='xiandai',mode='simple',n_results=10,
     if not query:
         return 'Empty query'
     results = download_all(query,n_results,n_left,n_right,corpus,mode)[:n_results]
+    if not results:
+        print ('zho_search: nothing found for "%s"' % (query))
     if kwic:
         cols = ['index','left','center','right']
     else:
@@ -118,7 +121,18 @@ def main(query,corpus='xiandai',mode='simple',n_results=10,
         write_results(query,results,cols)
     return results
 
+
+class TestMethods(unittest.TestCase):
+    def test1(self):
+        self.assertTrue(parse_page(get_results(query='古代汉',start=0,n=50,lang='xiandai',
+                                               mode='simple',n_left=30,n_right=30)))
+
+    def test2(self):
+        self.assertIs(list, type(download_all(query='古代汉',results_wanted=10,n_left=30,
+                                              n_right=30,lang='xiandai',mode='simple')))
+
 if __name__ == '__main__':
+    unittest.main()
     args = sys.argv[1:]
     parser = argparse.ArgumentParser()
     parser.add_argument('query', type=str)
