@@ -7,10 +7,12 @@ This package includes API for
 * [National Corpus of Polish](http://nkjp.pl)
 * [Das Wortauskunftssystem zur deutschen Sprache in Geschichte und Gegenwart](https://www.dwds.de/r)
 * [Center of Chinese Linguistics corpus](http://ccl.pku.edu.cn:8080/ccl_corpus/index.jsp)
+* [Corpus Bambara de Reference](http://maslinsky.spb.ru/bonito/run.cgi/first_form)
+* [Maninka Automatically Parsed corpus](http://maslinsky.spb.ru/emk/run.cgi/first_form)
 
 R version of this package by George Moroz is located [here](https://github.com/agricolamz/lingcorpora.R)
 
-## Instalation
+## Installation
 
 If you want to install our package, please type the following command in Terminal:
 
@@ -37,83 +39,89 @@ sudo pip3 install lingcorpora
 ```
 
 
-For import it in your project, type:
+To import it in your project, type:
 
 ```python
 import lingcorpora
 ```
 
+**Note:** this package does not require [Pandas](http://pandas.pydata.org) to be installed. <br>
+The output of functions is a list of occurences, which are in turn are also lists. The output can be used as an input to a Pandas DataFrame (see examples below).
+
 ## Usage
 
-### rus_search, pol_search, deu_search, bam_search
+### rus_search, pol_search, deu_search, bam_search, emk_search
 All these functions are using the following arguments:
 * query – the actual query (wordform, or regular expression, if corpus supports it)
 * corpus - the subcorpus where you want to search (it differs from corpora to corpora)
-* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags
+* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags where relevant
 * n_results - the actual quantity of the results (by default it is 10)
 * kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
 * write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
 
-###### rus_search function
+### zho_search
+This function has the following arguments:
+
+* query - a query to search by (regular expressions are supported, read instructions in the corpus (in Chinese))
+* corpus - 'xiandai' (modern Chinese, by default) or 'dugai' (ancient Chinese)
+* mode - 'simple' (default) or 'pattern' (they differ in syntax, read instructions in the corpus (in Chinese))
+* n_results - desired number of results (10 by default)
+* n_left - length of left context (in chars, max = 40, 30 by default)
+* n_right - length of right context (in chars, max = 40, 30 by default)
+* write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
+* kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
+
+
+## Output examples
+### bam_search
 ```python
->>> print(lingcorpora.rus_search('дядя'))
-                                                left  center  \
-0                                Ой какие нехорошие    дяди    
-1                    Её работа (Елена Андреевна) в "   Дяде    
-2                                      Когда войдёт    дядя    
-3                       и К. Раппопорт в спектакле "   Дядя    
-4                   Во-первых, нет уверенности, что    дядя    
-5           Коляем Коляичем с пистолетом.  (Смотри "   Дядю    
-6            из ваших близких, например двоюродного    дяди    
-7          земским врачам.  "Надо быть милосердным,    дядя    
-8                                        Мои отец и    дядя    
-9  волновавшейся о неизвестном местонахождении св...   дяди    
+>>> output = lingcorpora.bam_search(query='súngurun', corpus='corbama-net-tonal')
+>>> print(output)
+[["y' à bìla sunguru dɔ́ dè kàn .", 'súnguru', "nìn tɛ́ fóyì kɛ́ , n' à wúlila à"],
+["dén nìn mìnɛ k' à ɲími , k' ò bɛ́na", 'súngurunninw', 'lɔ̀gɔbɛ ò kàna sɔ̀n kà tág
+a túlon'], ['kà tága só . kàbini ò dón ,', 'súngurunw', 'tɛ́ sɔ̀n kà bɔ́ ò ká dùgu 
+lá kà tága'], ['tága túlon kɛ́ dùgu wɛ́rɛ lá , sísan', 'súngurun', 'dɔw , ò bɛ́ dòn
+móbili lá kà tága'], ['díya bɛ́ bán . 172 ) ní fɛ́n wɛ́rɛ má', 'súngurunya', 'sà , 
+síjɛtigiya nà à sà . 173 ) tìle'], ['bìlakoroba fàga jóona , à bólo nà dá', 'sún
+gurun', 'sín ná . 402 ) « ní Ála má ń sònya'], ['bóloɲɛ fɔ́lɔ tɛ́ mɔ̀gɔɲumandun yé 
+. 948 )', 'súngurunba', 'bóloɲɛ fɔ́lɔ tɛ́ mɔ̀gɔɲumandun yé . 949'], ["mùsokɔrɔnin y
+é wɔ̀lɔgɛn ná , ò y' à sɔ̀rɔ à", 'súngurunma', 'dè yé dɔ́ mìnɛ . 959 ) ò yé sìrakwà
+ma'], ['à ɲɛ́dɔn dè ? 1017 ) kámalenba dè bɛ́', 'súngurunba', 'sìyɔrɔ dɔ́n . 1018 )
+kànu bɛ́ npògotigi'], ["2792 ) mɔ̀gɔ t' à fɔ́ wáliden mà « í", 'súngurunba', "! » ,
+í tá bɛ́ í bólo , í t' ò lában"]]
+>>> import pandas
+>>> print(pandas.DataFrame(output, columns=['left','center','right'])
+                                                left         center  \
+0                 y' à bìla sunguru dɔ́ dè kàn .       súnguru   
+1          dén nìn mìnɛ k' à ɲími , k' ò bɛ́na  súngurunninw   
+2                  kà tága só . kàbini ò dón ,     súngurunw   
+3          tága túlon kɛ́ dùgu wɛ́rɛ lá , sísan      súngurun   
+4          díya bɛ́ bán . 172 ) ní fɛ́n wɛ́rɛ má    súngurunya   
+5        bìlakoroba fàga jóona , à bólo nà dá      súngurun   
+6        bóloɲɛ fɔ́lɔ tɛ́ mɔ̀gɔɲumandun yé . 948 )    súngurunba   
+7  mùsokɔrɔnin yé wɔ̀lɔgɛn ná , ò y' à sɔ̀rɔ à    súngurunma   
+8          à ɲɛ́dɔn dè ? 1017 ) kámalenba dè bɛ́    súngurunba   
+9           2792 ) mɔ̀gɔ t' à fɔ́ wáliden mà « í    súngurunba   
 
                                           right  
-0                   позвали их на баррикады.     
-1             Ване" Льва Додина, без сомнения    
-2                    Ваня с осенними розами и    
-3                    Ваня" ― К. Раппопорт и С    
-4             Вася, съевший собаку на ремонте    
-5            Ваню")  . Автор уверяет, что его    
-6                , до 40 лет был тромбофлебит    
-7         …"   Дача― деревянная, но крепкая.     
-8  , правда, всегда говорили, что обязательно    
-9      ", пришлась к новогоднему столу ложкой    
-
+0        nìn tɛ́ fóyì kɛ́ , n' à wúlila à  
+1        lɔ̀gɔbɛ ò kàna sɔ̀n kà tága túlon  
+2   tɛ́ sɔ̀n kà bɔ́ ò ká dùgu lá kà tága  
+3       dɔw , ò bɛ́ dòn móbili lá kà tága  
+4    sà , síjɛtigiya nà à sà . 173 ) tìle  
+5     sín ná . 402 ) « ní Ála má ń sònya  
+6     bóloɲɛ fɔ́lɔ tɛ́ mɔ̀gɔɲumandun yé . 949  
+7  dè yé dɔ́ mìnɛ . 959 ) ò yé sìrakwàma  
+8    sìyɔrɔ dɔ́n . 1018 ) kànu bɛ́ npògotigi  
+9   ! » , í tá bɛ́ í bólo , í t' ò lában 
 ```
 
-###### pol_search function
+### pol_search (with tags)
 
 ```python
->>> print(lingcorpora.pol_search('tata'))
-                                left  center  \
-0      pieczołowicie, jak kiedyś mój   tata    
-1              ojcem ani wymówek, że   tata    
-2        że ten dzidziuś to wykapany   tata    
-3                    za sobą. - Czyj   tata    
-4                m mężczyznę. Był to   tata    
-5   tracić takich pieniędzy. Nianiek   tata    
-6                   .. - zdziwił się   tata    
-7                dziadków na wieś, a   tata    
-8                    . - Kto to jest   tata    
-9                            - No...   tata    
-
-                                 right  
-0    . Noemi przyrządziła pyszny obiad  
-1                  jest zbyt surowy, a  
-2                    ! - usłyszałam za  
-3                ? - nie zrozumiał mąż  
-4         Rafałka. Siedział na urlopie  
-5        Rafałka nie uznawał. Wiedział  
-6         Rafałka. Dwie mamy spojrzały  
-7   Rafałka zabrał rodzinę do stadniny  
-8        Rafałka? - zainteresowała się  
-9                     Rafałka. - Aha -  
-```
-
-```python
->>> print(lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
+>>> import pandas
+>>> output = lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
+>>> print(pandas.DataFrame(output, columns=['left','center','right'])
                                                 left       center  \
 0   . [.:interp] Aż [aż:qub] na [na:prep:acc] siłę...   powstanie    
 1    czy [czy:qub] taki [taki:adj:sg:nom:m3:pos] k...   powstanie    
@@ -147,140 +155,4 @@ All these functions are using the following arguments:
 12  . [.:interp]. [.:interp]. [.:interp] Zobacz [z...  
 13  ? [?:interp] Albo [albo:conj] za [za:prep:acc]...  
 14   na [na:prep:acc] deskach [deska:subst:pl:loc:...  
-```
-
-###### deu_search function
-
-```python
->>> print(lingcorpora.deu_search(query='Muther'))
-                                                left  center  \
-0       Da meint er schon etwas Großes zu thun, w...  Muther
-1                        Dann wird der Mann, der      Muther
-2       Und schon sehe ich den Besten, der seit l...  Muther
-3       Wer von den Lesern, die neulich den Schar...  Muther
-4       Vor wenigen Tagen hat nun auch der Kunstw...  Muther
-5       - Von der unter dem Titel Die Kunst " im ...  Muther
-6       Manet und sein Kreis wird von Julius Meye...  Muther
-7       Sie ist schwer gekränkt und klagt, man en...  Muther
-8       Zur Frühstückstafel beim Kaiser waren gel...  Muther
-9       Ferner führte er die Verteidigung in zahl...  Muther
-
-                                               right
-0       - in dessen in jungen Jahren geschaffenem...
-1       als Plagiator missachtet, zum - Plagiator...
-2                   , sich hier acclimatisieren.
-3       aus den Bildern eines jungen Herrn Schles...
-4                           , Ruskin »gefeiert«.
-5       herausgegebenen Sammlung illustrirter Mon...
-6       zum Gegenstande einer geistvollen Untersu...
-7      , die Künstlergenossenschaft schlecht beha...
-8       , Hauptleute Lannert , Nachtigall u. Majo...
-9       . Weitere viel besprochene Prozesse betra...
-```
-##### bam_search function
-'Simple search' which is used here gives various wordforms if a lemma was passed to the corpus.
-```python
->>> print(lingcorpora.bam_search(query='sungurun'))
-                                            left        center  \
-0                n y' a bila sunguru dɔ de kan .       sunguru   
-1      ale bɛ den nin minɛ k' a ɲimi , k' o bɛna  sungurunninw   
-2                           bɛ kasi ka taga so .     sungurunw   
-3       la ka taga tulon kɛ dugu wɛrɛ la , sisan      sungurun   
-4    ntɛnɛ sɔrɔ » . diya bɛ ban . ni fɛn wɛrɛ ma    sungurunya   
-5        ma bilakoroba faga joona , a bolo na da      sungurun   
-6        subaga boloɲɛ fɔlɔ tɛ mɔgɔɲumandun ye .    sungurunba   
-7      musokɔrɔnin ye wɔlɔgɛn na , o y' a sɔrɔ a    sungurunma   
-8    hali sa , i ma a ɲɛdɔn de ? kamalenba de bɛ    sungurunba   
-9  laminɛ kɔrɔ dɔn . mɔgɔ t' a fɔ waliden ma « i    sungurunba   
-
-                                         right  
-0       nin tɛ foyi kɛ , n' a wulila a bɛ taga  
-1      lɔgɔbɛ o kana sɔn ka taga tulon kɛ dugu  
-2      tɛ sɔn ka bɔ o ka dugu la ka taga tulon  
-3      dɔw , o bɛ don mobili la ka taga jamana  
-4       sa , sijɛtigiya na a sa . tile banbali  
-5      sin na . « ni Ala ma n sonya , ne si na  
-6  boloɲɛ fɔlɔ tɛ mɔgɔɲumandun ye . kuma kelen  
-7     de ye dɔ minɛ . o ye sirakwama ye , a tɛ  
-8     siyɔrɔ dɔn . kanu bɛ npogotigi deli cɛko  
-9      ! » , i ta bɛ i bolo , i t' o laban dɔn 
-```
-```python
->>> print(lingcorpora.bam_search(query='jamana',tag=True))
-                                               left  \
-0          sar' a ye . kɔnɔnin tagara ɲɔ kumu caman   
-1         sungurun dɔw , o bɛ don mobili la ka taga   
-2          a bila bi la , ja ye tiɲɛni min kɛ an ka   
-3  baganmarajamana ye . o kama , ni ja in ma kɛlɛ ,   
-4          k' o bila kɔlɔn kɔnɔ , a ko : « an taara   
-5       kɔrɔ a biɲɛ ye . daga bɛɛ ni a galama don .   
-6          , mɔgɔninfinya bɛnnen ka fisa a bɛɛ ye .   
-7           denjugu wolo , i ye ku bɔ , ni a fakura   
-8          a ma ko Nkalannin Cɛnnege . Nkalannin bɛ   
-9           marakaw tun bɛ tɛmɛ . fɛn o fɛn ni o bɛ   
-
-                                              center  \
-0  jamana (jamana|jamani; n; pays; jamana; jàman...   
-1  jamana (jamana|jamani; n; pays; jamana; jàman...   
-2  jamana (jamana|jamani; n; pays; jamana; jàman...   
-3  jamana (jamana|jamani; n; pays; jamana; jàman...   
-4  jamana (jamana|jamani; n; pays; jàmànà; jà...   
-5  jamani (jamani|jamana; n; pays; Jàmàni; jàm...   
-6  jamana (jamana|jamani; n; pays; Jàmàna; jàm...   
-7  jamana (jamana|jamani; n; pays; jàmàna; jàm...   
-8  jamani (jamani|jamana; n; pays; jamani; jàman...   
-9  jamani (jamani|jamana; n; pays; jamani; jàman...   
-
-                                          right  
-0        jan dɔ la . a nana min kɛ a ye den nin  
-1        wɛrɛ la ka dɔn kɛ yen ka sɔrɔ ka segin  
-2       kɔnɔ , bɛɛ b' a dɔn . ja in kɛra sababu  
-3                             tɛ se ka yiriwa .  
-4    kura la » . ntamanin kun-kelen-fɔ , a diya  
-5      bɛɛ ni a ka laada don . dugubila ka fisa  
-6      fila bɛ bɛn ni sodansow tɛ . masakɛ fila  
-7  fan o fan , i tɔgɔ bɛ yen . « ku tɛ banannin  
-8        min na sa , a bɛ yɔrɔ o yɔrɔ , ne kɔni  
-9    sɔtigɛ ni taama ye , u bɛ tɛmɛ-tɛmɛ siraba  
-```
-
-### zho_search
-This function has the following arguments:
-
-* query - a query to search by (regular expressions are supported, read instructions in the corpus (in Chinese))
-* corpus - 'xiandai' (modern Chinese, by default) or 'dugai' (ancient Chinese)
-* mode - 'simple' (default) or 'pattern' (they differ in syntax, read instructions in the corpus (in Chinese))
-* n_results - desired number of results (10 by default)
-* n_left - length of left context (in chars, max = 40, 30 by default)
-* n_right - length of right context (in chars, max = 40, 30 by default)
-* write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
-* kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
-
-##### zho_search function
-
-```python
->>> print(lingcorpora.zho_search('古代汉语'))
-                                                        left     center  \
-0  ...词汇语义学"不同。中国的词汇学，主要来源于中国传统的训诂学（    古代汉语   
-1  ...学科，是广义语言学的一个重要分支。音韵学也称声韵学，它是研究   古代汉语   
-2  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
-3  ...包括古音学、今音学、等韵学等学科。音韵学也称声韵学，它是研究   古代汉语   
-4  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
-5                             音韵学是研究   古代汉语   
-6  ...汉语各个历史时期声、韵、调系统及其发展规律的一门传统学问，是   古代汉语   
-7  ...统性，以便更好地掌握现代汉语的语音，有利于语言实践。我们研究   古代汉语   
-8  ...因为它是与汉语史有密切关系的一个语言学部门。必须先深入研究了   古代汉语   
-9  ...的人愈来愈多。为了继承祖国的历史遗产，我们不少人还要专门学习   古代汉语   
-
-                                                         right  
-0  词汇学）和现代汉语语法部分中的词法学（现代汉语词汇学）。当然，...  
-1  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
-2                          的一个重要组成部分。  
-3  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
-4  的一个重要组成部分。在研究方法上，传统音韵学主要使用的是系联法...  
-5  各个历史时期声、韵、调系统及其发展规律的一门传统学问，是古代汉...  
-6  的一个重要组成部分，就像现代汉语语音是现代汉语的重要组成部分一...  
-7  音韵学，因为它是与汉语史有密切关系的一个语言学部门。必须先深入...  
-8  音韵学，然后有可能研究汉语语音发展的历史。其作用是多方面的，我...  
-9  。本族语（包括古语）的学习，外语学习，以及外国人学汉语，做好翻...
 ```
