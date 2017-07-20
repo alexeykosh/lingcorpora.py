@@ -1,14 +1,9 @@
 from requests import post
 from bs4 import BeautifulSoup
-import pandas as pd
+import csv
 import sys
 import argparse
 import unittest
-
-
-def not_kwic(x):
-    return x[0] + x[1] + x[2]
-
 
 def get_page(query, corpus, n_results):
     params = {'corpus': corpus,
@@ -37,22 +32,33 @@ def get_results(page, write, kwic, query, n_results):
         center_list.append(center.text)
     for right in soup.select('.ddc-kwic-rs'):
         right_list.append(right.text)
-    left_list = [s.strip('\n') for s in left_list]
-    center_list = [s.strip('\n') for s in center_list]
-    right_list = [s.strip('\n') for s in right_list]
-    d = {"center": center_list, "left": left_list, "right": right_list}
-    s = pd.DataFrame(d, columns=["left", "center", "right"])
-    if kwic is False:
-        s = s.apply(not_kwic, axis=1)
-    else:
-        pass
-    if write is True:
-        file = open('table' + str(query) + str(n_results) + '.csv', 'w')
-        s.to_csv(file, encoding='utf-8', sep=';')
-        file.close()
-    else:
-        pass
+    s = [[left_list[i].strip(),center_list[i].strip(),right_list[i].strip()]
+               for i in range(len(left_list))]
+    if not s:
+        print ('deu_search: nothing found for "%s"' % (query))    
+    if not kwic:
+        s = [[' '.join(x)] for x in s]
+    if write:
+        if not kwic:
+            cols = ['index','results']
+        else:
+            cols = ['index','left','center','right']
+        write_results(query,s,cols)
     return s
+
+
+def write_results(query,results,cols):
+    """
+    write csv
+    """
+    not_allowed = '/\\?%*:|"<>'
+    query = ''.join([x if x not in not_allowed else '_na_' for x in query])
+    with open('deu_search_' + str(query) + '.csv','w',encoding='utf-8-sig') as f:
+        writer = csv.writer(f, delimiter=';', quotechar='"',
+                            quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+        writer.writerow(cols)
+        for i,x in enumerate(results):
+            writer.writerow([i]+x)
 
 
 class TestMethods(unittest.TestCase):
@@ -60,12 +66,8 @@ class TestMethods(unittest.TestCase):
         self.assertEqual(('<Response [200]>'), str(get_page(query='bezug', n_results='100', corpus='kern')))
 
     def test2(self):
-        self.assertEqual(("<class 'pandas.core.frame.DataFrame'>"), str(type(get_results(page=get_page(query='bezug',
-                                                                                                       corpus='kern',
-                                                                                                       n_results='100'),
-                                                                                         write=False, kwic=True,
-                                                                                         query='bezug', n_results='100')
-                                                                             )))
+        self.assertIs(list, type(get_results(page=get_page(query='bezug',corpus='kern',n_results='100'),
+                                             write=False, kwic=True,query='bezug', n_results='100')))
 
 
 def main(query, corpus='kern', n_results=10, write=False, kwic=True):
@@ -84,4 +86,4 @@ if __name__ == '__main__':
     parser.add_argument('write', type=int)
     parser.add_argument('kwic', type=int)
     args = parser.parse_args(args)
-    main(corpus, query, n_results, write, kwic)
+    main(query, corpus, n_results, write, kwic)
