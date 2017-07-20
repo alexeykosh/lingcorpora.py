@@ -33,25 +33,25 @@ def parse_page(page,first=False):
     return res
 
 
-def parse_results(results,tags):
+def parse_results(results,tags,corpus):
     """
     find hit and its left and right contexts
     in the extracted row of table
     """
     parsed_results = []
     for i in range(len(results)):
-        lc = results[i].select('td.lc span.nott')[0].text.strip()
+        lc = ' '.join([x.text.strip() for x in results[i].select('td.lc span.nott')])
         kws = results[i].select('td.kw div.token')
         final_kws = []
         for kw in kws:
             tag = kw.select('div.aline')
             tag = '; '.join([x.text.strip() for x in tag if x.text.strip()])
-            if tags and tag:
+            if tags and tag and corpus == 'corbama-net-tonal':
                 text_kw = kw.select('span.nott')[0].text.strip() +' ('+tag+')'
             else:
                 text_kw = kw.select('span.nott')[0].text.strip()
             final_kws.append(text_kw)
-        rc = results[i].select('td.rc span.nott')[0].text.strip()
+        rc = ' '.join([x.text.strip() for x in results[i].select('td.rc span.nott')])
         parsed_results.append([lc,' '.join(final_kws),rc])
     return parsed_results
 
@@ -66,12 +66,12 @@ def download_all(query,num_res,corpus,tags):
         first,total = parse_page(get_results(query,corpus,1),first=True)
     except:
         return []
-    results = parse_results(first,tags)
+    results = parse_results(first,tags,corpus)
     final_total = min(total,num_res)
     pages_to_get = len(list(range(per_page+1,final_total+1,per_page)))
     for i in range(pages_to_get):
         one_page = parse_page(get_results(query,corpus,i))
-        one_res = parse_results(one_page,tags)
+        one_res = parse_results(one_page,tags,corpus)
         results += one_res
     if len(results) > final_total:
         results = results[:final_total]
