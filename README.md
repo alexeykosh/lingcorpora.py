@@ -54,7 +54,7 @@ The output of functions is a list of occurences, which are in turn are also list
 All these functions are using the following arguments:
 * query – the actual query (wordform, or regular expression, if corpus supports it)
 * corpus - the subcorpus where you want to search (it differs from corpora to corpora)
-* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags where relevant
+* tag - ```True``` or ```False ``` by default it is ```False```, when it is ```True```, it shows you morphological tags where they are present
 * n_results - the actual quantity of the results (by default it is 10)
 * kwic - ```True``` or ```False ```, shows in kwic format (by default it is ```True```)
 * write - ```True``` or ```False ```, writes results to an csv file (by default it is ```False```)
@@ -90,7 +90,7 @@ ma'], ['à ɲɛ́dɔn dè ? 1017 ) kámalenba dè bɛ́', 'súngurunba', 's
 kànu bɛ́ npògotigi'], ["2792 ) mɔ̀gɔ t' à fɔ́ wáliden mà « í", 'súngurunba', "! » ,
 í tá bɛ́ í bólo , í t' ò lában"]]
 >>> import pandas
->>> print(pandas.DataFrame(output, columns=['left','center','right'])
+>>> print(pandas.DataFrame(output, columns=['left','center','right']))
                                                 left         center  \
 0                 y' à bìla sunguru dɔ́ dè kàn .       súnguru   
 1          dén nìn mìnɛ k' à ɲími , k' ò bɛ́na  súngurunninw   
@@ -121,7 +121,7 @@ í tá bɛ́ í bólo , í t' ò lában"]]
 ```python
 >>> import pandas
 >>> output = lingcorpora.pl_search('powstanie' , tag=True, n_results=15))
->>> print(pandas.DataFrame(output, columns=['left','center','right'])
+>>> print(pandas.DataFrame(output, columns=['left','center','right']))
                                                 left       center  \
 0   . [.:interp] Aż [aż:qub] na [na:prep:acc] siłę...   powstanie    
 1    czy [czy:qub] taki [taki:adj:sg:nom:m3:pos] k...   powstanie    
