@@ -5,7 +5,7 @@ import argparse
 from html import unescape
 import csv
 import unittest
-
+import os
 
 def get_results(query,corpus,page):
     """
@@ -84,7 +84,7 @@ def write_results(query,results,cols):
     """
     not_allowed = '/\\?%*:|"<>'
     query = ''.join([x if x not in not_allowed else '_na_' for x in query])
-    with open('bam_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
+    with open('bam_search_'+query+'.csv','w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(cols)
@@ -127,16 +127,21 @@ class TestMethods(unittest.TestCase):
         self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
 
     def test2(self):
-        self.assertFalse(download_all(query='gfjsjfjsdl',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+        r = main(query='kɔ́nɔ',corpus='corbama-net-tonal',tag=True,write=True)
+        filelist = os.listdir()
+        self.assertIn('bam_search_kɔ́nɔ.csv',filelist)
+        os.remove('bam_search_kɔ́nɔ.csv')
 
+        
 if __name__ == '__main__':
     unittest.main()
     args = sys.argv[1:]
     parser = argparse.ArgumentParser()
     parser.add_argument('query', type=str)
     parser.add_argument('corpus', type=str)
-    parser.add_argument('tag', type=int)
-    parser.add_argument('kwic', type=int)
-    parser.add_argument('write', type=int)
+    parser.add_argument('tag', type=bool)
+    parser.add_argument('n_results', type=int)
+    parser.add_argument('kwic', type=bool)
+    parser.add_argument('write', type=bool)
     args = parser.parse_args(args)
-    main(query, corpus, tag, n_results, kwic, write)
+    main(**vars(args))

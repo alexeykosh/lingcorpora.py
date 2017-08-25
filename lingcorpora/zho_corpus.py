@@ -89,7 +89,7 @@ def write_results(query,results,cols):
 
     
 def main(query,corpus='xiandai',mode='simple',n_results=10,
-         n_left=30,n_right=30,write=False,kwic=True):
+         n_left=30,n_right=30,kwic=True,write=False):
     """
     main function
     
@@ -130,6 +130,7 @@ class TestMethods(unittest.TestCase):
     def test2(self):
         self.assertIs(list, type(download_all(query='古代汉',results_wanted=10,n_left=30,
                                               n_right=30,lang='xiandai',mode='simple')))
+       
 
 if __name__ == '__main__':
     unittest.main()
@@ -141,7 +142,7 @@ if __name__ == '__main__':
     parser.add_argument('n_results', type=int)
     parser.add_argument('n_left', type=int)
     parser.add_argument('n_right', type=int)
-    parser.add_argument('write', type=int)
-    parser.add_argument('kwic', type=int)
+    parser.add_argument('kwic', type=bool)
+    parser.add_argument('write', type=bool)
     args = parser.parse_args(args)
-    main(query, corpus, mode, n_results, n_left, n_right, write, kwic)
+    main(**vars(args))

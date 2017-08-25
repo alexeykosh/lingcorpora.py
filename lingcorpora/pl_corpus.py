@@ -4,7 +4,7 @@ import csv
 import sys
 import argparse
 import unittest
-
+import os
 
 def get_results(query, corpus, n_results, tag):  # the request part: here we are using request package
     if tag is True:
@@ -79,12 +79,17 @@ class TestMethods(unittest.TestCase):
         self.assertEqual(('<Response [200]>'), str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
 
     def test2(self):
-        self.assertIs(list, type(kwic_results(page=get_results(query='tata',
-                                                               corpus='nkjp300', n_results=10, tag=True),
+        self.assertIs(list, type(kwic_results(page=get_results(query='tata', corpus='nkjp300', n_results=10, tag=True),
                                                                write=False, kwic=True, query='tata')))
 
+    def test3(self):
+        r = main('pies',kwic=False,write=True)
+        filelist = os.listdir()
+        self.assertIn('pol_search_pies.csv',filelist)
+        os.remove('pol_search_pies.csv')
 
-def main(query, corpus='nkjp300', n_results=10, write=False, kwic=True, tag=False):
+
+def main(query, corpus='nkjp300', tag=False, n_results=10, kwic=True, write=False):
     page = get_results(query, corpus, n_results, tag)
     results = kwic_results(page, write, kwic, query)
     return results
@@ -94,13 +99,13 @@ if __name__ == '__main__':
     unittest.main()
     args = sys.argv[1:]
     parser = argparse.ArgumentParser()
-    parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
+    parser.add_argument('corpus', type=str)
+    parser.add_argument('tag', type=bool)
     parser.add_argument('n_results', type=int)
-    parser.add_argument('write', type=int)
-    parser.add_argument('kwic', type=int)
-    parser.add_argument('tag', type=int)
+    parser.add_argument('kwic', type=bool)
+    parser.add_argument('write', type=bool)
     args = parser.parse_args(args)
-    main(query, corpus, n_results, write, kwic, tag)
+    main(**vars(args))
 
 

@@ -4,6 +4,7 @@ import csv
 import sys
 import argparse
 import unittest
+import os
 
 def get_page(query, corpus, n_results):
     params = {'corpus': corpus,
@@ -69,8 +70,14 @@ class TestMethods(unittest.TestCase):
         self.assertIs(list, type(get_results(page=get_page(query='bezug',corpus='kern',n_results='100'),
                                              write=False, kwic=True,query='bezug', n_results='100')))
 
+    def test3(self):
+        r = main('Mutter',kwic=False,write=True)
+        filelist = os.listdir()
+        self.assertIn('deu_search_Mutter.csv',filelist)
+        os.remove('deu_search_Mutter.csv')
 
-def main(query, corpus='kern', n_results=10, write=False, kwic=True):
+
+def main(query, corpus='kern', n_results=10, kwic=True, write=False):
     page = get_page(query, corpus, n_results)
     results = get_results(page, write, kwic, query, n_results)
     return results
@@ -83,7 +90,7 @@ if __name__ == '__main__':
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
     parser.add_argument('n_results', type=int)
-    parser.add_argument('write', type=int)
-    parser.add_argument('kwic', type=int)
+    parser.add_argument('kwic', type=bool)
+    parser.add_argument('write', type=bool)
     args = parser.parse_args(args)
-    main(query, corpus, n_results, write, kwic)
+    main(**vars(args))

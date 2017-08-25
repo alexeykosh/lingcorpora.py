@@ -6,6 +6,7 @@ import unittest
 import argparse
 from html import unescape
 from copy import deepcopy
+import os
    
         
 def get_results(query,corpus,page):
@@ -80,7 +81,7 @@ def write_results(query,results,cols):
     """
     not_allowed = '/\\?%*:|"<>'
     query = ''.join([x if x not in not_allowed else '_na_' for x in query])
-    with open('emk_results_'+query+'.csv','w',encoding='utf-8-sig') as f:
+    with open('emk_search_'+query+'.csv','w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(cols)
@@ -123,7 +124,13 @@ class TestMethods(unittest.TestCase):
         self.assertTrue(get_results(query='tuma',corpus='cormani-brut-lat',page=1))
 
     def test2(self):
-        self.assertIs(list,type(download_all(query='ߛߐ߬ߘߐ߲߬',num_res=10,corpus='cormani-brut-nko')))
+        self.assertIs(list,type(main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko')))
+    
+    def test3(self):
+        r = main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko',write=True,kwic=False)
+        filelist = os.listdir()
+        self.assertIn('emk_search_ߛߐ߬ߘߐ߲߬.csv',filelist)
+        os.remove('emk_search_ߛߐ߬ߘߐ߲߬.csv')
 
     
 
@@ -133,8 +140,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('query', type=str)
     parser.add_argument('corpus', type=str)
-    parser.add_argument('tag', type=int)
-    parser.add_argument('kwic', type=int)
-    parser.add_argument('write', type=int)
+    parser.add_argument('tag', type=bool)
+    parser.add_argument('n_results', type=int)
+    parser.add_argument('kwic', type=bool)
+    parser.add_argument('write', type=bool)
     args = parser.parse_args(args)
-    main(query, corpus, tag, n_results, kwic, write)
+    main(**vars(args))
