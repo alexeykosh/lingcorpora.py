@@ -77,7 +77,7 @@ class TestMethods(unittest.TestCase):
         os.remove('deu_search_Mutter.csv')
 
 
-def main(query, corpus='kern', n_results=10, kwic=True, write=False):
+def main(query, corpus='kern', tag=False, n_results=10, kwic=True, write=False):
     page = get_page(query, corpus, n_results)
     results = get_results(page, write, kwic, query, n_results)
     return results
@@ -89,6 +89,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
+    parser.add_argument('tag', type=bool)
     parser.add_argument('n_results', type=int)
     parser.add_argument('kwic', type=bool)
     parser.add_argument('write', type=bool)
