@@ -1,12 +1,14 @@
 from requests import get
 from bs4 import BeautifulSoup
+import csv
 import sys
+import unittest
 import argparse
 from html import unescape
-import csv
-import unittest
+from copy import deepcopy
 import os
-
+   
+        
 def get_results(query,corpus,page):
     """
     create a query url and get results for one page
@@ -16,7 +18,7 @@ def get_results(query,corpus,page):
         "iquery": query,
         "fromp": page
     }
-    r = get('http://maslinsky.spb.ru/bonito/run.cgi/first',params)
+    r = get('http://maslinsky.spb.ru/emk/run.cgi/first',params)
     return unescape(r.text)
 
 
@@ -33,45 +35,40 @@ def parse_page(page,first=False):
     return res
 
 
-def parse_results(results,tags,corpus):
+def parse_results(results,query):
     """
     find hit and its left and right contexts
     in the extracted row of table
     """
     parsed_results = []
     for i in range(len(results)):
-        lc = ' '.join([x.text.strip() for x in results[i].select('td.lc span.nott')])
-        kws = results[i].select('td.kw div.token')
-        final_kws = []
-        for kw in kws:
-            tag = kw.select('div.aline')
-            tag = '; '.join([x.text.strip() for x in tag if x.text.strip()])
-            if tags and tag and corpus == 'corbama-net-tonal':
-                text_kw = kw.select('span.nott')[0].text.strip() +' ('+tag+')'
-            else:
-                text_kw = kw.select('span.nott')[0].text.strip()
-            final_kws.append(text_kw)
-        rc = ' '.join([x.text.strip() for x in results[i].select('td.rc span.nott')])
-        parsed_results.append([lc,' '.join(final_kws),rc])
+        lc = ' '.join([x.text.strip()
+                            for x in results[i].select('td.lc span.nott')])
+        kw = results[i].select('td.kw span.nott')[0].text.strip()
+        if kw != query:
+            kw = query + ' (' + kw + ')'
+        rc = ' '.join([x.text.strip()
+                            for x in results[i].select('td.rc span.nott')])
+        parsed_results.append([lc,kw,rc]) 
     return parsed_results
 
 
-def download_all(query,num_res,corpus,tags):
+def download_all(query,num_res,corpus):
     """
     get information and hits from first page and iterate until
-    all hits are collected or the maximum set by user is achieved
+    all hits are collected or maximum set by user is achieved
     """
     per_page = 20
     try:
         first,total = parse_page(get_results(query,corpus,1),first=True)
     except:
         return []
-    results = parse_results(first,tags,corpus)
+    results = parse_results(first,query)
     final_total = min(total,num_res)
     pages_to_get = len(list(range(per_page+1,final_total+1,per_page)))
     for i in range(pages_to_get):
         one_page = parse_page(get_results(query,corpus,i))
-        one_res = parse_results(one_page,tags,corpus)
+        one_res = parse_results(one_page,query)
         results += one_res
     if len(results) > final_total:
         results = results[:final_total]
@@ -84,7 +81,7 @@ def write_results(query,results,cols):
     """
     not_allowed = '/\\?%*:|"<>'
     query = ''.join([x if x not in not_allowed else '_na_' for x in query])
-    with open('bam_search_'+query+'.csv','w',encoding='utf-8-sig') as f:
+    with open('emk_search_'+query+'.csv','w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(cols)
@@ -92,15 +89,15 @@ def write_results(query,results,cols):
             writer.writerow([i]+x)
 
 
-def main(query,corpus='corbama-net-non-tonal',tag=False,
+def main(query,corpus='cormani-brut-lat',tag=False,
          n_results=10,kwic=True,write=False):
     """
     main function
     
     Args:
         query: a query to search by
-        corpus: a subcorpus ('corbama-net-non-tonal' by default)
-        tag: whether to provide grammatical information 
+        corpus: a subcorpus ('cormani-brut-lat' by default)
+        tag: whether to provide grammatical information (irrelevant here)
         n_results: desired number of results (10 by default)
         kwic: whether to write into file in kwic format or not
         write: whether to write into csv file or not
@@ -109,9 +106,9 @@ def main(query,corpus='corbama-net-non-tonal',tag=False,
         list of row lists and csv file is written if specified
         
     """
-    results = download_all(query,n_results,corpus,tag)
+    results = download_all(query,n_results,corpus)
     if not results:
-        print ('bam_search: nothing found for "%s"' % (query))
+        print ('emk_search: nothing found for "%s"' % (query))
     if kwic:
         cols = ['index','left','center','right']
     else:
@@ -124,15 +121,19 @@ def main(query,corpus='corbama-net-non-tonal',tag=False,
 
 class TestMethods(unittest.TestCase):
     def test1(self):
-        self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+        self.assertTrue(get_results(query='tuma',corpus='cormani-brut-lat',page=1))
 
     def test2(self):
-        r = main(query='kɔ́nɔ',corpus='corbama-net-tonal',tag=True,write=True)
+        self.assertIs(list,type(main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko')))
+    
+    def test3(self):
+        r = main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko',write=True,kwic=False)
         filelist = os.listdir()
-        self.assertIn('bam_search_kɔ́nɔ.csv',filelist)
-        os.remove('bam_search_kɔ́nɔ.csv')
+        self.assertIn('emk_search_ߛߐ߬ߘߐ߲߬.csv',filelist)
+        os.remove('emk_search_ߛߐ߬ߘߐ߲߬.csv')
 
-        
+    
+
 if __name__ == '__main__':
     unittest.main()
     args = sys.argv[1:]
