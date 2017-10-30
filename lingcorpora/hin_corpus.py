@@ -54,10 +54,8 @@ def write_results(query, results, cols):
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(cols)
-        i = 1
-        for x in results:
+        for i, x in enumerate(results, start=1):
             writer.writerow([i]+x)
-            i += 1
 
 
 def main(query, n_results, start, kwic=True, write=False):
