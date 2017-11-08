@@ -6,6 +6,7 @@ import argparse
 import unittest
 import os
 
+
 def get_results(query, corpus, n_results, tag):  # the request part: here we are using request package
     if tag is True:
         tag_variable = 'slt'
@@ -57,26 +58,27 @@ def kwic_results(page, write, kwic, query):# results parse
             cols = ['index','results']
         else:
             cols = ['index','left','center','right']
-        write_results(query,s,cols)
+        write_results(query, s, cols)
     return s
 
-def write_results(query,results,cols):
+
+def write_results(query, results, cols):
     """
     write csv
     """
     not_allowed = '/\\?%*:|"<>'
     query = ''.join([x if x not in not_allowed else '_na_' for x in query])
-    with open('pol_search_' + str(query) + '.csv','w',encoding='utf-8-sig') as f:
+    with open('pol_search_' + str(query) + '.csv', 'w',encoding='utf-8-sig') as f:
         writer = csv.writer(f, delimiter=';', quotechar='"',
                             quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         writer.writerow(cols)
-        for i,x in enumerate(results):
+        for i, x in enumerate(results):
             writer.writerow([i]+x)
 
 
 class TestMethods(unittest.TestCase):
     def test1(self):
-        self.assertEqual(('<Response [200]>'), str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
+        self.assertEqual('<Response [200]>', str(get_results(query='tata', corpus='nkjp300', n_results=10, tag=True)))
 
     def test2(self):
         self.assertIs(list, type(kwic_results(page=get_results(query='tata', corpus='nkjp300', n_results=10, tag=True),
