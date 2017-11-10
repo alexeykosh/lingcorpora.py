@@ -28,6 +28,7 @@ class QueryArgs:
 class HtmlPage:
 
     def __init__(self):
+        # QueryArgs.__init__(self, query, corpus=corpus, )
 
         if args.tag is True:
             tag_variable = 'slt'
@@ -71,9 +72,11 @@ class HtmlPage:
 
     def post_and_get(self):
 
-        """
-
-        @return:
+        """Post cookies to nkjp.pl and get results
+        This method posts cokiies usind genereated user agent (which contains
+        user custom session id) and then gets the html page, containing the
+        query results
+        :return: html page, contatining results table
         """
         user_agent = self.create_user_agent()
 
@@ -96,7 +99,7 @@ class ResultTable(HtmlPage):
         This method extracts left and right parts from table, then cleans the
         results
 
-        @return: list of lists, which contains all rows
+        :return: list of lists, which contains all rows
         """
         left_list = []
         right_list = []
@@ -126,7 +129,7 @@ class ResultTable(HtmlPage):
         """Deal with user arguments
         This function transform list of all rows due to user preferences
 
-        @return: user-wanted list of lists, which contains all rows
+        :return: user-wanted list of lists, which contains all rows
         """
 
         all_rows = self.get_lr_parts()
@@ -145,6 +148,16 @@ class CsvTable:
     @staticmethod
     def write_results(query, results, cols):
 
+        """Write search results to .csv file
+        This is a static method, which offers the opportynity to save the list
+        of list containing the results of search to .csv file
+
+        :param query: desired query
+        :param results: list of lists
+        :param cols: names of columns (depends on kwic argument of the main
+        function)
+        """
+
         not_allowed = '/\\?%*:|"<>'
 
         query = ''.join([x if x not in not_allowed else '_na_' for x in query])
@@ -160,6 +173,11 @@ class CsvTable:
 
     def write_to_csv(self):
 
+        """Write results to csv
+        This method uses the static method write_results to write the list of
+        lists of results to a .csv file
+
+        """
         if args.kwic:
             cols = ['index','left','center','right']
         else:
@@ -169,9 +187,9 @@ class CsvTable:
 
 
 if __name__ == '__main__':
-    args = QueryArgs(query='Tata', write=True)
+    args = QueryArgs(query='tata', write=True, n_results=10)
 
     if args.write:
         CsvTable().write_to_csv()
     else:
-        ResultTable().get_lr_parts()
+        ResultTable().deal_with_args()
