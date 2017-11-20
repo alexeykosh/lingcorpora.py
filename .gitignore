@@ -1,12 +1,6 @@
-*.iml
-
 *.idea
 
 *.pyc
-
-*.pyc
-
-*.xml
 
 *.DS_Store
 
@@ -17,6 +11,8 @@ try.py
 *.cfg
 
 czh_corpus.py
+
+ava_corpus.py
 
 .coverage
 
