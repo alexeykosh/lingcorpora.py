@@ -3,7 +3,8 @@ from params_container import Container
 import csv
 
 
-functions = {'bam': bam_corpus}
+functions = {'bam': bam_corpus,
+             'emk': emk_corpus}
 
 
 def singleton(cls):
