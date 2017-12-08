@@ -4,7 +4,8 @@ import csv
 
 
 functions = {'bam': bam_corpus,
-             'emk': emk_corpus}
+             'emk': emk_corpus,
+             'zho': zho_corpus}
 
 
 def singleton(cls):
@@ -62,6 +63,6 @@ class Query(Container):
                                 quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
             writer.writerow(self.cols)
             for i,x in enumerate(self.results):
-                writer.writerow([i]+x)
+                writer.writerow([i+1]+x)
 
 

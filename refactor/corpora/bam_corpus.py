@@ -75,7 +75,7 @@ class Downloader(Container):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.per_page = 20
-        if self.subcorpus == None:
+        if self.subcorpus is None:
             self.subcorpus = 'corbama-net-non-tonal'
     
     def download_all(self):
