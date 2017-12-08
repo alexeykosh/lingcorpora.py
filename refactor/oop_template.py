@@ -1,4 +1,4 @@
-from corpora import bam_corpus
+from corpora import *
 from params_container import Container
 import csv
 
