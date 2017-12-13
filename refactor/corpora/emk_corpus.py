@@ -1,32 +1,32 @@
-from params_container import Container
 from requests import get
 from bs4 import BeautifulSoup
+import csv
+from params_container import Container
 import sys
+import unittest
 import argparse
 from html import unescape
-import csv
-import unittest
 import os
+   
 
 class PageParser:
-    def __init__(self,query,subcorpus,tag):
+    def __init__(self,query,subcorpus):
         self.query = query
-        self.tag = tag
         self.subcorpus = subcorpus
         self.page = None
         self.occurrences = 0
         self.pagenum = 1
-        
+
     def get_results(self):
+        """
+        create a query url and get results for one page
+        """
         params = {
             "corpname": self.subcorpus,
             "iquery": self.query,
             "fromp": self.pagenum
         }
-        """
-        create a query url and get results for one page
-        """
-        r = get('http://maslinsky.spb.ru/bonito/run.cgi/first',params)
+        r = get('http://maslinsky.spb.ru/emk/run.cgi/first',params)
         return unescape(r.text)
 
 
@@ -49,19 +49,14 @@ class PageParser:
         """
         parsed_results = []
         for i in range(len(results)):
-            lc = ' '.join([x.text.strip() for x in results[i].select('td.lc span.nott')])
-            kws = results[i].select('td.kw div.token')
-            final_kws = []
-            for kw in kws:
-                tag = kw.select('div.aline')
-                tag = '; '.join([x.text.strip() for x in tag if x.text.strip()])
-                if self.tag and tag and self.subcorpus == 'corbama-net-tonal':
-                    text_kw = kw.select('span.nott')[0].text.strip() +' ('+tag+')'
-                else:
-                    text_kw = kw.select('span.nott')[0].text.strip()
-                final_kws.append(text_kw)
-            rc = ' '.join([x.text.strip() for x in results[i].select('td.rc span.nott')])
-            parsed_results.append([lc,' '.join(final_kws),rc])
+            lc = ' '.join([x.text.strip()
+                                for x in results[i].select('td.lc span.nott')])
+            kw = results[i].select('td.kw span.nott')[0].text.strip()
+            if kw != self.query:
+                kw = query + ' (' + kw + ')'
+            rc = ' '.join([x.text.strip()
+                                for x in results[i].select('td.rc span.nott')])
+            parsed_results.append([lc,kw,rc]) 
         return parsed_results
 
     def extract_results(self):
@@ -69,21 +64,21 @@ class PageParser:
         rows = self.parse_page()
         parsed_results = self.parse_results(rows)
         return parsed_results
-
+    
 
 class Downloader(Container):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.per_page = 20
         if self.subcorpus is None:
-            self.subcorpus = 'corbama-net-non-tonal'
-    
+            self.subcorpus = 'cormani-brut-lat'
+            
     def download_all(self):
         """
         get information and hits from first page and iterate until
-        all hits are collected or the maximum set by user is achieved
+        all hits are collected or maximum set by user is achieved
         """
-        parser = PageParser(self.query,self.subcorpus,self.tag)
+        parser = PageParser(self.query,self.subcorpus)
         try:
             first = parser.extract_results()
         except:
@@ -101,15 +96,19 @@ class Downloader(Container):
 #rewrite
 class TestMethods(unittest.TestCase):
     def test1(self):
-        self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+        self.assertTrue(get_results(query='tuma',corpus='cormani-brut-lat',page=1))
 
     def test2(self):
-        r = main(query='kɔ́nɔ',corpus='corbama-net-tonal',tag=True,write=True)
+        self.assertIs(list,type(main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko')))
+    
+    def test3(self):
+        r = main(query='ߛߐ߬ߘߐ߲߬',corpus='cormani-brut-nko',write=True,kwic=False)
         filelist = os.listdir()
-        self.assertIn('bam_search_kɔ́nɔ.csv',filelist)
-        os.remove('bam_search_kɔ́nɔ.csv')
+        self.assertIn('emk_search_ߛߐ߬ߘߐ߲߬.csv',filelist)
+        os.remove('emk_search_ߛߐ߬ߘߐ߲߬.csv')
 
-        
+    
+
 if __name__ == '__main__':
     unittest.main()
     args = sys.argv[1:]
