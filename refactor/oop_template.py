@@ -5,7 +5,10 @@ import csv
 
 functions = {'bam': bam_corpus,
              'emk': emk_corpus,
-             'zho': zho_corpus}
+             'zho': zho_corpus,
+             'kat': kat_corpus,
+             'est': est_corpus,
+             'dan': dan_corpus}
 
 
 def singleton(cls):
