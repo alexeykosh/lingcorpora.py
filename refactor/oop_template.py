@@ -8,7 +8,10 @@ functions = {'bam': bam_corpus,
              'zho': zho_corpus,
              'kat': kat_corpus,
              'est': est_corpus,
-             'dan': dan_corpus}
+             'dan': dan_corpus,
+             'hin': hin_corpus,
+             'crh': crh_corpus,
+             'slk': slk_corpus}
 
 
 def singleton(cls):
