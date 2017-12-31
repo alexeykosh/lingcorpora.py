@@ -8,6 +8,7 @@ import csv
 import unittest
 import os
 
+
 class PageParser:
     def __init__(self,query,subcorpus,tag):
         self.query = query
@@ -40,7 +41,6 @@ class PageParser:
         if self.pagenum == 1:
             self.occurrences = int(soup.select('strong[data-num]')[0].text)
         return res
-
 
     def parse_results(self,results):
         """
@@ -98,16 +98,16 @@ class Downloader(Container):
             results = results[:final_total]
         return results
 
-#rewrite
-class TestMethods(unittest.TestCase):
-    def test1(self):
-        self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
-
-    def test2(self):
-        r = main(query='kɔ́nɔ',corpus='corbama-net-tonal',tag=True,write=True)
-        filelist = os.listdir()
-        self.assertIn('bam_search_kɔ́nɔ.csv',filelist)
-        os.remove('bam_search_kɔ́nɔ.csv')
+# #rewrite
+# class TestMethods(unittest.TestCase):
+#     def test1(self):
+#         self.assertTrue(download_all(query='jamana',num_res=10,corpus='corbama-net-non-tonal',tags=False))
+#
+#     def test2(self):
+#         r = main(query='kɔ́nɔ',corpus='corbama-net-tonal',tag=True,write=True)
+#         filelist = os.listdir()
+#         self.assertIn('bam_search_kɔ́nɔ.csv',filelist)
+#         os.remove('bam_search_kɔ́nɔ.csv')
 
         
 if __name__ == '__main__':
