@@ -1,7 +1,9 @@
 class Container:
     def __init__(self,query,subcorpus=None,tag=False,nLeft=None,
                  nRight=None,mode=None,numResults=100,kwic=True,
-                 session=None,language=None,start=0):
+                 session=None, language=None, targetLanguage=None, start=0):
+        self.language = language
+        self.targetLanguage = targetLanguage
         self.query = query
         self.subcorpus = subcorpus
         self.tag = tag
