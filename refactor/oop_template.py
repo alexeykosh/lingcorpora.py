@@ -13,7 +13,7 @@ functions = {'bam': bam_corpus,
              'crh': crh_corpus,
              'slk': slk_corpus,
              'deu': deu_corpus,
-             'ru_pol': ru_pol_corpus}
+             'ru_pl': ru_pl_corpus}
 
 
 def singleton(cls):
