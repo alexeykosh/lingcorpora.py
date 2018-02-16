@@ -9,11 +9,16 @@ class PageParser:
         self.page = None
         self.subcorpus = subcorpus
         self.numResults = numResults
-        self.targetLanguage = targetLanguage
+        if targetLanguage is None:
+            self.targetLanguage = 'pl'
+        else:
+            self.targetLanguage = targetLanguage
+
         if self.targetLanguage is 'pl':
             self.language = 'ru'
         else:
             self.language = 'pl'
+
 
     def get_page(self):
 
@@ -51,11 +56,8 @@ class Downloader(Container):
             self.subcorpus = ['1', '2', '3', '4', '5', '6', 'russian', 'foreign', 'polish']
 
     def download_all(self):
-        parser = PageParser(self.query, self.numResults, self.language, self.targetLanguage)
-        try:
-            return parser.extract_results()
-        except:
-            return []
+        parser = PageParser(self.query, self.subcorpus, self.numResults, self.targetLanguage)
+        return parser.extract_results()
 
 
 if __name__ == '__main__':
@@ -64,7 +66,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('corpus', type=str)
     parser.add_argument('query', type=str)
-    parser.add_argument('n_results', type=int)
+    parser.add_argument('subcorpus', type=str)
+    parser.add_argument('numResults', type=int)
     parser.add_argument('targetLanguage', type=int)
     parser.add_argument('kwic', type=bool)
     parser.add_argument('write', type=bool)
