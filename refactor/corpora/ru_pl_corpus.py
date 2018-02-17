@@ -10,7 +10,7 @@ class PageParser:
         self.subcorpus = subcorpus
         self.numResults = numResults
         if targetLanguage is None:
-            self.targetLanguage = 'pl'
+            raise ValueError('Please, pass the targetLanguage argument. It migth be \'ru\' or \'pl\'.')
         else:
             self.targetLanguage = targetLanguage
 
@@ -57,7 +57,10 @@ class Downloader(Container):
 
     def download_all(self):
         parser = PageParser(self.query, self.subcorpus, self.numResults, self.targetLanguage)
-        return parser.extract_results()
+        try:
+            return parser.extract_results()
+        except:
+            return []
 
 
 if __name__ == '__main__':
