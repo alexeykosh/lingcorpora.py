@@ -148,7 +148,7 @@ class PageParser:
         self.__stop_flag = False
         self.__c_page = 0
         self.__targets_seen = 0
-        self.__sleep_time = 5
+        self.__sleep_time = 1
         self.__sleep_each = 5
         
         if self.subcorpus is None:
