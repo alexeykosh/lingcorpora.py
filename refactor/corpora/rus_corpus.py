@@ -6,6 +6,7 @@ from lxml import etree
 import urllib.request as ur
 from time import sleep
 from collections import Iterable
+from params_container import Container
 
 
 class Downloader(Container):
