@@ -128,47 +128,6 @@ class Target:
                 for i, idx in enumerate(self.idxs)]
 
     
-def parse_docs(docs, analyses=True):
-    """
-    a generator over documents tree
-    """
-    # iter over docs
-    for i, doc in enumerate(docs):
-        _meta = doc.attrib['title']
-        # iter over examples in *doc*
-        for snip in doc.getchildren()[1:]:
-            _text = list()
-            _idx = 0
-            _target_idxs = list()
-            _ana = dict()
-            # iter over words in cur example
-            for word in snip.getchildren():
-                if word.tag == 'text':
-                    _text.append(word.text)
-                    _idx += 1
-                if len(word.attrib) > 0:
-                    _text.append(word.attrib['text'])
-                    # process target
-                    if word.attrib.get('target') is not None:
-                        _target_idxs.append(_idx)
-                        if analyses:
-                            _ana = get_ana(word)
-                    _idx += 1
-            if _target_idxs:
-                yield _text, _target_idxs, _meta, _ana
-            else:
-                continue
-
-                
-def get_ana(word):
-    _ana = dict()
-    for ana in word.findall('ana'):
-        # iter over values of current ana of target (lex, sem, m, ...)
-        for ana_type in ana.findall('el'):
-            _ana[ana_type.attrib['name']] = [x.text for x in ana_type.findall('el-group/el-atom')]
-    return _ana
-   
-    
 class PageParser:
     def __init__(self, query, subcorpus, numResults, nLeft, nRight, tag, seed=''):
         self.query = query
