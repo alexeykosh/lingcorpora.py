@@ -1,9 +1,5 @@
-
+# python3
 # coding: utf-8
-
-# In[ ]:
-
-#python3
 
 import os
 import re
@@ -112,7 +108,8 @@ class Target:
             
             out.append((l_res, r_res))
         
-        return [('%s\t%s\t%s' % (out[i][0], self.text[idx], out[i][1])).strip()                 for i, idx in enumerate(self.idxs)]
+        return [('%s\t%s\t%s' % (out[i][0], self.text[idx], out[i][1])).strip() \
+                for i, idx in enumerate(self.idxs)]
 
     
 def parse_docs(docs, analyses=True):
@@ -121,7 +118,6 @@ def parse_docs(docs, analyses=True):
     """
     # iter over docs
     for i, doc in enumerate(docs):
-        #print(doc)
         _meta = doc.attrib['title']
         # iter over examples in *doc*
         for snip in doc.getchildren()[1:]:
@@ -215,8 +211,7 @@ class PageParser:
         
         if len(docs_tree) < 1:
             raise EnvironmentError('empty page')
-        
-        #for doc in tqdm(parse_docs(docs_tree, analyses=self.tag), total=5):
+            
         for doc in parse_docs(docs_tree, analyses=self.tag):
             t = Target(*doc)  
             for c_example in t.idxs:
@@ -231,7 +226,6 @@ class PageParser:
         """
         solve return for multiple targets in single kwic
         """
-        # desc = 'Extracting results for "%s"' % self.query
         while not self.__stop_flag:
             # print('parsing page: %s' % (self.__c_page + 1))
             try:
