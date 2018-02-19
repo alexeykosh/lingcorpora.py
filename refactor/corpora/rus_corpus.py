@@ -141,7 +141,7 @@ class PageParser:
         self.__dom = 'http://search1.ruscorpora.ru/dump.xml?'
         self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&mycorp=%s&req=%s&p=%s'
 
-    def __get_ana(word):
+    def __get_ana(self, word):
         _ana = dict()
         for ana in word.findall('ana'):
             # iter over values of current ana of target (lex, sem, m, ...)
