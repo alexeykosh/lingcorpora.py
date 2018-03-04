@@ -1,1 +1,4 @@
-theme: jekyll-theme-cayman
+theme: lumen
+toc: yes
+toc_position: right
+toc_float: yes
