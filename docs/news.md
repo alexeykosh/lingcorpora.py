@@ -1,11 +1,12 @@
 # What's new
 
 ## Production
+* * *
 Release date (expected): March 2018
 
 
 ## Development
-
+* * *
 ### 28.02.2018
 * Tatar corpus added (Ustya Kosheleva)
 
