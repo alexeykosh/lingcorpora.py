@@ -1,3 +1,15 @@
+---
+output:
+  html_document:
+    theme: lumen
+    highlight: tango
+    toc: yes
+    toc_position: right
+    toc_float: yes
+    smooth_scroll: false
+    number_sections: true
+---
+
 # What's new
 
 ## Production
