@@ -19,6 +19,10 @@ Release date (expected): March 2018
 
 ## Development
 * * *
+
+### 07.03.2018
+* New architecture added (Artyom Kopetskiy)
+
 ### 28.02.2018
 * Tatar corpus added (Ustya Kosheleva)
 
