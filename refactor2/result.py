@@ -22,6 +22,9 @@ class Result:
         
     __repr__ = __str__
     
+    def __iter__(self):
+        return iter(self.results)
+    
     def export_csv(self):
         pass
     
