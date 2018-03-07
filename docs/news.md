@@ -22,6 +22,10 @@ Release date (expected): March 2018
 
 ### 07.03.2018
 * New architecture added (Artyom Kopetskiy)
+* Bamana corpus refactored (Katya Gerasimenko)
+  * Target objects
+  * Generator
+  * More adequate kwic-sentence distinction
 
 ### 28.02.2018
 * Tatar corpus added (Ustya Kosheleva)
