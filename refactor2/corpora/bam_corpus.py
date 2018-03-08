@@ -4,23 +4,28 @@ from bs4 import BeautifulSoup
 from html import unescape
 from target import Target
 
-class PageParser(Container):
-    """
-    
-    API for Bamana corpus (http://maslinsky.spb.ru/bonito/index.html).
-    
-    Args:
-        query: list: queries (currently only exact search by word or phrase is available)
-        numResults: int: number of results wanted (100 by default)
-        kwic: boolean: kwic format (True) or a sentence (False) (True by default)
-        tag: boolean: whether to collect grammatical tags for target word or not (False by default, available only for corbama-net-non-tonal subcorpus)
-        subcorpus: str: subcorpus. Available options: 'corbama-net-non-tonal', 'corbama-net-tonal', 'corbama-brut' ('corbama-net-non-tonal' by default)
-    
-    Main function: extract
-    Returns:
-        A generator of Target objects.
 
-    """
+__doc__ = \
+"""
+    
+API for Bamana corpus (http://maslinsky.spb.ru/bonito/index.html).
+    
+Args:
+    query: list: queries (currently only exact search by word or phrase is available)
+    numResults: int: number of results wanted (100 by default)
+    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
+    tag: boolean: whether to collect grammatical tags for target word or not (False by default, available only for corbama-net-non-tonal subcorpus)
+    subcorpus: str: subcorpus. Available options: 'corbama-net-non-tonal', 'corbama-net-tonal', 'corbama-brut' ('corbama-net-non-tonal' by default)
+    
+Main function: extract
+Returns:
+    A generator of Target objects.
+
+"""
+
+
+
+class PageParser(Container):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         if self.subcorpus is None:
@@ -53,6 +58,8 @@ class PageParser(Container):
         find results (and total number of results) in the page code
         """
         soup = BeautifulSoup(self.page, 'lxml')
+        if soup.select('div#error'):
+            return []
         res = soup.find('table')
         res = res.find_all('tr')
         if self.pagenum == 1:
@@ -120,6 +127,8 @@ class PageParser(Container):
         while n < self.numResults:
             self.page = self.get_results()
             rows = self.parse_page()
+            if not rows:
+                break
             r = 0
             while n < self.numResults and r < len(rows):
                 if self.kwic:
