@@ -29,10 +29,11 @@ class Result:
         self.N += 1
     
     def __str__(self):
-        return 'Result(query=%s, N=%s, params=%s)' % (self.q_prm['query'],
-                                                      self.N,
-                                                      self.q_prm
-                                                     )
+        return 'Result(query=%s, N=%s, params=%s)' \
+                % (self.q_prm['query'],
+                   self.N,
+                   self.q_prm
+                  )
     
     __repr__ = __str__
     
