@@ -12,7 +12,8 @@ from corpora import *
 
 functions = {'rus': rus_corpus,
              'bam': bam_corpus,
-             'emk': emk_corpus
+             'emk': emk_corpus,
+             'zho': zho_corpus
             }
 
 
