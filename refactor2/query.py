@@ -10,9 +10,9 @@ from result import Result
 from corpora import *
 
 
-functions = {#'rus': rus_corpus,
-              'bam': bam_corpus
-}
+functions = {'rus': rus_corpus,
+             'bam': bam_corpus
+            }
 
 
 class Query:
@@ -66,7 +66,8 @@ class Query:
             elif 'numResults' in kwargs:
                 progress_total = kwargs['numResults']
             else:
-                progress_total = 100           
+                progress_total = 100
+                
             for t in tqdm(parser.extract(),
                           total=progress_total,
                           unit='docs',
