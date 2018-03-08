@@ -22,7 +22,7 @@ Release date (expected): March 2018
 
 ### 07.03.2018
 * New architecture added (Artyom Kopetskiy)
-* Bamana corpus refactored (Katya Gerasimenko)
+* Bamana, Maninka and Chinese corpora refactored (Katya Gerasimenko)
   * Target objects
   * Generator
   * More adequate kwic-sentence distinction
