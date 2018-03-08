@@ -57,20 +57,20 @@ class Query:
         
         if not isinstance(query, Iterable):
             raise TypeError(self.__type_except % type(query))
+            
+        if args:
+            progress_total = args[0]
+        elif 'numResults' in kwargs:
+            progress_total = kwargs['numResults']
+        else:
+            progress_total = 100
         
         for q in query:
-            _r = Result(q)
-            parser = self.__corpus.PageParser(q, *args, **kwargs)
+            self.parser = self.__corpus.PageParser(q, *args, **kwargs)
+            _r = Result(self)
             q_desc = self.__pbar_desc % q
-
-            if args:
-                progress_total = args[0]
-            elif 'numResults' in kwargs:
-                progress_total = kwargs['numResults']
-            else:
-                progress_total = 100
                 
-            for t in tqdm(parser.extract(),
+            for t in tqdm(self.parser.extract(),
                           total=progress_total,
                           unit='docs',
                           desc=q_desc):
