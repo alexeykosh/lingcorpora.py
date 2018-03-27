@@ -26,7 +26,7 @@ class Query:
         
         self.language = language
         self.__corpus = functions[self.language] 
-        self.search.__func__.__doc__ = self.__corpus.__doc__
+        self.doc = self.__corpus.__doc__
         
         self.results = list()
         self.unsuccessful = list()
@@ -65,6 +65,8 @@ class Query:
         else:
             progress_total = 100
         
+        _results = list()
+        
         for q in query:
             self.parser = self.__corpus.PageParser(q, *args, **kwargs)
             _r = Result(self)
@@ -78,9 +80,11 @@ class Query:
                 if _r.N % self.sleep_each == 0:
                     sleep(self.sleep_time)
             
-            self.results.append(_r)
+            _results.append(_r)
             if _r.N == 0:
                 warnings.warn(self.__warn % q)
                 self.unsuccessful.append(q)
-            
-        return self.results
+        
+        self.results.extend(_results)
+        
+        return _results
