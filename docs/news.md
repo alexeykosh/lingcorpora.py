@@ -20,6 +20,9 @@ Release date (expected): March 2018
 ## Development
 * * *
 
+### 25.03.2018
+* Parallel Russian corpus added (Maria Terekhina)
+
 ### 07.03.2018
 * New architecture added (Artyom Kopetskiy)
 * Bamana, Maninka and Chinese corpora refactored (Katya Gerasimenko)
