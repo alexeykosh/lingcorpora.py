@@ -5,7 +5,7 @@ import re
 
 
 class Target:
-    def __init__(self, text, idxs, meta, tags):
+    def __init__(self, text, idxs, meta, tags, transl=None):
         """
         text: str: full sentence / document
         idxs: tuple (l, r): target idxs in self.text -> self.text[l:r]
@@ -16,6 +16,7 @@ class Target:
         self.idxs = idxs
         self.meta = meta
         self.tags = tags
+        self.transl = transl
         
     def __str__(self):
         return 'Target(%s, %s)' \
