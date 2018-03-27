@@ -1,14 +1,16 @@
+# Documentation
+
 **The package is under reconstruction. Documentation applies to new release only. For old version, see the main page.**
 
 Welcome to lingcorpora's documentation. In order to get started, see [Installation](#Installation) and then proceed to [Quickstart](#Quickstart). For parameter description, see [Making queries](#Making-queries). To obtain description of our `Target` and `Result` objects, go to [Working with results](#Working-with-results).
 
-* [Installation](#Installation)
-* [Quickstart](#Quickstart)
-* [Making queries](#Making-queries)
-  * [Corpora](##Corpora)
-* [Working with results](#Working-with-results)
+* [Installation](##Installation)
+* [Quickstart](##Quickstart)
+* [Making queries](##Making-queries)
+  * [Corpora](###Corpora)
+* [Working with results](##Working-with-results)
 
-# Installation
+## Installation
 
 To install lingcorpora, type in the terminal:
 ```
@@ -22,10 +24,10 @@ lingcorpora has dependencies on:
 
 Lingcorpora will install these packages during installation. If you have troubles with installing dependencies, check Installation section in the documentation of the according packages.
 
-# Quickstart
+## Quickstart
 
-# Making queries
+## Making queries
 
-## Corpora
+### Corpora
 
-# Working with results
+## Working with results
