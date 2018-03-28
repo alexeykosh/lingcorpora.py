@@ -20,6 +20,11 @@ Release date (expected): March 2018
 ## Development
 * * *
 
+### 27.03.2018
+* Docs starting to emerge (Katya Gerasimenko)
+* Docstring fixed (Artyom Kopetskiy)
+* `search` return fixed (Artyom Kopetskiy)
+
 ### 25.03.2018
 * Parallel Russian corpus added (Maria Terekhina)
 
