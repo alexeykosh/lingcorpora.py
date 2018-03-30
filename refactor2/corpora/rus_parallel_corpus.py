@@ -38,7 +38,7 @@ class PageParser(Container):
                 _ana[ana_type.attrib['name']] = [x.text for x in ana_type.findall('el-group/el-atom')]
         return _ana        
 
-    def __parse_docs(self, docs, tl, analyses=True):
+    def __parse_docs(self, docs, sub, analyses=True):
             """
             a generator over documents tree
             """
@@ -53,6 +53,7 @@ class PageParser(Container):
                     _idx = 0
                     _target_idxs = list()
                     _ana = list()
+                    _lang = str()
 
                     # iter over examples in *para*
                     for snip in para.getchildren():
@@ -60,32 +61,37 @@ class PageParser(Container):
                         for word in snip.getchildren():
                             if word.tag == 'text':
 
-                                if snip.attrib['language'] != tl[:-1]:
+                                if snip.attrib['language'] != sub[:-1]:
                                     _text += word.text
                                     _idx += len(word.text)
                                 else:
                                     _transl += word.text
 
-                            if len(word.attrib) > 0:
+                                if snip.attrib['language'] != 'ru':
+                                    _lang = snip.attrib['language']
 
+                            if len(word.attrib) > 0:
                                 # process target
                                 if word.attrib.get('target') is not None:
                                     _target_idxs.append((_idx, _idx + len(word.attrib['text'])))
                                     if analyses:
                                         _ana.append(self.__get_ana(word))
 
-                                if snip.attrib['language'] != tl[:-1]:
+                                if snip.attrib['language'] != sub[:-1]:
                                     _text += word.attrib['text']
                                     _idx += len(word.attrib['text'])
                                 else:
                                     _transl += word.attrib['text']
 
+                                if snip.attrib['language'] != 'ru':
+                                    _lang = snip.attrib['language']
+
                     if _target_idxs:
                         for i, ixs in enumerate(_target_idxs):
                             if analyses:
-                                yield _text, ixs, _meta, _ana[i], _transl
+                                yield _text, ixs, _meta, _ana[i], _transl, _lang
                             else:
-                                yield _text, ixs, _meta, _ana, _transl
+                                yield _text, ixs, _meta, _ana, _transl, _lang
                     else:
                         continue
         
