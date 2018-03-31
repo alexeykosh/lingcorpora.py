@@ -9,4 +9,4 @@ setup(name='lingcorpora',
       author_email='alexeykochevoy@gmail.com',
       packages=['lingcorpora'],
       zip_safe=False,
-      install_requires=['bs4', 'requests', 'lxml', 'html', 'urllib', 're'])
+      install_requires=['bs4', 'requests', 'lxml', 'tqdm'])
