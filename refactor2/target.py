@@ -11,6 +11,8 @@ class Target:
         idxs: tuple (l, r): target idxs in self.text -> self.text[l:r]
         meta: str: sentence / document info (if exists)
         tags: dict?: target tags
+        transl: str: text translation (only for parallel corpora)
+        lang: str: translation language (only for parallel corpora)
         """
         self.text = text
         self.idxs = idxs
