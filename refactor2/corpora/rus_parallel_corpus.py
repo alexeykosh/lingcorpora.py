@@ -15,6 +15,7 @@ API for parallel subcorpus of National Corpus of Russian (http://ruscorpora.ru/s
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     numResults: int: number of results wanted (100 by default)
+    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     tag: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('rus' by default - search query over all subcorpora).
                     Valid: ['rus', 'eng', 'bel', 'bul', 'bua', 'esp', 'ita',

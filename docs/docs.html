@@ -11753,15 +11753,20 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Documentation">Documentation<a class="anchor-link" href="#Documentation">&#182;</a></h1><p><strong>The package is under reconstruction. Documentation applies to new release only. For old version, see the main page.</strong>
 <strong>The documentation is in development.</strong></p>
-<p>Welcome to <code>lingcorpora</code>'s documentation. In order to get started, see <a href="#installation">Installation</a> and then proceed to <a href="#quickstart">Quickstart</a>. For parameter description, see <a href="#making-queries">Making queries</a>. To obtain description of our <code>Target</code> and <code>Result</code> objects, go to <a href="#working-with-results">Working with results</a>.</p>
+<p>Welcome to <code>lingcorpora</code>'s documentation. In order to get started, see <a href="#Installation">Installation</a> and then proceed to <a href="#Quickstart">Quickstart</a>. For parameter description, see <a href="#Making-queries">Making queries</a>. To obtain description of our <code>Target</code> and <code>Result</code> objects, go to <a href="#Working-with-results">Working with results</a>.</p>
 <ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#quickstart">Quickstart</a></li>
-<li><a href="#making-queries">Making queries</a><ul>
-<li><a href="#corpora">Corpora</a></li>
+<li><a href="#Installation">Installation</a></li>
+<li><a href="#Quickstart">Quickstart</a></li>
+<li><a href="#Making-queries">Making queries</a><ul>
+<li><a href="#lingcorpora.Corpus">lingcorpora.Corpus</a></li>
+<li><a href="#Corpora">Corpora</a></li>
 </ul>
 </li>
-<li><a href="#working-with-results">Working with results</a></li>
+<li><a href="#Working-with-results">Working with results</a><ul>
+<li><a href="#lingcorpora.Target">lingcorpora.Target</a></li>
+<li><a href="#lingcorpora.Result">lingcorpora.Result</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h2><p>To install <code>lingcorpora</code>, type in the terminal:</p>
 
@@ -12003,23 +12008,23 @@ Query &#34;мешок&#34;: 100%|███████████████�
 <tbody>
 <tr>
 <td>bam</td>
-<td><a href="#corpus-bambara-de-reference">Corpus Bambara de Reference</a></td>
+<td><a href="#Corpus-Bambara-de-Reference">Corpus Bambara de Reference</a></td>
 </tr>
 <tr>
 <td>emk</td>
-<td><a href="#maninka-automatically-parsed-corpus">Maninka Automatically Parsed corpus</a></td>
+<td><a href="#Maninka-Automatically-Parsed-corpus">Maninka Automatically Parsed corpus</a></td>
 </tr>
 <tr>
 <td>rus</td>
-<td><a href="#national-corpus-of-russian-language">National Corpus of Russian Language</a></td>
+<td><a href="#National-Corpus-of-Russian-Language">National Corpus of Russian Language</a></td>
 </tr>
 <tr>
 <td>rus_parallel</td>
-<td><a href="#parallel-subcorpus-of-national-corpus-of-russian-language">Parallel subcorpus of National Corpus of Russian Language</a></td>
+<td><a href="#Parallel-subcorpus-of-National-Corpus-of-Russian-Language">Parallel subcorpus of National Corpus of Russian Language</a></td>
 </tr>
 <tr>
 <td>zho</td>
-<td><a href="#center-of-chinese-linguistics-corpus">Center of Chinese Linguistics corpus</a></td>
+<td><a href="#Center-of-Chinese-Linguistics-corpus">Center of Chinese Linguistics corpus</a></td>
 </tr>
 </tbody>
 </table>
@@ -12031,7 +12036,7 @@ Query &#34;мешок&#34;: 100%|███████████████�
 <li><strong>failed</strong>: list: list of <code>Result</code> objects where nothing was found.</li>
 </ul>
 <h4 id="lingcorpora.Corpus.search(query,-*args,-**kwargs)">lingcorpora.Corpus.search(query, *args, **kwargs)<a class="anchor-link" href="#lingcorpora.Corpus.search(query,-*args,-**kwargs)">&#182;</a></h4><p>This is a search function that queries the corpus and returns the results.</p>
-<h5 id="Arguments">Arguments<a class="anchor-link" href="#Arguments">&#182;</a></h5><p>Here we provide a comprehensive list of arguments, although not all arguments are applicable to all corpora and the default values depend on a corpus. For specific description, go to <a href="#сorpora">Corpora</a> subsection.</p>
+<h5 id="Arguments">Arguments<a class="anchor-link" href="#Arguments">&#182;</a></h5><p>Here we provide a comprehensive list of arguments, although not all arguments are applicable to all corpora and the default values depend on a corpus. For specific description, go to <a href="#Corpora">Corpora</a> subsection.</p>
 <p>Two arguments are universal:</p>
 <ul>
 <li><strong>query</strong>: str or list[str]: query or queries</li>
@@ -12039,7 +12044,7 @@ Query &#34;мешок&#34;: 100%|███████████████�
 </ul>
 <p>Other depend on the corpus:</p>
 <ul>
-<li><strong>kwic</strong>: boolean, optional, default True: whether to make a request to <code>kwic</code> format in the corpus</li>
+<li><strong>kwic</strong>: boolean, optional, default True: <code>kwic</code> format (True) or a sentence (False)</li>
 <li><strong>nLeft</strong>: int, optional: number of words / symbols (corpus-specific) in the left context</li>
 <li><strong>nRight</strong>: int, optional: number of words / symbols (corpus-specific) in the right context</li>
 <li><strong>targetLanguage</strong>: str, optional: for parallel corpora, target language</li>
@@ -12134,7 +12139,7 @@ Query &#34;fɔra&#34;: 100%|█████████████████�
 <h3 id="Corpora">Corpora<a class="anchor-link" href="#Corpora">&#182;</a></h3><h4 id="Corpus-Bambara-de-Reference"><a href="http://maslinsky.spb.ru/bonito/run.cgi/first_form">Corpus Bambara de Reference</a><a class="anchor-link" href="#Corpus-Bambara-de-Reference">&#182;</a></h4><h5 id="Relevant-parameters">Relevant parameters<a class="anchor-link" href="#Relevant-parameters">&#182;</a></h5><ul>
 <li><strong>query</strong>: str or list[str]: query or queries (currently only exact search by word or phrase is available)</li>
 <li><strong>numResults</strong>: int, default 100: number of results wanted</li>
-<li><strong>kwic</strong>: boolean, default True: whether to request the corpus for kwic format (True) or a sentence (False)</li>
+<li><strong>kwic</strong>: boolean, default True: <code>kwic</code> format (True) or a sentence (False)</li>
 <li><strong>tag</strong>: boolean, default False: whether to collect grammatical tags for target word or not (available only for <code>corbama-net-non-tonal</code> subcorpus)</li>
 <li><strong>subcorpus</strong>: str, default <code>corbama-net-non-tonal</code>: subcorpus. Available options: <code>corbama-net-non-tonal</code>, <code>corbama-net-tonal</code>, <code>corbama-brut</code></li>
 </ul>
@@ -12197,7 +12202,7 @@ Query &#34;fɔra&#34;: 100%|█████████████████�
 <h4 id="Maninka-Automatically-Parsed-corpus"><a href="http://maslinsky.spb.ru/emk/run.cgi/first_form">Maninka Automatically Parsed corpus</a><a class="anchor-link" href="#Maninka-Automatically-Parsed-corpus">&#182;</a></h4><h5 id="Relevant-parameters">Relevant parameters<a class="anchor-link" href="#Relevant-parameters">&#182;</a></h5><ul>
 <li><strong>query</strong>: str or list[str]: query or queries (currently only exact search by word or phrase is available)</li>
 <li><strong>numResults</strong>: int, default 100: number of results wanted</li>
-<li><strong>kwic</strong>: boolean, default True: whether to request the corpus for kwic format (True) or a sentence (False)</li>
+<li><strong>kwic</strong>: boolean, default True: <code>kwic</code> format (True) or a sentence (False)</li>
 <li><strong>subcorpus</strong>: str, default <code>cormani-brut-lat</code>: subcorpus. Available options: <code>cormani-brut-lat</code>, <code>corbama-brut-nko</code></li>
 <li><strong>writingSystem</strong>: str, default <code>None</code>: writing system for examples. Available options: <code>nko</code>, <code>latin</code>. Bug: only <code>latin</code> for <code>corbama-brut-nko</code> subcorpus.</li>
 </ul>
@@ -12260,6 +12265,7 @@ Query &#34;fɔra&#34;: 100%|█████████████████�
 <h4 id="National-Corpus-of-Russian-Language"><a href="http://ruscorpora.ru">National Corpus of Russian Language</a><a class="anchor-link" href="#National-Corpus-of-Russian-Language">&#182;</a></h4><h5 id="Relevant-parameters">Relevant parameters<a class="anchor-link" href="#Relevant-parameters">&#182;</a></h5><ul>
 <li><strong>query</strong>: str or list[str]: query or queries (currently only exact search by word or phrase is available)</li>
 <li><strong>numResults</strong>: int, default 100: number of results wanted</li>
+<li><strong>kwic</strong>: boolean, default True: <code>kwic</code> format (True) or a sentence (False)</li>
 <li><strong>tag</strong>: boolean, default False: whether to collect grammatical tags for target word or not</li>
 <li><strong>subcorpus</strong>: str, default <code>main</code>: subcorpus. Available options:<code>main</code>, <code>syntax</code>, <code>paper</code>, <code>regional</code>, <code>school</code>, <code>dialect</code>, <code>poetic</code>, <code>spoken</code>, <code>accent</code>, <code>murco</code>, <code>multiparc</code>, <code>old_rus</code>, <code>birchbark</code>, <code>mid_rus</code>, <code>orthlib</code>.</li>
 </ul>
@@ -12322,6 +12328,7 @@ Query &#34;fɔra&#34;: 100%|█████████████████�
 <h4 id="Parallel-subcorpus-of-National-Corpus-of-Russian-Language"><a href="http://ruscorpora.ru/search-para-multi.html">Parallel subcorpus of National Corpus of Russian Language</a><a class="anchor-link" href="#Parallel-subcorpus-of-National-Corpus-of-Russian-Language">&#182;</a></h4><h5 id="Relevant-parameters">Relevant parameters<a class="anchor-link" href="#Relevant-parameters">&#182;</a></h5><ul>
 <li><strong>query</strong>: str or list[str]: query or queries (currently only exact search by word or phrase is available)</li>
 <li><strong>numResults</strong>: int, default 100: number of results wanted</li>
+<li><strong>kwic</strong>: boolean, default True: <code>kwic</code> format (True) or a sentence (False)</li>
 <li><strong>tag</strong>: boolean, default False: whether to collect grammatical tags for target word or not</li>
 <li><strong>subcorpus</strong>: str, default <code>rus</code> (search by all target languages): subcorpus. Available options: <code>rus</code>, <code>eng</code>, <code>bel</code>, <code>bul</code>, <code>bua</code>, <code>esp</code>, <code>ita</code>,<code>zho</code>, <code>lav</code>, <code>ger</code>, <code>pol</code>, <code>ukr</code>, <code>fra</code>, <code>sve</code>, <code>est</code>.</li>
 </ul>
@@ -12447,6 +12454,15 @@ Query &#34;fɔra&#34;: 100%|█████████████████�
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Working-with-results">Working with results<a class="anchor-link" href="#Working-with-results">&#182;</a></h2><h3 id="lingcorpora.Target">lingcorpora.Target<a class="anchor-link" href="#lingcorpora.Target">&#182;</a></h3><h4 id="Attributes">Attributes<a class="anchor-link" href="#Attributes">&#182;</a></h4><h4 id="lingcorpora.Target.kwic(left,-right,-level='word')">lingcorpora.Target.kwic(left, right, level='word')<a class="anchor-link" href="#lingcorpora.Target.kwic(left,-right,-level='word')">&#182;</a></h4><h3 id="lingcorpora.Result">lingcorpora.Result<a class="anchor-link" href="#lingcorpora.Result">&#182;</a></h3><h4 id="Attributes">Attributes<a class="anchor-link" href="#Attributes">&#182;</a></h4><h4 id="lingcorpora.Result.export_csv(filename=None,-header=True,-sep=';')">lingcorpora.Result.export_csv(filename=None, header=True, sep=';')<a class="anchor-link" href="#lingcorpora.Result.export_csv(filename=None,-header=True,-sep=';')">&#182;</a></h4>
+</div>
+</div>
 </div>
     </div>
   </div>
