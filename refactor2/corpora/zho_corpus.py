@@ -11,10 +11,9 @@ __doc__ = \
 API for Chinese corpus (http://ccl.pku.edu.cn:8080/ccl_corpus/).
     
 Args:
-    query: list: queries (currently only exact search by word or phrase is available)
+    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     numResults: int: number of results wanted (100 by default)
-    subcorpus: str: subcorpus. Available options: ‘xiandai’ (modern Chinese) or ‘dugai’ (ancient Chinese) ('xiandai' by default)
-    mode: str: ‘simple’ (default) or ‘pattern’ (regular expressions, description here (in Chinese): http://ccl.pku.edu.cn:8080/ccl_corpus/CCLCorpus_Readme.html)
+    subcorpus: str: subcorpus. Available options: 'xiandai' (modern Chinese) or 'dugai' (ancient Chinese) ('xiandai' by default)
     nLeft, nRight: int: context lenght (in symbols, 30 by default)
     
 Main function: extract
@@ -31,8 +30,6 @@ class PageParser(Container):
         self.pagenum = 0
         if self.subcorpus is None:
             self.subcorpus = 'xiandai'
-        if self.mode is None:
-            self.mode = 'simple'
         if self.nLeft is None:
             self.nLeft = 30
         if self.nRight is None:
@@ -55,10 +52,7 @@ class PageParser(Container):
                   'dir':self.subcorpus,
                   'scopestr':'' # text selection: TO DO?
                   }
-        if self.mode == 'simple':
-            r = get('http://ccl.pku.edu.cn:8080/ccl_corpus/search',params)
-        if self.mode == 'pattern':
-            r = get('http://ccl.pku.edu.cn:8080/ccl_corpus/pattern',params)
+        r = get('http://ccl.pku.edu.cn:8080/ccl_corpus/search',params)
         return unescape(r.text)
 
 

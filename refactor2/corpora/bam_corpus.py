@@ -11,7 +11,7 @@ __doc__ = \
 API for Bamana corpus (http://maslinsky.spb.ru/bonito/index.html).
     
 Args:
-    query: list: queries (currently only exact search by word or phrase is available)
+    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     numResults: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     tag: boolean: whether to collect grammatical tags for target word or not (False by default, available only for corbama-net-non-tonal subcorpus)

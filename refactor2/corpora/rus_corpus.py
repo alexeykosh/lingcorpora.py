@@ -16,9 +16,8 @@ __doc__ = \
 API for National Corpus of Russian (http://ruscorpora.ru/index.html)
 
 Args:
-    query: str or List([str]): queries (currently only exact search by word or phrase is available)
+    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     numResults: int: number of results wanted (100 by default)
-    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     tag: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('main' by default).
                     Valid: ['main', 'syntax', 'paper', 'regional', 'school',

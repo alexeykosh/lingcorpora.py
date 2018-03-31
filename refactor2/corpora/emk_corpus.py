@@ -11,7 +11,7 @@ __doc__ = \
 API for Maninka corpus (http://maslinsky.spb.ru/emk/run.cgi/first_form).
     
 Args:
-    query: list: queries (currently only exact search by word or phrase is available)
+    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     numResults: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     subcorpus: str: subcorpus. Available options: 'cormani-brut-lat', 'corbama-brut-nko' ('cormani-brut-lat' by default)
