@@ -20,6 +20,11 @@ Release date (expected): March 2018
 ## Development
 * * *
 
+### 31.03.2018
+* Target and Result adjusted for parallel corpora (Maria Terekhina, Artyom Kopetskiy)
+* Query renamed to Corpus (Katya Gerasimenko)
+* Preparing package for release (Maria Terekhina)
+
 ### 27.03.2018
 * Docs starting to emerge (Katya Gerasimenko)
 * Docstring fixed (Artyom Kopetskiy)
