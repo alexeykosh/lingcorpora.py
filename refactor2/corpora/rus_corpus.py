@@ -46,9 +46,10 @@ class PageParser(Container):
         self.__stop_flag = False
         self.__c_page = 0
         self.__targets_seen = 0
+        self.__nodia = 1
             
         self.__dom = 'http://search1.ruscorpora.ru/dump.xml?'
-        self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&req=%s&p=%s'
+        self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&req=%s&p=%s&nodia=%s'
 
     def __get_ana(self, word):
         _ana = dict()
@@ -107,7 +108,8 @@ class PageParser(Container):
                   self.__seed,
                   self.__dpp,
                   ur.quote(self.query),
-                  self.__c_page
+                  self.__c_page,
+                  self.__nodia
                  )
 
         post = self.__post % (params)
