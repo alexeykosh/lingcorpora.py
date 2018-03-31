@@ -1,6 +1,1 @@
-theme: spacelab
-highlight: pygments
-toc: yes
-toc_position: right
-toc_depth: 4
-toc_float: yes
+theme: minima
