@@ -11,7 +11,25 @@ from target import Target
 
 
 __author__ = 'akv_17'
-__doc__ = 'RUS CORPUS HELP'
+__doc__ = \
+"""
+API for National Corpus of Russian (http://ruscorpora.ru/index.html)
+
+Args:
+    query: str or List([str]): queries (currently only exact search by word or phrase is available)
+    numResults: int: number of results wanted (100 by default)
+    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
+    tag: boolean: whether to collect grammatical tags for target word or not (False by default)
+    subcorpus: str: subcorpus ('main' by default).
+                    Valid: ['main', 'syntax', 'paper', 'regional', 'school',
+                            'dialect', 'poetic', 'spoken', 'accent', 'murco',
+                            'multiparc', 'old_rus', 'birchbark', 'mid_rus', 'orthlib']
+    
+Main method: extract
+
+Returns:
+    A generator over Target objects.
+"""
 
 
 class PageParser(Container):
@@ -19,7 +37,7 @@ class PageParser(Container):
         super().__init__(*args, **kwargs)
         
         if self.subcorpus is None:
-            self.subcorpus = ''
+            self.subcorpus = 'main'
         
         self.__seed = ''
         self.__temp = 'temptree.xml'
@@ -30,7 +48,7 @@ class PageParser(Container):
         self.__targets_seen = 0
             
         self.__dom = 'http://search1.ruscorpora.ru/dump.xml?'
-        self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&mycorp=%s&req=%s&p=%s'
+        self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&req=%s&p=%s'
 
     def __get_ana(self, word):
         _ana = dict()
@@ -83,15 +101,15 @@ class PageParser(Container):
         return documents tree
         """
         params = ('alpha',
-                  'main',
+                  self.subcorpus,
                   'lexform',
                   'gr_tagging',
                   self.__seed,
                   self.__dpp,
-                  self.subcorpus,
                   ur.quote(self.query),
                   self.__c_page
                  )
+
         post = self.__post % (params)
         ur.urlretrieve(self.__dom + post, self.__temp)
         raw_tree = etree.parse(self.__temp)
