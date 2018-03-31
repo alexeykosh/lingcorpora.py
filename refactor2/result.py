@@ -6,18 +6,18 @@ import csv
 
 
 class Result:
-    def __init__(self, query):
+    def __init__(self, language, query_params):
         """
-        results: list: list of type Target
-        N: int: len(self.results)
-        query: str: query
+        language: str: language
+        query_params: dict: __dict__ of used parser
         """
         self.results = list()
         self.N = 0
-        self.query = query
-        self.q_prm = {k: query.parser.__dict__[k] \
-                      for k in query.parser.__dict__ \
-                      if k[0] != '_' and k != 'page'
+        self.lang = language
+        self.query = query_params['query']
+        self.params = {k: query_params[k] \
+                      for k in query_params \
+                      if k[0] != '_' and k not in ['page', 'query']
                      }
                       
         self.__header = ('index', 'text')
@@ -30,9 +30,9 @@ class Result:
     
     def __str__(self):
         return 'Result(query=%s, N=%s, params=%s)' \
-                % (self.q_prm['query'],
+                % (self.query,
                    self.N,
-                   self.q_prm
+                   self.params
                   )
     
     __repr__ = __str__
@@ -43,8 +43,8 @@ class Result:
     def export_csv(self, filename=None, header=True, sep=';'):
         if filename is None:
             filename = '%s_%s_results.csv' \
-                        % (self.query.language,
-                           re.sub(self.__not_allowed, '', self.q_prm['query'])
+                        % (self.lang,
+                           re.sub(self.__not_allowed, '', self.query)
                           )
         
         with open(filename,'w',encoding='utf-8-sig') as f:
@@ -52,12 +52,12 @@ class Result:
                                 quoting=csv.QUOTE_MINIMAL, lineterminator='\n'
                                )
             
-            if self.q_prm['kwic']:
+            if self.params['kwic']:
                 if header:
                     writer.writerow(self.__kwic_header)
                 
-                nLeft = self.q_prm['nLeft'] 
-                nRight = self.q_prm['nRight']
+                nLeft = self.params['nLeft'] 
+                nRight = self.params['nRight']
                 
                 if nLeft is None:
                     nLeft = 10
