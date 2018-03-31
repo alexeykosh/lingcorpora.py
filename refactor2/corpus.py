@@ -1,7 +1,6 @@
 # python3
 # coding=<UTF-8>
 
-
 from collections import Iterable
 import warnings
 from time import sleep
@@ -10,7 +9,8 @@ from result import Result
 from corpora import *
 
 
-functions = {'rus': rus_corpus,
+functions = {
+             'rus': rus_corpus,
              'bam': bam_corpus,
              'emk': emk_corpus,
              'zho': zho_corpus
@@ -20,6 +20,7 @@ functions = {'rus': rus_corpus,
 class Corpus:
     def __init__(self, language, sleep_time=1, sleep_each=5):
         """
+        language: str: language alias
         sleep_time: int: sleeping time in seconds
         sleep_each: int: sleep after each `sleep_each` request
         """
@@ -29,10 +30,12 @@ class Corpus:
         self.doc = self.__corpus.__doc__
         
         self.results = list()
-        self.unsuccessful = list()
+        self.failed = list()
+        self.__retry_flag = False
+        
         self.__warn = 'Nothing found for query "%s".\n' \
-                      'Unsuccessful queries are available via Query.unsuccessful'
-        self.__pbar_desc = 'Query "%s"'
+                      'Call `retry_failed` method to retry failed queries'
+        self.__pbar_desc = '"%s"'
         self.__type_except = 'Argument `query` must be of type <str> or iterable, got <%s>'
 
         if sleep_each < 1:
@@ -42,14 +45,9 @@ class Corpus:
         self.sleep_time = sleep_time
 
     def search(self, query, *args, **kwargs):
-        """      
+        """
+        query: str: query
         for arguments see `params_container.Container`
-        __________
-        
-        pbar bad behaviour if found < numResults
-        pbar dies if interrupted
-        verbose might be more stable
-        we want to add param "progress=['bar', 'verbose']", dont we
         """
         
         if isinstance(query, str):
@@ -69,7 +67,7 @@ class Corpus:
         
         for q in query:
             self.parser = self.__corpus.PageParser(q, *args, **kwargs)
-            _r = Result(self)
+            _r = Result(self.language, self.parser.__dict__)
             q_desc = self.__pbar_desc % q
                 
             for t in tqdm(self.parser.extract(),
@@ -81,10 +79,41 @@ class Corpus:
                     sleep(self.sleep_time)
             
             _results.append(_r)
-            if _r.N == 0:
+            if _r.N < 1:
                 warnings.warn(self.__warn % q)
-                self.unsuccessful.append(q)
+                if not self.__retry_flag:
+                    self.failed.append(_r)
         
-        self.results.extend(_results)
+        if not self.__retry_flag:
+            self.results.extend(_results)
         
         return _results
+
+    def retry_failed(self):
+        """
+        Calls `.search()` for failed queries stored in `.failed`
+        
+        ISSUE:
+        if `_r` got successfully retrieved here,
+        its empty `Result` is still left in `Corpus.results` 
+        """
+        if self.failed:
+            self.__retry_flag = True
+            _pos = list()
+            _neg = list()
+            
+            for r in self.failed:
+                _r = self.search(r.query, **r.params)[0]
+                if _r.N > 0:
+                    _pos.append(_r)
+                else:
+                    _neg.append(_r)
+            
+            self.failed = _neg[:]
+            self.results.extend(_pos)
+            self.__retry_flag = False
+            
+            return _pos
+        
+        else:
+            return []
