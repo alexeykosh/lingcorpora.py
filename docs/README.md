@@ -1,5 +1,8 @@
 # Lingcorpora
-[![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py) [![Build status](https://ci.appveyor.com/api/projects/status/a9yljmk5g6fkgj33?svg=true)](https://ci.appveyor.com/project/alexeykosh/lingcorpora-py) [![PyPI version](https://badge.fury.io/py/lingcorpora.svg)](https://badge.fury.io/py/lingcorpora)[![codecov](https://codecov.io/gh/alexeykosh/lingcorpora.py/branch/master/graph/badge.svg)](https://codecov.io/gh/alexeykosh/lingcorpora.py) [![DOI](https://zenodo.org/badge/115459241.svg)](https://zenodo.org/badge/latestdoi/115459241)
+[![Build Status](https://travis-ci.org/alexeykosh/lingcorpora.py.svg?branch=master)](https://travis-ci.org/alexeykosh/lingcorpora.py)
+[![Build status](https://ci.appveyor.com/api/projects/status/4f5i7bwypma1gp29?svg=true)](https://ci.appveyor.com/project/kategerasimenko/lingcorpora-py)
+[![PyPI version](https://badge.fury.io/py/lingcorpora.svg)](https://badge.fury.io/py/lingcorpora)
+[![DOI](https://zenodo.org/badge/115459241.svg)](https://zenodo.org/badge/latestdoi/115459241)
 
 
 This package includes API for 
