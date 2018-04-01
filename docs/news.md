@@ -20,6 +20,10 @@ Release date (expected): March 2018
 ## Development
 * * *
 
+### 01.04.2018
+* Bug fixes
+* Finalizing docs
+
 ### 31.03.2018
 * Target and Result adjusted for parallel corpora (Maria Terekhina, Artyom Kopetskiy)
 * Query renamed to Corpus (Katya Gerasimenko)
