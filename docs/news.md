@@ -1,20 +1,17 @@
----
-output:
-  html_document:
-    theme: lumen
-    highlight: tango
-    toc: yes
-    toc_position: right
-    toc_float: yes
-    smooth_scroll: false
-    number_sections: true
----
-
 # What's new
 
 ## Production
 * * *
-Release date (expected): March 2018
+
+### 01.04.2018
+`lingcorpora`, version 1.1
+
+* 5 corpora, including a parallel one
+* `Corpus` object for searching, storing results and retrying failed queries
+* `Result` object for storing all results and export to `csv`
+* `Target` object for managing occurrences
+
+[Documentation](https://lingcorpora.github.io/lingcorpora.py/docs.html)
 
 
 ## Development
