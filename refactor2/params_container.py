@@ -5,7 +5,7 @@
 class Container:
     def __init__(self, query, numResults=100, kwic=True, nLeft=None, nRight=None,
                  subcorpus=None, tag=False, ana=False, queryLanguage=None,
-                 mode=None, start=0, writingSystem=None):
+                 start=0, writingSystem=None):
         self.query = query
         self.numResults = numResults
         self.kwic = kwic
@@ -15,6 +15,5 @@ class Container:
         self.subcorpus = subcorpus
         self.tag = tag
         self.ana = ana
-        self.mode = mode
         self.start = start
         self.writingSystem = writingSystem
