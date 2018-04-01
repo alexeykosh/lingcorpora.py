@@ -4,8 +4,8 @@
 from lxml import etree
 import urllib.request as ur
 
-from params_container import Container
-from target import Target
+from ..params_container import Container
+from ..target import Target
 
 
 __author__ = 'akv_17, maria-terekhina'

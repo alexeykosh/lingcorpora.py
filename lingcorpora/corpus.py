@@ -5,8 +5,8 @@ from collections import Iterable
 import warnings
 from time import sleep
 from tqdm import tqdm
-from result import Result
-from corpora import *
+from .result import Result
+from .corpora import *
 
 
 functions = {

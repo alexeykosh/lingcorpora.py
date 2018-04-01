@@ -1,8 +1,8 @@
-from params_container import Container
+from ..params_container import Container
 from requests import get
 from bs4 import BeautifulSoup
 from html import unescape
-from target import Target
+from ..target import Target
 
 
 __doc__ = \
