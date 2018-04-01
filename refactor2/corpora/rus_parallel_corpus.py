@@ -9,23 +9,7 @@ from target import Target
 
 
 __author__ = 'akv_17, maria-terekhina'
-__doc__ = \
-"""
-API for parallel subcorpus of National Corpus of Russian (http://ruscorpora.ru/search-para-en.html)
-Args:
-    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    numResults: int: number of results wanted (100 by default)
-    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
-    tag: boolean: whether to collect grammatical tags for target word or not (False by default)
-    subcorpus: str: subcorpus ('rus' by default - search query over all subcorpora).
-                    Valid: ['rus', 'eng', 'bel', 'bul', 'bua', 'esp', 'ita',
-                            'zho', 'lav', 'ger', 'pol', 'ukr',
-                            'fra', 'sve', 'est']
-    
-Main method: extract
-Returns:
-    A generator over Target objects.
-"""
+__doc__ = 'RUS CORPUS HELP'
 
 
 class PageParser(Container):
@@ -34,6 +18,9 @@ class PageParser(Container):
         
         if self.subcorpus is None:
             self.subcorpus = 'rus'
+
+        if self.queryLanguage is None:
+            raise ValueError('Please specify query language')
 
         self.__seed = ''
         self.__temp = 'temptree.xml'
@@ -54,7 +41,7 @@ class PageParser(Container):
                 _ana[ana_type.attrib['name']] = [x.text for x in ana_type.findall('el-group/el-atom')]
         return _ana        
 
-    def __parse_docs(self, docs, sub, analyses=True):
+    def __parse_docs(self, docs, ql, analyses=True):
             """
             a generator over documents tree
             """
@@ -77,7 +64,7 @@ class PageParser(Container):
                         for word in snip.getchildren():
                             if word.tag == 'text':
 
-                                if snip.attrib['language'] != sub[:-1]:
+                                if snip.attrib['language'] == ql[:-1]:
                                     _text += word.text
                                     _idx += len(word.text)
                                 else:
@@ -93,7 +80,7 @@ class PageParser(Container):
                                     if analyses:
                                         _ana.append(self.__get_ana(word))
 
-                                if snip.attrib['language'] != sub[:-1]:
+                                if snip.attrib['language'] == ql[:-1]:
                                     _text += word.attrib['text']
                                     _idx += len(word.attrib['text'])
                                 else:
@@ -132,7 +119,7 @@ class PageParser(Container):
         if len(docs_tree) < 1:
             raise EnvironmentError('empty page')
     
-        for doc in self.__parse_docs(docs_tree, self.subcorpus, analyses=self.tag):
+        for doc in self.__parse_docs(docs_tree, self.queryLanguage, analyses=self.tag):
             self.__targets_seen += 1
             if self.__targets_seen <= self.numResults:
                 yield Target(*doc) 
