@@ -9,9 +9,9 @@ This package includes API for
 * [Corpus Bambara de Reference](http://maslinsky.spb.ru/bonito/run.cgi/first_form)
 * [Maninka Automatically Parsed corpus](http://maslinsky.spb.ru/emk/run.cgi/first_form)
 
-R version of this package by George Moroz is located [here](https://github.com/lingcorpora/lingcorpora.R)
+R version of this package by George Moroz is located [here](https://github.com/lingcorpora/lingcorpora.R).
 
-The package is available under MIT license.
+The package is available under [MIT license](https://github.com/lingcorpora/lingcorpora.py/blob/master/LICENSE).
 
 * [Documentation](https://lingcorpora.github.io/lingcorpora.py/docs.html)
 * [What's new](https://lingcorpora.github.io/lingcorpora.py/news.html)
