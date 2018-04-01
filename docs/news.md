@@ -28,6 +28,8 @@ Release date (expected): March 2018
 * Target and Result adjusted for parallel corpora (Maria Terekhina, Artyom Kopetskiy)
 * Query renamed to Corpus (Katya Gerasimenko)
 * Preparing package for release (Maria Terekhina)
+* Retry function added (Artyom Kopetskiy)
+* Docs added to all corpora
 
 ### 27.03.2018
 * Docs starting to emerge (Katya Gerasimenko)
