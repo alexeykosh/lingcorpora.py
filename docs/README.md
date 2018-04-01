@@ -15,5 +15,16 @@ The package is available under [MIT license](https://github.com/lingcorpora/ling
 
 * [Documentation](https://lingcorpora.github.io/lingcorpora.py/docs.html)
 * [What's new](https://lingcorpora.github.io/lingcorpora.py/news.html)
-* [About](https://lingcorpora.github.io/lingcorpora.py/about.html)
-* [Contributing](https://lingcorpora.github.io/lingcorpora.py/contributing.html)
+
+## About
+
+The project is maintained by [George Moroz](https://github.com/agricolamz) and several students of School of Linguistics of Higher School of Economics. At different stages, the following people have contributed to the project: Alexey Koshevoy, Ekaterina Gerasimenko, Anna Zueva, Diana Malyshok, Artyom Kopetskiy, Maria Terekhina, Ustinya Kosheleva.
+
+
+## Contributing
+
+### Reporting a bug & requesting functionality
+You can report a bug, ask a question or suggest adding features via [Issues](https://github.com/lingcorpora/lingcorpora.py/issues) in the repository.
+
+### Making new corpora and proposing changes
+You are welcome to suggest your improvements to the source code and make APIs for more corpora. You should propose changes via [pull requests](https://help.github.com/articles/about-pull-requests/). Your code should fit into the overall structure, which is described [in the guide](https://lingcorpora.github.io/lingcorpora.py/lingcorpora_guide.html).
