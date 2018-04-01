@@ -26,8 +26,8 @@ Returns:
 class PageParser(Container):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.per_page = 50
-        self.pagenum = 0
+        self.__per_page = 50
+        self.__pagenum = 0
         if self.subcorpus is None:
             self.subcorpus = 'xiandai'
         if self.nLeft is None:
@@ -41,7 +41,7 @@ class PageParser(Container):
         create a query url and get results for one page
         """
         params = {'q': self.query,
-                  'start': self.pagenum,
+                  'start': self.__pagenum,
                   'num': self.numResults,
                   'index':'FullIndex',
                   'outputFormat':'HTML',
@@ -60,13 +60,13 @@ class PageParser(Container):
         """
         find results (and total number of results) in the page code
         """
-        soup = BeautifulSoup(self.page, 'lxml')
+        soup = BeautifulSoup(self.__page, 'lxml')
         res = soup.find('table',align='center')
         if res:
             res = res.find_all('tr')
         else:
             return []
-        if self.pagenum == 0:
+        if self.__pagenum == 0:
             self.numResults = min(self.numResults,int(soup.find('td',class_='totalright').find('b').text))
         return res
 
@@ -86,7 +86,7 @@ class PageParser(Container):
     def extract(self):
         n = 0
         while n < self.numResults:
-            self.page = self.get_results()
+            self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
@@ -95,5 +95,5 @@ class PageParser(Container):
                 yield self.parse_result(rows[r])
                 n += 1
                 r += 1
-            self.pagenum += self.per_page
+            self.__pagenum += self.__per_page
 

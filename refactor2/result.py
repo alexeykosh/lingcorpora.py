@@ -39,6 +39,15 @@ class Result:
     
     def __iter__(self):
         return iter(self.results)
+        
+    def __getitem__(self,key):
+        return self.results[key]
+        
+    def __setitem__(self,key,val):
+        self.results[key] = val
+
+    def __delitem__(self, key):
+        del self.results[key]
     
     def export_csv(self, filename=None, header=True, sep=';'):
         if filename is None:

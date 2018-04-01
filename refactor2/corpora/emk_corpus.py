@@ -36,12 +36,12 @@ class PageParser(Container):
         if self.writingSystem is None or self.subcorpus.endswith(self.writingSystem[:3]):
             self.writingSystem = ''
         if self.kwic:
-            self.viewmode = 'kwic'
+            self.__viewmode = 'kwic'
         else:
-            self.viewmode = 'sen'
+            self.__viewmode = 'sen'
             
-        self.page = None
-        self.pagenum = 1
+        self.__page = None
+        self.__pagenum = 1
         
  
     def get_results(self):
@@ -51,8 +51,8 @@ class PageParser(Container):
         params = {
             "corpname": self.subcorpus,
             "iquery": self.query,
-            "fromp": self.pagenum,
-            "viewmode": self.viewmode,
+            "fromp": self.__pagenum,
+            "viewmode": self.__viewmode,
             "attrs": self.writingSystem,
             "ctxattrs": self.writingSystem
         }
@@ -64,12 +64,12 @@ class PageParser(Container):
         """
         find results (and total number of results) in the page code
         """
-        soup = BeautifulSoup(self.page, 'lxml')
+        soup = BeautifulSoup(self.__page, 'lxml')
         if soup.select('div#error'):
             return []
         res = soup.find('table')
         res = res.find_all('tr')
-        if self.pagenum == 1:
+        if self.__pagenum == 1:
             self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
         return res      
         
@@ -91,7 +91,7 @@ class PageParser(Container):
     def extract(self):
         n = 0
         while n < self.numResults:
-            self.page = self.get_results()
+            self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
@@ -100,4 +100,4 @@ class PageParser(Container):
                 yield self.parse_result(rows[r])
                 n += 1
                 r += 1
-            self.pagenum += 1
+            self.__pagenum += 1
