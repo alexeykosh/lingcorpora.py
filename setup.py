@@ -9,4 +9,5 @@ setup(name='lingcorpora',
       author_email='alexeykochevoy@gmail.com',
       packages=['lingcorpora'],
       zip_safe=False,
+      keywords = ['corpora', 'api', 'language']
       install_requires=['bs4', 'requests', 'lxml', 'tqdm'])
