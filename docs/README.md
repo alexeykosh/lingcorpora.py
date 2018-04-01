@@ -20,7 +20,7 @@ The package is available under [MIT license](https://github.com/lingcorpora/ling
 
 ## About
 
-The project is maintained by [George Moroz](https://github.com/agricolamz) and several students of School of Linguistics of Higher School of Economics. At different stages, the following people have contributed to the project: Alexey Koshevoy, Alexey Duryagin, Ekaterina Gerasimenko, Anna Zueva, Diana Malyshok, Artyom Kopetskiy, Maria Terekhina, Ustinya Kosheleva.
+The project is maintained by [George Moroz](https://github.com/agricolamz) and several students of School of Linguistics of Higher School of Economics. At different stages, the following people have contributed to the project: Alexey Koshevoy, Mark Sobolev, Ekaterina Gerasimenko, Anna Zueva, Diana Malyshok, Artyom Kopetskiy, Maria Terekhina, Ustinya Kosheleva.
 
 
 ## Contributing
