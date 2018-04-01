@@ -13,7 +13,7 @@ R version of this package by George Moroz is located [here](https://github.com/l
 
 The package is available under MIT license.
 
-* [Documentation](docs.html)
-* [What's new](news.html)
-* [About](about.html)
-* [Contributing](contributing.html)
+* [Documentation](https://lingcorpora.github.io/lingcorpora.py/docs.html)
+* [What's new](https://lingcorpora.github.io/lingcorpora.py/news.html)
+* [About](https://lingcorpora.github.io/lingcorpora.py/about.html)
+* [Contributing](https://lingcorpora.github.io/lingcorpora.py/contributing.html)
