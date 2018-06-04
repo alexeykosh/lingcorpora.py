@@ -144,11 +144,11 @@ if __name__ == '__main__':
     #FUNCS_TO_TEST = functions
     FUNCS_TO_TEST = {'rus': functions['rus']}
     TESTS_TO_RUN = ['test_single_query',
-                                'test_num_results',
-                                'test_multi_query',
-                                'test_docstring',
-                                'test_local_scope_only',
-                                'test_dependencies'
-                                ]
+                    'test_num_results',
+                    'test_multi_query',
+                    'test_docstring',
+                    'test_local_scope_only',
+                    'test_dependencies'
+                    ]
 
     run()
