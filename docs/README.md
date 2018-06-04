@@ -17,6 +17,7 @@ The package is available under [MIT license](https://github.com/lingcorpora/ling
 
 * [Documentation](https://lingcorpora.github.io/lingcorpora.py/docs.html)
 * [What's new](https://lingcorpora.github.io/lingcorpora.py/news.html)
+* [Contr](https://github.com/lingcorpora/lingcorpora.py/blob/master/docs/contributing.md)
 
 ## About
 
