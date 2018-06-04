@@ -146,3 +146,36 @@ class PageParser(Container):
             
             self.__c_page += 1
             
+            
+def test_single_query():
+    query = 'фонема'
+
+    parser = PageParser(query=query,
+                        numResults=5
+                        )        
+
+    for t in parser.extract():
+        l, r = t.idxs
+        assert t.text[l:r].lower() == query, \
+               'does not match query: `%s`' % t.text[l:r]
+
+    del parser
+
+
+def test_num_results():
+    numResults = 8
+    query = 'фонема'
+    
+    parser = PageParser(query=query,
+                        numResults=numResults
+                        )        
+    
+    res = list(parser.extract())
+
+    assert len(res) == numResults    
+
+    del parser, res
+
+
+def test_multi_query():
+    return ['фонема', 'морфема']
