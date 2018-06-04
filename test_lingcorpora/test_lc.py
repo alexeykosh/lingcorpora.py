@@ -23,7 +23,7 @@ class TestLangFunc(unittest.TestCase):
         - 1. processing single query
         - 2. matching number or results to desired one
         - 3. processing multiple query
-        - 4. docstring availablility
+        - 4. docstring availability
         - 5. exploiting local scope only
         - 6. exploiting legit dependencies only
     """
@@ -55,7 +55,7 @@ class TestLangFunc(unittest.TestCase):
                              numResults=1
                              )
 
-        self.assertEqual(len(R), 2)
+        self.assertEqual(len(R), len(query))
 
         for q, r in zip(query, R):
             self.assertEqual(q, r.query)
