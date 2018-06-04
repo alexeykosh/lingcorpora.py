@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>lingcorpora_guide</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>lingcorpora_guide</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13,8 +11,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -1109,7 +1107,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2535,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3025,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8760,6 +8755,9 @@ body > #header .header-bar {
     margin-left: 10px;
   }
 }
+[dir="rtl"] #ipython_notebook {
+  float: right !important;
+}
 #noscript {
   width: auto;
   padding-top: 16px;
@@ -8962,8 +8960,14 @@ span#login_widget > .button .badge,
  *
  * Author: Jupyter Development Team
  */
+[dir="rtl"] #tabs li {
+  float: right;
+}
 ul#tabs {
   margin-bottom: 4px;
+}
+[dir="rtl"] ul#tabs {
+  margin-right: 0px;
 }
 ul#tabs a {
   padding-top: 6px;
@@ -8986,6 +8990,16 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons {
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-right {
+  padding-top: 1px;
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-left {
+  float: right !important;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9122,6 +9136,9 @@ ul.breadcrumb span {
 #tree-selector {
   padding-right: 0px;
 }
+[dir="rtl"] #tree-selector a {
+  float: right;
+}
 #button-select-all {
   min-width: 50px;
 }
@@ -9211,6 +9228,9 @@ ul#new-menu {
   left: auto;
   right: 0;
 }
+[dir="rtl"] #new-menu {
+  text-align: right;
+}
 .kernel-menu-icon {
   padding-right: 12px;
   width: 24px;
@@ -9255,6 +9275,9 @@ ul#new-menu {
 }
 #running .panel-group .panel .panel-body .list_container .list_item:last-child {
   border-bottom: 0px;
+}
+[dir="rtl"] #running .col-sm-8 {
+  float: right !important;
 }
 .delete-button {
   display: none;
@@ -9551,6 +9574,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +9595,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -11246,7 +11265,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11558,6 +11577,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +11591,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +11654,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +11668,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11699,9 +11726,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11722,7 +11747,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11746,8 +11771,7 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11755,8 +11779,7 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11772,8 +11795,7 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11796,6 +11818,12 @@ div#notebook {
 </li>
 <li>Write the docstring <code>__doc__</code> and the author <code>__author__</code> before <code>PageParser</code></li>
 <li>Name the file <em>langcode</em>_corpus.py and place it into the <code>corpora</code> directory. <em>langcode</em> stands for <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-3 code</a></li>
+<li>For testing purposes the following functions must be provided (see implementation details in the template below):<ol>
+<li><code>test_single_query</code>: single query processing test-run</li>
+<li><code>test_num_results</code>: assert that amount of data extracted matches the passed one via <code>numResults</code> arg</li>
+<li><code>test_multi_query</code>: provide <code>query</code> arg for the multiple query</li>
+</ol>
+</li>
 <li>If you would like to add new search parameters, open <code>params_container.py</code> and add this parameter to the arguments (<strong>do not forget default value</strong>) and attributes.</li>
 <li>Make a pull request and if API is OK, we will:<ol>
 <li>Add it to the package</li>
@@ -11817,14 +11845,14 @@ div#notebook {
 
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-<span class="n">__doc__</span> <span class="o">=</span> \
+<span class="vm">__doc__</span> <span class="o">=</span> \
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
 <span class="k">class</span> <span class="nc">PageParser</span><span class="p">(</span><span class="n">Container</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># inner auxiliary attributes:</span>
         <span class="c1"># self.__page = None</span>
         <span class="c1"># self.__pagenum = 0</span>
@@ -11849,7 +11877,61 @@ div#notebook {
         <span class="c1"># describing the occurrence, to Query.search()</span>
         <span class="c1"># for parallel corpora also transl and lang</span>
         <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">Target</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span> 
+            <span class="k">yield</span> <span class="n">Target</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">test_single_query</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *This is a possible valid template*</span>
+<span class="sd">    </span>
+<span class="sd">    process single query passed as `query` arg</span>
+<span class="sd">    and make sure that all the Targets found</span>
+<span class="sd">    match the `query`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">query</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">PageParser</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                        <span class="n">numResults</span><span class="o">=</span><span class="mi">5</span>
+                        <span class="p">)</span>        
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">idxs</span>
+        <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">query</span><span class="p">,</span> \
+               <span class="s1">&#39;does not match `query`: `</span><span class="si">%s</span><span class="s1">`&#39;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">r</span><span class="p">]</span>
+
+    <span class="k">del</span> <span class="n">parser</span>
+    
+    
+<span class="k">def</span> <span class="nf">test_num_results</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *This is a possible valid template*</span>
+<span class="sd">    </span>
+<span class="sd">    assert that the amount of Targets found</span>
+<span class="sd">    matches the one passed via `numResults` arg</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">numResults</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span>
+    
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">PageParser</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                        <span class="n">numResults</span><span class="o">=</span><span class="n">numResults</span>
+                        <span class="p">)</span>        
+    
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="n">numResults</span>    
+
+    <span class="k">del</span> <span class="n">parser</span><span class="p">,</span> <span class="n">res</span>
+    
+    
+<span class="k">def</span> <span class="nf">test_multi_query</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    provide `query` arg as iterable[&lt;str&gt;]</span>
+<span class="sd">    for low-level testing of multiple query processing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">str1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">str2</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -11860,4 +11942,8 @@ div#notebook {
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>
