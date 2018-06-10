@@ -14,7 +14,10 @@ functions = {
              'bam': bam_corpus,
              'emk': emk_corpus,
              'zho': zho_corpus,
-             'rus_parallel': rus_parallel_corpus
+             'rus_parallel': rus_parallel_corpus,
+             'dan': dan_corpus,
+             'est': est_corpus,
+             'kat': kat_corpus
             }
 
 

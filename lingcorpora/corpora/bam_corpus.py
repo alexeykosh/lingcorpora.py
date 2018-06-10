@@ -118,7 +118,7 @@ class PageParser(Container):
             final_kws,tags = self.extract_kws(kws)
             idx = (len(lc) + 1, len(lc) + 1 + len(final_kws))
             text = lc + ' ' + final_kws + ' ' + rc
-        t = Target(text.strip(),idx,'',tags)
+        t = Target(text,idx,'',tags)
         return t
         
 
