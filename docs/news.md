@@ -17,6 +17,13 @@
 ## Development
 * * *
 
+### 10.06.2018
+* Georgian, Estonian and Danish corpora refactored (Katya Gerasimenko)
+
+
+### 04.04.2018
+* First tests added (Artyom Kopetskiy)
+
 ### 01.04.2018
 * Bug fixes
 * Finalizing docs
