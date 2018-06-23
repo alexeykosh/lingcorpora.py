@@ -11726,7 +11726,9 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}@media print {
+}
+
+@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11747,7 +11749,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11771,7 +11773,8 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11779,7 +11782,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11795,7 +11799,8 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11818,12 +11823,7 @@ div#notebook {
 </li>
 <li>Write the docstring <code>__doc__</code> and the author <code>__author__</code> before <code>PageParser</code></li>
 <li>Name the file <em>langcode</em>_corpus.py and place it into the <code>corpora</code> directory. <em>langcode</em> stands for <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-3 code</a></li>
-<li>For testing purposes the following functions must be provided (see implementation details in the template below):<ol>
-<li><code>test_single_query</code>: single query processing test-run</li>
-<li><code>test_num_results</code>: assert that amount of data extracted matches the passed one via <code>numResults</code> arg</li>
-<li><code>test_multi_query</code>: provide <code>query</code> arg for the multiple query</li>
-</ol>
-</li>
+<li>For testing purposes strings for single and multi queries must be provided via <code>&lt;dict&gt;</code> named <code>TEST_QUERIES</code> (see template below for details) </li>
 <li>If you would like to add new search parameters, open <code>params_container.py</code> and add this parameter to the arguments (<strong>do not forget default value</strong>) and attributes.</li>
 <li>Make a pull request and if API is OK, we will:<ol>
 <li>Add it to the package</li>
@@ -11848,6 +11848,12 @@ div#notebook {
 <span class="vm">__doc__</span> <span class="o">=</span> \
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># &lt;dict&gt; of queries to be fetched by the testing routine</span>
+<span class="c1"># keys to be preserved</span>
+<span class="n">TEST_QUERIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_single_query&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">,</span>
+                <span class="s1">&#39;test_multi_query&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="nb">str</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="n">N</span><span class="o">&gt;</span><span class="p">]</span>
+               <span class="p">}</span>
 
 
 <span class="k">class</span> <span class="nc">PageParser</span><span class="p">(</span><span class="n">Container</span><span class="p">):</span>
@@ -11878,60 +11884,6 @@ div#notebook {
         <span class="c1"># for parallel corpora also transl and lang</span>
         <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">Target</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">test_single_query</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    *This is a possible valid template*</span>
-<span class="sd">    </span>
-<span class="sd">    process single query passed as `query` arg</span>
-<span class="sd">    and make sure that all the Targets found</span>
-<span class="sd">    match the `query`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">query</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span>
-
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">PageParser</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
-                        <span class="n">numResults</span><span class="o">=</span><span class="mi">5</span>
-                        <span class="p">)</span>        
-
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">parser</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
-        <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">idxs</span>
-        <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">query</span><span class="p">,</span> \
-               <span class="s1">&#39;does not match `query`: `</span><span class="si">%s</span><span class="s1">`&#39;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">r</span><span class="p">]</span>
-
-    <span class="k">del</span> <span class="n">parser</span>
-    
-    
-<span class="k">def</span> <span class="nf">test_num_results</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    *This is a possible valid template*</span>
-<span class="sd">    </span>
-<span class="sd">    assert that the amount of Targets found</span>
-<span class="sd">    matches the one passed via `numResults` arg</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">numResults</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span>
-    
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">PageParser</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
-                        <span class="n">numResults</span><span class="o">=</span><span class="n">numResults</span>
-                        <span class="p">)</span>        
-    
-    <span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
-
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="n">numResults</span>    
-
-    <span class="k">del</span> <span class="n">parser</span><span class="p">,</span> <span class="n">res</span>
-    
-    
-<span class="k">def</span> <span class="nf">test_multi_query</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    provide `query` arg as iterable[&lt;str&gt;]</span>
-<span class="sd">    for low-level testing of multiple query processing</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">return</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">str1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">str2</span><span class="o">&gt;</span><span class="p">]</span>
 </pre></div>
 
 </div>
