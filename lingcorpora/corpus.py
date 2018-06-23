@@ -22,14 +22,16 @@ functions = {
 
 
 class Corpus:
-    def __init__(self, language, sleep_time=1, sleep_each=5):
+    def __init__(self, language, verbose=True, sleep_time=1, sleep_each=5):
         """
         language: str: language alias
+        verbose: bool: tqdm progressbar
         sleep_time: int: sleeping time in seconds
         sleep_each: int: sleep after each `sleep_each` request
         """
         
         self.language = language
+        self.verbose = verbose
         self.__corpus = functions[self.language] 
         self.doc = self.__corpus.__doc__
         
@@ -77,7 +79,8 @@ class Corpus:
             for t in tqdm(self.parser.extract(),
                           total=progress_total,
                           unit='docs',
-                          desc=q_desc):
+                          desc=q_desc,
+                          disable=abs(-1 + self.verbose)):
                 _r.add(t)
                 if _r.N % self.sleep_each == 0:
                     sleep(self.sleep_time)
