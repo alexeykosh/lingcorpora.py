@@ -7,7 +7,11 @@ import re
 import os
 import sys
 import argparse
-import unittest
+
+
+TEST_QUERIES = {'test_single_query': 'къырым ',
+                'test_multi_query': ['къырым', 'озюни']
+                }
 
 
 class PageParser(Container):

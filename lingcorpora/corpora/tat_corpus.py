@@ -11,6 +11,11 @@ results_url = 'http://web-corpora.net/TatarCorpus/search/results.php'
 # get_meta
 
 
+TEST_QUERIES = {'test_single_query': 'туган',
+                'test_multi_query': ['туган', 'мәхәббәт']
+                }
+
+
 class PageParser(Container):
 
     def __init__(self, *args, **kwargs):
