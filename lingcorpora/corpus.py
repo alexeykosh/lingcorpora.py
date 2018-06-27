@@ -17,7 +17,9 @@ functions = {
              'rus_parallel': rus_parallel_corpus,
              'dan': dan_corpus,
              'est': est_corpus,
-             'kat': kat_corpus
+             'kat': kat_corpus,
+             'crh': crh_corpus,
+             'tat': tat_corpus
             }
 
 
