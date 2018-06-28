@@ -19,7 +19,10 @@ functions = {
              'est': est_corpus,
              'kat': kat_corpus,
              'crh': crh_corpus,
-             'tat': tat_corpus
+             'tat': tat_corpus,
+             'deu': deu_corpus,
+             'slk': slk_corpus,
+             'hin': hin_corpus
             }
 
 

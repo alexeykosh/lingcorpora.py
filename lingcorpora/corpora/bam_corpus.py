@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 from html import unescape
 from ..target import Target
 
+TEST_QUERIES = {'test_single_query': 'walasa',
+                'test_multi_query': ['walasa', 'yɔrɔ']
+                }
 
 __doc__ = \
 """

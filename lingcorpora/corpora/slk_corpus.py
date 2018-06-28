@@ -3,20 +3,21 @@ from ..target import Target
 from requests import get
 from bs4 import BeautifulSoup
 
-
-TEST_QUERIES = {'test_single_query': 'къырым ',
-                'test_multi_query': ['къырым', 'озюни']
+TEST_QUERIES = {'test_single_query': 'elektronická',
+                'test_multi_query': ['elektronická', 'je']
                 }
 
 __doc__ = \
     """
     
-API for Crimean Tatar corpus (http://korpus.juls.savba.sk:8080/manatee.ks/do_query?corpname=qirim).
+API for Slovak corpus (http://korpus.juls.savba.sk:8080/manatee.ks/do_query).
     
 Args:
     query: str or List([str]): query or queries
     numResults: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
+    subcorpus: str: subcorpus. Available options:
+                            'prim-6.0-public-all' (by default), 'r-mak-3.0'
     start: int: index of the first query appearance to be shown (0 by default)
     
 Main function: extract
@@ -30,22 +31,24 @@ class PageParser(Container):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        if self.subcorpus is None:
+            self.subcorpus = 'prim-6.0-public-all'
         self.__page = None
         self.__pagenum = 0
 
-    def get_page(self):
+    def __get_page(self):
         """
         create a query url and return a page with results
         """
         params = {'query': self.query,
-                  'corpname': 'qirim',
+                  'corpname': self.subcorpus,
                   'start': self.__pagenum}
         s = get('http://korpus.juls.savba.sk:8080/manatee.ks/do_query', params=params)
         return s.text
 
-    def __get_target(self, l, word, r):
-        text = '%s %s %s' % (l, word, r)
-        idxs = (len(l) + 2, len(l) + 1 + len(word))
+    def __new_target(self, left, word, right):
+        text = '%s %s %s' % (left, word, right)
+        idxs = (len(left) + 2, len(left) + len(word) + 1)
         meta = ''
         tags = {}
         return Target(text, idxs, meta, tags)
@@ -64,20 +67,16 @@ class PageParser(Container):
             center_list.append(center.text)
         for right in soup.select('td[class="rc"]'):
             right_list.append(right.text)
-        res = [self.__get_target(l, c, r) for l, c, r in zip(
+        res = [self.__new_target(l, c, r) for l, c, r in zip(
             left_list, center_list, right_list)]
         return res
 
     def __extract_results(self):
-        self.__page = self.get_page()
+        self.__page = self.__get_page()
         parsed_results = self.__parse_page()
         return parsed_results
 
     def extract(self):
-        """
-        get information and hits from first page and iterate until
-        all hits are collected or the maximum set by user is achieved
-        """
         output_counter = 0
         for i in range(0, self.numResults - 1, 10):
             try:

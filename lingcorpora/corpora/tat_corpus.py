@@ -15,6 +15,22 @@ TEST_QUERIES = {'test_single_query': 'туган',
                 'test_multi_query': ['туган', 'мәхәббәт']
                 }
 
+__doc__ = \
+    """
+    
+API for Tatar corpus (http://web-corpora.net/TatarCorpus/).
+    
+Args:
+    query: str or List([str]): query or queries
+    numResults: int: number of results wanted (100 by default)
+    kwic: boolean: kwic format (True) or a sentence (False) (True by default)
+    tag: boolean: tags shown (True) or not (False)
+    
+Main function: extract
+Returns:
+    A generator of Target objects.
+
+"""
 
 class PageParser(Container):
 
