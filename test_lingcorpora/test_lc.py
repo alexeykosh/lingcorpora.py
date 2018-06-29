@@ -68,7 +68,7 @@ class TestLangFunc(unittest.TestCase):
         for t in parser.extract():
             l, r = t.idxs
             assert t.text[l:r].lower() == query.lower(), \
-                'does not match query: `%s`' % t.text[l:r]
+                '`%s` does not match query `%s`' % (t.text[l:r], query)
 
         del parser
 
@@ -82,7 +82,7 @@ class TestLangFunc(unittest.TestCase):
 
         res = list(parser.extract())
 
-        assert len(res) == numResults
+        assert len(res) == numResults, 'expected %s, got %s' % (numResults, len(res))
 
         del parser, res
 
@@ -93,10 +93,10 @@ class TestLangFunc(unittest.TestCase):
                              numResults=1
                              )
 
-        self.assertEqual(len(R), len(query))
+        self.assertEqual(len(R), len(query), 'expected %s, got %s' % (len(query), len(R)))
 
         for q, r in zip(query, R):
-            self.assertEqual(q, r.query)
+            self.assertEqual(q, r.query, '`%s` does not match query `%s`' % (r.query, q))
 
         del R
         
