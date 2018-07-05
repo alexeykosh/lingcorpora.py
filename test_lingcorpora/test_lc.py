@@ -175,12 +175,12 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
     if stream is None:
         stream = sys.stderr
 
-    log_header = '%s\nTESTING: %s_corpus.py\n%s\n\n'
+    log_header = '\n%s\nTESTING: %s_corpus.py\n%s\n\n'
 
     runner = unittest.TextTestRunner(stream, verbosity=verbosity)
 
     for LANG, FUNC in funcs_to_test.items():
-        stream.write(log_header % ('=' * 20, LANG, '=' * 20))
+        stream.write(log_header % ('*' * 20, LANG, '*' * 20))
 
         suite = unittest.TestSuite()
         routine = TestLangFunc
