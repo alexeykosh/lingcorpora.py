@@ -1,14 +1,18 @@
 language: python
-sudo: required
-cache: packages
+python:
+  - "3.6"
 notifications:
   email:
     on_success: never
-    on_failure: always
+    on_failure: never
+before_install:
+  - "pip install -U pip"
+  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
 install:
   - pip install bs4
   - pip install requests
   - pip install lxml
   - pip install tqdm
 script:
-  - pytest
+  - python test_lingcorpora/test_lc.py
+
