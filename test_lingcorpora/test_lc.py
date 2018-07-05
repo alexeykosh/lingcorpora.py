@@ -198,8 +198,8 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
     stream.close()
 
 if __name__ == '__main__':
-    # FUNCS_TO_TEST = functions
-    FUNCS_TO_TEST = {'rus': functions['rus']}
+    FUNCS_TO_TEST = functions
+    # FUNCS_TO_TEST = {'rus': functions['rus']}
     TESTS_TO_RUN = ['test_single_query',
                     'test_num_results',
                     'test_multi_query',
