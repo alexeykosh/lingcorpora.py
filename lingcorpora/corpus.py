@@ -22,7 +22,8 @@ functions = {
              'tat': tat_corpus,
              'deu': deu_corpus,
              'slk': slk_corpus,
-             'hin': hin_corpus
+             'hin': hin_corpus,
+             'rus_pol': rus_pol_corpos
             }
 
 
