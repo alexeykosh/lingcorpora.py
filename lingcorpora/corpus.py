@@ -23,7 +23,7 @@ functions = {
              'deu': deu_corpus,
              'slk': slk_corpus,
              'hin': hin_corpus,
-             'rus_pol': rus_pol_corpos
+             'rus_pol': rus_pol_corpus
             }
 
 
