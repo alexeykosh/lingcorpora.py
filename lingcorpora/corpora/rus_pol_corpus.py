@@ -26,9 +26,10 @@ __doc__ = \
         A generator over Target objects.
     """
 
-TEST_QUERIES = {'test_single_query': 'стул',
-                'test_multi_query': ['стул', 'siadania']
-                }
+
+TEST_DATA = {'test_single_query': {'query': 'стул', 'queryLanguage': 'rus'},
+             'test_multi_query': {'query': ['стул', 'siadania'], 'queryLanguage': 'rus'}
+            }
 
 
 class PageParser(Container):
