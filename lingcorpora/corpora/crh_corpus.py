@@ -4,9 +4,10 @@ from requests import get
 from bs4 import BeautifulSoup
 
 
-TEST_QUERIES = {'test_single_query': 'къырым ',
-                'test_multi_query': ['къырым', 'озюни']
-                }
+TEST_DATA = {'test_single_query': {'query': 'къырым'},
+             'test_multi_query': {'query': ['къырым', 'озюни']}
+            }
+
 
 __doc__ = \
     """
