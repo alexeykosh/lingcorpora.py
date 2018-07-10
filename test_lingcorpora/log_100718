@@ -1,0 +1,419 @@
+
+********************
+TESTING: rus_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.358s
+
+OK
+
+********************
+TESTING: bam_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ERROR
+test_num_results (__main__.TestLangFunc) ... ERROR
+test_multi_query (__main__.TestLangFunc) ... ERROR
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ERROR
+
+======================================================================
+ERROR: test_single_query (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 68, in test_single_query
+    res = list(parser.extract())
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 132, in extract
+    rows = self.parse_page()
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 69, in parse_page
+    self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_num_results (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 85, in test_num_results
+    res = list(parser.extract())
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 132, in extract
+    rows = self.parse_page()
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 69, in parse_page
+    self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_multi_query (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 96, in test_multi_query
+    R = self.corp.search(**_kwargs)
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpus.py", line 89, in search
+    disable=abs(-1 + self.verbose)):
+  File "C:\Users\PC\Anaconda3\lib\site-packages\tqdm\_tqdm.py", line 934, in __iter__
+    for obj in iterable:
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 132, in extract
+    rows = self.parse_page()
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 69, in parse_page
+    self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_local_scope_only (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 119, in test_local_scope_only
+    R = self.corp.search(**_kwargs)
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpus.py", line 89, in search
+    disable=abs(-1 + self.verbose)):
+  File "C:\Users\PC\Anaconda3\lib\site-packages\tqdm\_tqdm.py", line 934, in __iter__
+    for obj in iterable:
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 132, in extract
+    rows = self.parse_page()
+  File "C:\Users\PC\Desktop\lingcorpora.py-master\lingcorpora\corpora\bam_corpus.py", line 69, in parse_page
+    self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
+IndexError: list index out of range
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.968s
+
+FAILED (errors=4)
+
+********************
+TESTING: emk_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... FAIL
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+======================================================================
+FAIL: test_single_query (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 75, in test_single_query
+    '`%s` does not match query `%s`' % (t.text[l:r], parser.query)
+AssertionError: ` siyaman` does not match query `kɔdɔ`
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.486s
+
+FAILED (failures=1)
+
+********************
+TESTING: zho_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... FAIL
+
+======================================================================
+FAIL: test_fetch_data (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 50, in test_fetch_data
+    self.assertIn(_var, self.func.__dict__)
+AssertionError: 'TEST_DATA' not found in {'__name__': 'lingcorpora.corpora.zho_corpus', '__doc__': "\n    \nAPI for Chinese corpus (http://ccl.pku.edu.cn:8080/ccl_corpus/).\n    \nArgs:\n    query: str or List([str]): query or queries (currently only exact search by word or phrase is available)\n    numResults: int: number of results wanted (100 by default)\n    subcorpus: str: subcorpus. Available options: 'xiandai' (modern Chinese) or 'dugai' (ancient Chinese) ('xiandai' by default)\n    nLeft, nRight: int: context lenght (in symbols, 30 by default)\n    \nMain function: extract\nReturns:\n    A generator of Target objects.\n\n", '__package__': 'lingcorpora.corpora', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000020D3911E358>, '__spec__': ModuleSpec(name='lingcorpora.corpora.zho_corpus', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000020D3911E358>, origin='C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\zho_corpus.py'), '__file__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\zho_corpus.py', '__cached__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\__pycache__\\zho_corpus.cpython-36.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'Exception': <class 'Exception'>, 'TypeError': <class 'TypeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'GeneratorExit': <class 'GeneratorExit'>, 'SystemExit': <class 'SystemExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'ImportError': <class 'ImportError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'OSError': <class 'OSError'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'EOFError': <class 'EOFError'>, 'RuntimeError': <class 'RuntimeError'>, 'RecursionError': <class 'RecursionError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'NameError': <class 'NameError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'AttributeError': <class 'AttributeError'>, 'SyntaxError': <class 'SyntaxError'>, 'IndentationError': <class 'IndentationError'>, 'TabError': <class 'TabError'>, 'LookupError': <class 'LookupError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ValueError': <class 'ValueError'>, 'UnicodeError': <class 'UnicodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'AssertionError': <class 'AssertionError'>, 'ArithmeticError': <class 'ArithmeticError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'SystemError': <class 'SystemError'>, 'ReferenceError': <class 'ReferenceError'>, 'BufferError': <class 'BufferError'>, 'MemoryError': <class 'MemoryError'>, 'Warning': <class 'Warning'>, 'UserWarning': <class 'UserWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'BytesWarning': <class 'BytesWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'ConnectionError': <class 'ConnectionError'>, 'BlockingIOError': <class 'BlockingIOError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'InterruptedError': <class 'InterruptedError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2017 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'license': See https://www.python.org/psf/license/, 'help': Type help() for interactive help, or help(object) for help about object.}, 'Container': <class 'lingcorpora.params_container.Container'>, 'get': <function get at 0x0000020D38437950>, 'BeautifulSoup': <class 'bs4.BeautifulSoup'>, 'unescape': <function unescape at 0x0000020D38308F28>, 'Target': <class 'lingcorpora.target.Target'>, 'PageParser': <class 'lingcorpora.corpora.zho_corpus.PageParser'>}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+
+********************
+TESTING: rus_parallel_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.777s
+
+OK
+
+********************
+TESTING: dan_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... FAIL
+test_num_results (__main__.TestLangFunc) ... FAIL
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+======================================================================
+FAIL: test_single_query (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 70, in test_single_query
+    self.assertGreater(len(res), 0)
+AssertionError: 0 not greater than 0
+
+======================================================================
+FAIL: test_num_results (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 88, in test_num_results
+    'expected %s, got %s' % (_kwargs['numResults'], len(res))
+AssertionError: expected 5, got 0
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.683s
+
+FAILED (failures=2)
+
+********************
+TESTING: est_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... FAIL
+
+======================================================================
+FAIL: test_fetch_data (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 50, in test_fetch_data
+    self.assertIn(_var, self.func.__dict__)
+AssertionError: 'TEST_DATA' not found in {'__name__': 'lingcorpora.corpora.est_corpus', '__doc__': "\n    \nAPI for Estonian corpus (http://www.cl.ut.ee/korpused/kasutajaliides/index.php).\n    \nArgs:\n    query: str or List([str]): query or queries (currently only exact search by word is available)\n    numResults: int: number of results wanted (100 by default)\n    subcorpus: str: subcorpus. Available options: see below values and their meanings ('1990_ajalehed_26_08_04' by default). To use several subcorpora, list them with semicolon, e.g. '1990_ajalehed_26_08_04;EE_10_09_2004'.\n    \nMain function: extract\nReturns:\n    A generator of Target objects.\n\nAvailable subcorpora:\n    1990_ajalehed_26_08_04: 1990d - ajakirjandus [865 tuhat]\n    EE_10_09_2004: Eesti Ekspress 1996-2001 [7,2 miljonit]\n    Maaleht: Maaleht 2001-2004 [5,3 miljonit]\n    Postimees_1995: Postimees 1995\n    Postimees_1996: Postimees 1996\n    Postimees_1997: Postimees 1997\n    Postimees_1998: Postimees 1998\n    Postimees_1999: Postimees 1999\n    Postimees_2000: Postimees 2000\n    Postimees_Extra: Postimees Extra\n    epl_1995: Eesti Päevaleht 1995\n    epl_1996: Eesti Päevaleht 1996\n    epl_1997: Eesti Päevaleht 1997\n    epl_1998: Eesti Päevaleht 1998\n    epl_1999: Eesti Päevaleht 1999\n    epl_2000: Eesti Päevaleht 2000\n    epl_2001: Eesti Päevaleht 2001\n    epl_2002: Eesti Päevaleht 2002\n    epl_2003: Eesti Päevaleht 2003\n    epl_2004: Eesti Päevaleht 2004\n    epl_2005: Eesti Päevaleht 2005\n    epl_2006: Eesti Päevaleht 2006\n    epl_2007: Eesti Päevaleht 2007\n    sloleht_1997: SLÕhtuleht 1997\n    sloleht_1998: SLÕhtuleht 1998\n    sloleht_1999: SLÕhtuleht 1999\n    sloleht_2000: SLÕhtuleht 2000\n    sloleht_2001: SLÕhtuleht 2001\n    sloleht_2002: SLÕhtuleht 2002\n    sloleht_2003: SLÕhtuleht 2003\n    sloleht_2004: SLÕhtuleht 2004\n    sloleht_2005: SLÕhtuleht 2005\n    sloleht_2006: SLÕhtuleht 2006\n    sloleht_2007: SLÕhtuleht 2007\n    valga: Ajaleht Valgamaalane [2,5 miljonit]\n    le: Ajaleht Lääne Elu [1,8 miljonit]\n    Kroonika: Seltskonnaajakiri Kroonika [960 tuhat]\n    1980_aja: 1980d - ajakirjandus (baas) [175 tuhat]\n    1970_aja: 1970d - ajakirjandus [168 tuhat]\n    1960_aja: 1960d - ajakirjandus [201 tuhat]\n    1950_aja: 1950d - ajakirjandus [242 tuhat]\n    1930_aja: 1930d - ajakirjandus [117 tuhat]\n    1910_aja: 1910d - ajakirjandus [182 tuhat]\n    1900_aja: 1900d - ajakirjandus [171 tuhat]\n    1890_aja: 1890d - ajakirjandus [193 tuhat]\n    1990_ilu_26_08_04: 1990d - ilukirjandus (katkendid) [602 tuhat]\n    segailu_5_10_2008: 1990d - ilukirjandus [5,6 miljonit]\n    1980_ilu: 1980d - ilukirjandus (baas) [250 tuhat]\n    1970_ilu: 1970d - ilukirjandus [257 tuhat]\n    1960_ilu: 1960d - ilukirjandus [132 tuhat]\n    1950_ilu: 1950d - ilukirjandus [66 tuhat]\n    1930_ilu: 1930d - ilukirjandus [252 tuhat]\n    1910_ilu: 1910d - ilukirjandus [247 tuhat]\n    1900_ilu: 1900d - ilukirjandus [64 tuhat]\n    1890_ilu: 1890d - ilukirjandus [155 tuhat]\n    1980_tea: 1980d - teadustekst [160 tuhat]\n    horisont: Ajakiri Horisont 1996-2003 [260 tuhat]\n    arvutitehnika: Ajakiri Arvutitehnika ja Andmetöötlus 1999-2005 [625 tuhat]\n    doktor: Doktoritööd [2,3 miljonit]\n    Eesti_Arst_2002: Ajakiri Eesti Arst 2002 [249 tuhat]\n    Eesti_Arst_2003: Ajakiri Eesti Arst 2003 [244 tuhat]\n    Eesti_Arst_2004: Ajakiri Eesti Arst 2004 [217 tuhat]\n    agraar: Agraarteadus 2001-2006 [298 tuhat]\n    jututoad: Jututoad [7 miljonit]\n    uudisgrupid: Uudisgrupid [8 miljonit]\n    foorumid: Foorumid [5 miljonit]\n    kommentaarid: Kommentaarid [2 miljonit]\n    riigikogu: Riigikogu stenogrammid 1995 - 2001 [13 miljonit]\n    1980_muu: 1980d - muud tekstid [415 tuhat]\n    teadusartiklid: Mitmesugused Teadusartiklid 1995-2007 [1,3 miljonit]\n    akp: Asutawa Kogu protokollid [2 miljonit]\n    \n", '__package__': 'lingcorpora.corpora', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000020D38F82898>, '__spec__': ModuleSpec(name='lingcorpora.corpora.est_corpus', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000020D38F82898>, origin='C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\est_corpus.py'), '__file__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\est_corpus.py', '__cached__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\__pycache__\\est_corpus.cpython-36.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'Exception': <class 'Exception'>, 'TypeError': <class 'TypeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'GeneratorExit': <class 'GeneratorExit'>, 'SystemExit': <class 'SystemExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'ImportError': <class 'ImportError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'OSError': <class 'OSError'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'EOFError': <class 'EOFError'>, 'RuntimeError': <class 'RuntimeError'>, 'RecursionError': <class 'RecursionError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'NameError': <class 'NameError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'AttributeError': <class 'AttributeError'>, 'SyntaxError': <class 'SyntaxError'>, 'IndentationError': <class 'IndentationError'>, 'TabError': <class 'TabError'>, 'LookupError': <class 'LookupError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ValueError': <class 'ValueError'>, 'UnicodeError': <class 'UnicodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'AssertionError': <class 'AssertionError'>, 'ArithmeticError': <class 'ArithmeticError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'SystemError': <class 'SystemError'>, 'ReferenceError': <class 'ReferenceError'>, 'BufferError': <class 'BufferError'>, 'MemoryError': <class 'MemoryError'>, 'Warning': <class 'Warning'>, 'UserWarning': <class 'UserWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'BytesWarning': <class 'BytesWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'ConnectionError': <class 'ConnectionError'>, 'BlockingIOError': <class 'BlockingIOError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'InterruptedError': <class 'InterruptedError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2017 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'license': See https://www.python.org/psf/license/, 'help': Type help() for interactive help, or help(object) for help about object.}, 'Container': <class 'lingcorpora.params_container.Container'>, 'Target': <class 'lingcorpora.target.Target'>, 'get': <function get at 0x0000020D38437950>, 'BeautifulSoup': <class 'bs4.BeautifulSoup'>, 're': <module 're' from 'C:\\Users\\PC\\Anaconda3\\lib\\re.py'>, 'PageParser': <class 'lingcorpora.corpora.est_corpus.PageParser'>}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+
+********************
+TESTING: kat_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... FAIL
+
+======================================================================
+FAIL: test_fetch_data (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 50, in test_fetch_data
+    self.assertIn(_var, self.func.__dict__)
+AssertionError: 'TEST_DATA' not found in {'__name__': 'lingcorpora.corpora.kat_corpus', '__doc__': '\n    \nAPI for Georgian monolingual corpus (http://corpora.iliauni.edu.ge).\n    \nArgs:\n    query: str or List([str]): query or queries (currently only exact search by word is available)\n    numResults: int: number of results wanted (100 by default)\n    \nMain function: extract\nReturns:\n    A generator of Target objects.\n\n', '__package__': 'lingcorpora.corpora', '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x0000020D38F82DA0>, '__spec__': ModuleSpec(name='lingcorpora.corpora.kat_corpus', loader=<_frozen_importlib_external.SourceFileLoader object at 0x0000020D38F82DA0>, origin='C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\kat_corpus.py'), '__file__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\kat_corpus.py', '__cached__': 'C:\\Users\\PC\\Desktop\\lingcorpora.py-master\\lingcorpora\\corpora\\__pycache__\\kat_corpus.cpython-36.pyc', '__builtins__': {'__name__': 'builtins', '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'Exception': <class 'Exception'>, 'TypeError': <class 'TypeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'GeneratorExit': <class 'GeneratorExit'>, 'SystemExit': <class 'SystemExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'ImportError': <class 'ImportError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'OSError': <class 'OSError'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'WindowsError': <class 'OSError'>, 'EOFError': <class 'EOFError'>, 'RuntimeError': <class 'RuntimeError'>, 'RecursionError': <class 'RecursionError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'NameError': <class 'NameError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'AttributeError': <class 'AttributeError'>, 'SyntaxError': <class 'SyntaxError'>, 'IndentationError': <class 'IndentationError'>, 'TabError': <class 'TabError'>, 'LookupError': <class 'LookupError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ValueError': <class 'ValueError'>, 'UnicodeError': <class 'UnicodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'AssertionError': <class 'AssertionError'>, 'ArithmeticError': <class 'ArithmeticError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'SystemError': <class 'SystemError'>, 'ReferenceError': <class 'ReferenceError'>, 'BufferError': <class 'BufferError'>, 'MemoryError': <class 'MemoryError'>, 'Warning': <class 'Warning'>, 'UserWarning': <class 'UserWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'BytesWarning': <class 'BytesWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'ConnectionError': <class 'ConnectionError'>, 'BlockingIOError': <class 'BlockingIOError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'InterruptedError': <class 'InterruptedError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-Z plus Return to exit, 'exit': Use exit() or Ctrl-Z plus Return to exit, 'copyright': Copyright (c) 2001-2017 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'license': See https://www.python.org/psf/license/, 'help': Type help() for interactive help, or help(object) for help about object.}, 'Container': <class 'lingcorpora.params_container.Container'>, 'Target': <class 'lingcorpora.target.Target'>, 'requests': <module 'requests' from 'C:\\Users\\PC\\Anaconda3\\lib\\site-packages\\requests\\__init__.py'>, 'BeautifulSoup': <class 'bs4.BeautifulSoup'>, 'PageParser': <class 'lingcorpora.corpora.kat_corpus.PageParser'>}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+
+********************
+TESTING: crh_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... FAIL
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+======================================================================
+FAIL: test_num_results (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 88, in test_num_results
+    'expected %s, got %s' % (_kwargs['numResults'], len(res))
+AssertionError: expected 1, got 0
+
+----------------------------------------------------------------------
+Ran 5 tests in 34.071s
+
+FAILED (failures=1)
+
+********************
+TESTING: tat_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 9.305s
+
+OK
+
+********************
+TESTING: deu_corpus.py
+********************
+test_fetch_data (__main__.TestLangFunc) ... ok
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+OK
+test_single_query (__main__.TestLangFunc) ... FAIL
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+======================================================================
+FAIL: test_single_query (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_lingcorpora/test_lc.py", line 75, in test_single_query
+    '`%s` does not match query `%s`' % (t.text[l:r], parser.query)
+AssertionError: `Bezüge` does not match query `bezug`
+----------------------------------------------------------------------
+Ran 5 tests in 4.792s
+FAILED (failures=1)
+
+********************
+TESTING: slk_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... FAIL
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+======================================================================
+FAIL: test_num_results (__main__.TestLangFunc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/PC/Desktop/lingcorpora.py-master/test_lingcorpora/test_lc.py", line 88, in test_num_results
+    'expected %s, got %s' % (_kwargs['numResults'], len(res))
+AssertionError: expected 1, got 0
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.257s
+
+FAILED (failures=1)
+
+********************
+TESTING: hin_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 2.219s
+
+OK
+
+********************
+TESTING: rus_pol_corpus.py
+********************
+
+test_fetch_data (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+test_single_query (__main__.TestLangFunc) ... ok
+test_num_results (__main__.TestLangFunc) ... ok
+test_multi_query (__main__.TestLangFunc) ... ok
+test_docstring (__main__.TestLangFunc) ... ok
+test_local_scope_only (__main__.TestLangFunc) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.721s
+
+OK
