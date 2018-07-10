@@ -4,9 +4,9 @@ from ..params_container import Container
 from ..target import Target
 import re
 
-TEST_QUERIES = {'test_single_query': 'skyne',
-                'test_multi_query': ['skyne', 'kanon']
-                }
+TEST_DATA = {'test_single_query': {'query': 'skyne'},
+             'test_multi_query': {'query': ['skyne', 'kanon']}
+            }
 
 __doc__ = \
 """
