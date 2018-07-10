@@ -4,9 +4,9 @@ from ..params_container import Container
 from html import unescape
 from ..target import Target
 
-TEST_QUERIES = {'test_single_query': 'kɔdɔ',
-                'test_multi_query': ['alu', 'kɔdɔ']
-                }
+TEST_DATA = {'test_single_query': {'query': 'kɔdɔ'},
+             'test_multi_query': {'query': ['alu', 'kɔdɔ']}
+            }
 
 __doc__ = \
 """
