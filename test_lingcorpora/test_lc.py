@@ -46,7 +46,7 @@ class TestLangFunc(unittest.TestCase):
         set as `self.fetch` if valid
         """
 
-        _var = 'TEST_QUERIES'
+        _var = 'TEST_DATA'
         self.assertIn(_var, self.func.__dict__)
         self.assertIsInstance(self.func.__dict__.get(_var), dict)
         self.assertIn('test_single_query', self.func.__dict__[_var].keys())
