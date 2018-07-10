@@ -32,9 +32,9 @@ Returns:
 """
 
 
-TEST_QUERIES = {'test_single_query': 'фонема',
-                'test_multi_query': ['фонема', 'морфема']
-                }
+TEST_DATA = {'test_single_query': {'query': 'фонема'},
+             'test_multi_query': {'query': ['фонема', 'морфема']}
+            }
 
 
 class PageParser(Container):
