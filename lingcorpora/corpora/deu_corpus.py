@@ -3,9 +3,9 @@ from ..target import Target
 from requests import post
 from bs4 import BeautifulSoup
 
-TEST_QUERIES = {'test_single_query': 'bezug',
-                'test_multi_query': ['bezug', 'Mutter']
-                }
+TEST_DATA = {'test_single_query': {'query': 'bezug'},
+             'test_multi_query': {'query': ['bezug', 'Mutter']}
+            }
 
 __doc__ = \
     """
