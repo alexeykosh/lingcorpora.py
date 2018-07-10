@@ -1,10 +1,9 @@
 import sys
 import os
 import unittest
-import pickle
 from modulefinder import ModuleFinder
 from random import randint
-from tqdm import tqdm
+from collections import Iterable
 
 sys.path.insert(0, os.path.abspath('..'))
 from lingcorpora.corpus import Corpus, functions
@@ -50,68 +49,70 @@ class TestLangFunc(unittest.TestCase):
         _var = 'TEST_QUERIES'
         self.assertIn(_var, self.func.__dict__)
         self.assertIsInstance(self.func.__dict__.get(_var), dict)
-        self.assertIn('test_single_query', self.func.__dict__.get(_var).keys())
-        self.assertIsInstance(self.func.__dict__.get(_var).get('test_single_query'), str)
-        self.assertIn('test_multi_query', self.func.__dict__.get(_var).keys())
-        self.assertIsInstance(self.func.__dict__.get(_var).get('test_multi_query'), list)
-        self.assertIsInstance(self.func.__dict__.get(_var).get('test_single_query')[0], str)
+        self.assertIn('test_single_query', self.func.__dict__[_var].keys())
+        self.assertIsInstance(self.func.__dict__[_var].get('test_single_query'), dict)
+        self.assertIsInstance(self.func.__dict__[_var]['test_single_query'].get('query'), str)
+        self.assertIn('test_multi_query', self.func.__dict__[_var].keys())
+        self.assertIsInstance(self.func.__dict__[_var].get('test_multi_query'), dict)
+        self.assertIsInstance(self.func.__dict__[_var]['test_multi_query'].get('query'), Iterable)
+        self.assertIsInstance(self.func.__dict__[_var]['test_multi_query']['query'][0], str)
 
-        TestLangFunc.fetch_data = self.func.__dict__.get(_var)
+        TestLangFunc.fetch_data = self.func.__dict__[_var]
 
     def test_single_query(self):
-        query = self.fetch_data.get('test_single_query')
+        _kwargs = self.fetch_data['test_single_query']
+        _kwargs['numResults'] = randint(1, 5)
 
-        parser = self.func.PageParser(query=query,
-                                      numResults=3
-                                      )
+        parser = self.func.PageParser(**_kwargs)
 
         for t in parser.extract():
             l, r = t.idxs
-            assert t.text[l:r].lower() == query.lower(), \
-                '`%s` does not match query `%s`' % (t.text[l:r], query)
+            assert t.text[l:r].lower() == parser.query.lower(), \
+                '`%s` does not match query `%s`' % (t.text[l:r], parser.query)
 
-        del parser
+        del _kwargs, parser
 
     def test_num_results(self):
-        query = self.fetch_data.get('test_single_query')
-        numResults = randint(1, 5)
+        _kwargs = self.fetch_data['test_single_query']
+        _kwargs['numResults'] = randint(1, 5)
 
-        parser = self.func.PageParser(query=query,
-                                      numResults=numResults
-                                      )
+        parser = self.func.PageParser(**_kwargs)
 
         res = list(parser.extract())
 
-        assert len(res) == numResults, 'expected %s, got %s' % (numResults, len(res))
+        assert len(res) == _kwargs['numResults'], \
+            'expected %s, got %s' % (_kwargs['numResults'], len(res))
 
-        del parser, res
+        del _kwargs, parser, res
 
     def test_multi_query(self):
-        query = self.fetch_data.get('test_multi_query')
+        _kwargs = self.fetch_data['test_multi_query']
+        _kwargs['numResults'] = randint(1, 5)
 
-        R = self.corp.search(query=query,
-                             numResults=1
+        R = self.corp.search(**_kwargs)
+
+        self.assertEqual(len(R), len(_kwargs['query']),
+                         'expected %s, got %s' % (len(_kwargs['query']), len(R))
+                         )
+
+        for q, r in zip(_kwargs['query'], R):
+            self.assertEqual(q, r.query,
+                             '`%s` does not match query `%s`' % (r.query, q)
                              )
 
-        self.assertEqual(len(R), len(query), 'expected %s, got %s' % (len(query), len(R)))
-
-        for q, r in zip(query, R):
-            self.assertEqual(q, r.query, '`%s` does not match query `%s`' % (r.query, q))
-
-        del R
+        del _kwargs, R
         
     def test_docstring(self):
         self.assertIn('__doc__', self.func.__dict__)
         self.assertIsInstance(self.func.__doc__, str)
 
     def test_local_scope_only(self):
-        query = self.fetch_data.get('test_single_query')
+        _kwargs = self.fetch_data['test_single_query']
+        _kwargs['numResults'] = randint(1, 5)
 
         pre_globals_len = len(globals())
 
-        R = self.corp.search(query=query,
-                             numResults=1
-                             )
+        R = self.corp.search(**_kwargs)
 
         post_globals_len = len(globals())
 
@@ -119,7 +120,7 @@ class TestLangFunc(unittest.TestCase):
                          post_globals_len
                          )
 
-        del R
+        del _kwargs, R
 
     def test_dependencies(self):
         """
@@ -141,7 +142,7 @@ class TestLangFunc(unittest.TestCase):
 
         mf = ModuleFinder()
 
-        mf.run_script(init_path)
+        mf.run_script(core_path)
         legit_deps = set(mf.modules.keys())
 
         mf.run_script(path)
@@ -199,7 +200,6 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
 
 if __name__ == '__main__':
     FUNCS_TO_TEST = functions
-    # FUNCS_TO_TEST = {'rus': functions['rus']}
     TESTS_TO_RUN = ['test_single_query',
                     'test_num_results',
                     'test_multi_query',
