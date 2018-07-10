@@ -28,9 +28,11 @@ Returns:
     A generator over Target objects.
 """
 
-TEST_QUERIES = {'test_single_query': 'стол',
-                'test_multi_query': ['стол', 'стул']
-                }
+
+TEST_DATA = {'test_single_query': {'query': 'стул', 'queryLanguage': 'rus'},
+             'test_multi_query': {'query': ['стол', 'стул'], 'queryLanguage': 'rus'}
+            }
+
 
 class PageParser(Container):
     def __init__(self, *args, **kwargs):
