@@ -11823,7 +11823,7 @@ div#notebook {
 </li>
 <li>Write the docstring <code>__doc__</code> and the author <code>__author__</code> before <code>PageParser</code></li>
 <li>Name the file <em>langcode</em>_corpus.py and place it into the <code>corpora</code> directory. <em>langcode</em> stands for <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-3 code</a></li>
-<li>For testing purposes strings for single and multi queries must be provided via <code>&lt;dict&gt;</code> named <code>TEST_QUERIES</code> (see template below for details) </li>
+<li>For testing purposes querying data must be provided via <code>&lt;dict&gt;</code> named <code>TEST_DATA</code> (see template below for details) </li>
 <li>If you would like to add new search parameters, open <code>params_container.py</code> and add this parameter to the arguments (<strong>do not forget default value</strong>) and attributes.</li>
 <li>Make a pull request and if API is OK, we will:<ol>
 <li>Add it to the package</li>
@@ -11849,11 +11849,12 @@ div#notebook {
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c1"># &lt;dict&gt; of queries to be fetched by the testing routine</span>
-<span class="c1"># keys to be preserved</span>
-<span class="n">TEST_QUERIES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_single_query&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s1">&#39;test_multi_query&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="nb">str</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="n">N</span><span class="o">&gt;</span><span class="p">]</span>
-               <span class="p">}</span>
+<span class="c1"># &lt;dict&gt; of querying data passed to `Corpus.search` as kwargs while testing</span>
+<span class="c1"># keys and types to be preserved</span>
+
+<span class="n">TEST_DATA</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;test_single_query&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>                            <span class="c1"># {arg: value, ...}</span>
+             <span class="s1">&#39;test_multi_query&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="nb">str</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span> <span class="o">&lt;</span><span class="nb">str</span> <span class="n">N</span><span class="o">&gt;</span><span class="p">],</span> <span class="o">...</span><span class="p">}</span>    <span class="c1"># {arg: value, ...}</span>
+            <span class="p">}</span>
 
 
 <span class="k">class</span> <span class="nc">PageParser</span><span class="p">(</span><span class="n">Container</span><span class="p">):</span>
