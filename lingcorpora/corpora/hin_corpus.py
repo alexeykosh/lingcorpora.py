@@ -6,9 +6,9 @@ import re
 
 # has errors exporting results with words with diacritics on the end
 
-TEST_QUERIES = {'test_single_query': 'कुत्ते',
-                'test_multi_query': ['कुत्ते', 'हाय']
-                }
+TEST_DATA = {'test_single_query': {'query': 'कुत्ते'},
+             'test_multi_query': {'query': ['कुत्ते', 'हाय']}
+            }
 
 __doc__ = \
     """
