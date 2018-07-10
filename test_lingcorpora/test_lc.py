@@ -64,8 +64,12 @@ class TestLangFunc(unittest.TestCase):
         _kwargs['numResults'] = randint(1, 5)
 
         parser = self.func.PageParser(**_kwargs)
+        
+        res = list(parser.extract())
 
-        for t in parser.extract():
+        self.assertGreater(len(res), 0)
+
+        for t in res:
             l, r = t.idxs
             assert t.text[l:r].lower() == parser.query.lower(), \
                 '`%s` does not match query `%s`' % (t.text[l:r], parser.query)
