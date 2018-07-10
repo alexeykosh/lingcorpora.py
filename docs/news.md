@@ -17,6 +17,9 @@
 ## Development
 * * *
 
+### 8.07.2018
+* Russian-polish parallel corpus refactored
+
 ### 10.06.2018
 * Georgian, Estonian and Danish corpora refactored (Katya Gerasimenko)
 
