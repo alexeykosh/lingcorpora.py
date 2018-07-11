@@ -16,7 +16,7 @@ __doc__ = \
         numResults: int: number of results wanted (100 by default)
         kwic: boolean: kwic format (True) or a sentence (False) (True by default)
         tag: boolean: whether to collect grammatical tags for target word or not (False by default)
-        subcorpus: list: subcorpus (all of the mentioned below).
+        subcorpus: list: subcorpus (all of the mentioned below by default).
                         Valid: ['non-fiction', 'fiction<1945', 'fiction>1945', 'press', 'law', 'religious', 
                         'russian', 'foreign', 'polish']
     
@@ -39,7 +39,7 @@ class PageParser(Container):
         if self.subcorpus is None:
             self.subcorpus = ['1', '2', '3', '4', '5', '6', 'russian', 'foreign', 'polish']
         elif not isinstance(self.subcorpus, list):
-            raise TypeError('Parameter subcorpus should be list!')
+            raise TypeError('This corpus is spetial: parameter subcorpus should be list type!')
         else:
             synon = {'non-fiction': '6',
                      'fiction<1945': '1',
