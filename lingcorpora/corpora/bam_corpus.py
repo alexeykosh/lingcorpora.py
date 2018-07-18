@@ -66,7 +66,7 @@ class PageParser(Container):
         res = soup.find('table')
         res = res.find_all('tr')
         if self.__pagenum == 1:
-            self.numResults = min(int(soup.select('strong[data-num]')[0].text),self.numResults)
+            self.numResults = min(int(soup.select('strong.add_commas')[0].text.replace(',','')),self.numResults)
         return res
 
         

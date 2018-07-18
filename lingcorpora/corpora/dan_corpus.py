@@ -4,8 +4,8 @@ from ..params_container import Container
 from ..target import Target
 import re
 
-TEST_DATA = {'test_single_query': {'query': 'skyne'},
-             'test_multi_query': {'query': ['skyne', 'kanon']}
+TEST_DATA = {'test_single_query': {'query': 'kaster'},
+             'test_multi_query': {'query': ['kaster', 'kanon']}
             }
 
 __doc__ = \
@@ -36,7 +36,7 @@ class PageParser(Container):
     def get_first_page(self):
         params = {'query': self.query,
                   'search': 'Search',
-                  'tag': 'lemma'}
+                  'tag': 'word'}
         response = self.__session.get('http://ordnet.dk/korpusdk_en/concordance/action', params=params)
         return response
 

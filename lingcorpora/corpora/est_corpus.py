@@ -4,6 +4,9 @@ from requests import get
 from bs4 import BeautifulSoup
 import re
 
+TEST_DATA = {'test_single_query': {'query': 'keele'},
+             'test_multi_query': {'query': ['keele', 'tulnud']}
+            }
 
 __doc__ = \
 """

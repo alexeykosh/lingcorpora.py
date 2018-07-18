@@ -4,6 +4,11 @@ import requests
 from bs4 import BeautifulSoup
 
 
+TEST_DATA = {'test_single_query': {'query': 'წელი'},
+             'test_multi_query': {'query': ['წამს', 'დეიდა']}
+            }
+            
+
 __doc__ = \
 """
     
