@@ -99,11 +99,6 @@ class TestLangFunc(unittest.TestCase):
                          'expected %s, got %s' % (len(_kwargs['query']), len(R))
                          )
 
-        for q, r in zip(_kwargs['query'], R):
-            self.assertEqual(q, r.query,
-                             '`%s` does not match query `%s`' % (r.query, q)
-                             )
-
         del _kwargs, R
         
     def test_docstring(self):
