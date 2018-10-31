@@ -1,6 +1,7 @@
 import sys
 import os
 import unittest
+
 from modulefinder import ModuleFinder
 from random import randint
 from collections import Iterable
@@ -37,6 +38,7 @@ class TestLangFunc(unittest.TestCase):
         self.lang = lang
         self.corp = Corpus(self.lang, verbose=False)
         self.fetch_data = None
+        self.pre_globals_len = len(globals())
 
     def test_fetch_data(self):
         """
@@ -97,7 +99,7 @@ class TestLangFunc(unittest.TestCase):
 
         self.assertEqual(len(R), len(_kwargs['query']),
                          'expected %s, got %s' % (len(_kwargs['query']), len(R))
-                         )
+        )
 
         del _kwargs, R
         
@@ -109,15 +111,13 @@ class TestLangFunc(unittest.TestCase):
         _kwargs = self.fetch_data['test_single_query']
         _kwargs['numResults'] = randint(1, 5)
 
-        pre_globals_len = len(globals())
-
         R = self.corp.search(**_kwargs)
 
         post_globals_len = len(globals())
 
-        self.assertEqual(pre_globals_len,
+        self.assertEqual(self.pre_globals_len,
                          post_globals_len
-                         )
+        )
 
         del _kwargs, R
 
@@ -130,12 +130,12 @@ class TestLangFunc(unittest.TestCase):
                             'lingcorpora',
                             'corpora',
                             '%s_corpus.py' % self.lang
-                            )
+        )
 
         core_path = os.path.join('..',
                                  'lingcorpora',
                                  'corpus.py',
-                                 )
+        )
 
         # legit_deps = pickle.load(open('dependencies.pickle', 'rb'))
 
@@ -166,14 +166,10 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
         - verbosity: int: verbosity mode
     """
     
-    if funcs_to_test is None:
-        funcs_to_test = FUNCS_TO_TEST
+    funcs_to_test = FUNCS_TO_TEST if funcs_to_test is None else funcs_to_test
+    tests_to_run = TESTS_TO_RUN if tests_to_run is None else tests_to_run
 
-    if tests_to_run is None:
-        tests_to_run = TESTS_TO_RUN
-
-    if stream is None:
-        stream = sys.stderr
+    stream = sys.stderr if stream is None else stream
 
     log_header = '\n%s\nTESTING: %s_corpus.py\n%s\n\n'
 
@@ -205,6 +201,6 @@ if __name__ == '__main__':
                     'test_docstring',
                     'test_local_scope_only',
                     # 'test_dependencies'
-                    ]
+    ]
 
     run()
