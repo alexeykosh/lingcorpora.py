@@ -1,7 +1,7 @@
 # python3
 # coding=<UTF-8>
 
-from collections import Iterable
+from collections import Iterable, deque
 import warnings
 from time import sleep
 from tqdm import tqdm
@@ -9,8 +9,7 @@ from .result import Result
 from .corpora import *
 
 
-functions = {
-             'rus': rus_corpus,
+functions = {'rus': rus_corpus,
              'bam': bam_corpus,
              'emk': emk_corpus,
              'zho': zho_corpus,
@@ -24,14 +23,17 @@ functions = {
              'slk': slk_corpus,
              'hin': hin_corpus,
              'rus_pol': rus_pol_corpus
-            }
+}
 
 
 class Corpus:
+    
     def __init__(self, language, verbose=True, sleep_time=1, sleep_each=5):
         """
         language: str: language alias
-        verbose: bool: tqdm progressbar
+        verbose: bool: enable tqdm progressbar
+
+        USELESS?
         sleep_time: int: sleeping time in seconds
         sleep_each: int: sleep after each `sleep_each` request
         """
@@ -42,11 +44,14 @@ class Corpus:
         self.doc = self.__corpus.__doc__
         
         self.results = list()
-        self.failed = list()
-        self.__retry_flag = False
+        self.failed = deque(list())
         
-        self.__warn = 'Nothing found for query "%s".\n' \
-                      'Call `retry_failed` method to retry failed queries'
+        self.__warn = \
+        """
+        Nothing found for query "%s".\n
+        Call `retry_failed` method to retry failed queries
+        """
+
         self.__pbar_desc = '"%s"'
         self.__type_except = 'Argument `query` must be of type <str> or iterable, got <%s>'
 
@@ -55,6 +60,12 @@ class Corpus:
             
         self.sleep_each = sleep_each
         self.sleep_time = sleep_time
+        
+    def __getattr__(self, name):
+        if name.lower() == 'r':
+            return self.results
+        
+        raise AttributeError("'Corpus' object has no attribute '%s'" % name)
 
     def search(self, query, *args, **kwargs):
         """
@@ -68,65 +79,57 @@ class Corpus:
         if not isinstance(query, Iterable):
             raise TypeError(self.__type_except % type(query))
             
-        if args:
-            progress_total = args[0]
-        elif 'numResults' in kwargs:
-            progress_total = kwargs['numResults']
-        else:
-            progress_total = 100
-        
         _results = list()
         
         for q in query:
-            self.parser = self.__corpus.PageParser(q, *args, **kwargs)
-            _r = Result(self.language, self.parser.__dict__)
-            q_desc = self.__pbar_desc % q
+            parser = self.__corpus.PageParser(q, *args, **kwargs)
+            R = Result(self.language, parser.__dict__)
                 
-            for t in tqdm(self.parser.extract(),
-                          total=progress_total,
+            for t in tqdm(parser.extract(),
+                          total=parser.numResults,
                           unit='docs',
-                          desc=q_desc,
-                          disable=abs(-1 + self.verbose)):
-                _r.add(t)
-                if _r.N % self.sleep_each == 0:
-                    sleep(self.sleep_time)
+                          desc=self.__pbar_desc % q,
+                          disable=not self.verbose
+            ):
+                
+                R.add(t)
             
-            _results.append(_r)
-            if _r.N < 1:
+            if R:
+                _results.append(R)
+            
+            else:
                 warnings.warn(self.__warn % q)
-                if not self.__retry_flag:
-                    self.failed.append(_r)
+                self.failed.append(R)
         
-        if not self.__retry_flag:
-            self.results.extend(_results)
+        self.results.extend(_results)
         
         return _results
 
     def retry_failed(self):
         """
-        Calls `.search()` for failed queries stored in `.failed`
-        
-        ISSUE:
-        if `_r` got successfully retrieved here,
-        its empty `Result` is still left in `Corpus.results` 
+        Apply `.search()` to failed queries stored in `.failed`
         """
-        if self.failed:
-            self.__retry_flag = True
-            _pos = list()
-            _neg = list()
-            
-            for r in self.failed:
-                _r = self.search(r.query, **r.params)[0]
-                if _r.N > 0:
-                    _pos.append(_r)
-                else:
-                    _neg.append(_r)
-            
-            self.failed = _neg[:]
-            self.results.extend(_pos)
-            self.__retry_flag = False
-            
-            return _pos
         
-        else:
-            return []
+        if self.failed:
+            n_rounds = len(self.failed)
+            retrieved = list()
+            
+            for _ in range(n_rounds):
+                R_failed = self.failed.popleft()
+                
+                # List[<Result>]
+                results_new = self.search(R_failed.query,
+                                          **R_failed.params
+                )
+                
+                if results_new:
+                    retrieved.append(results_new[0])
+            
+            return retrieved
+        
+    def reset_failed(self):
+        """
+        Reset `.failed`
+        """
+        
+        self.failed = deque(list())
