@@ -3,11 +3,13 @@
 
 import os
 import re
-from lxml import etree
-import urllib.request as ur
+
+from lxml.etree import parse
+from urllib.request import quote
 
 from ..params_container import Container
 from ..target import Target
+from ..exceptions import EmptyPageException
 
 
 __author__ = 'akv_17'
@@ -38,116 +40,120 @@ TEST_DATA = {'test_single_query': {'query': 'фонема'},
 
 
 class PageParser(Container):
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        if self.subcorpus is None:
-            self.subcorpus = 'main'
+        self.__stop_flag = False
+        self.__page_num = 0
+        self.__targets_seen = 0
         
+        self.subcorpus = self.subcorpus if self.subcorpus is not None else 'main' 
         self.__seed = ''
-        self.__temp = 'temptree.xml'
         self.__xpath = '/page/searchresult/body/result/document'
         self.__dpp = 100
-        self.__stop_flag = False
-        self.__c_page = 0
-        self.__targets_seen = 0
-        self.__nodia = 1
             
-        self.__dom = 'http://search1.ruscorpora.ru/dump.xml?'
-        self.__post = 'env=%s&mode=%s&text=%s&sort=%s&seed=%s&dpp=%s&req=%s&p=%s&nodia=%s'
+        self.__url = 'http://search1.ruscorpora.ru/dump.xml?'
+        self.__request = 'env=alpha&nodia=1&mode=%s&text=lexform&sort=gr_tagging&seed=%s&dpp=%s&req=%s&p=%s'
 
     def __get_ana(self, word):
-        _ana = dict()
-        for ana in word.findall('ana'):
-            # iter over values of current ana of target (lex, sem, m, ...)
-            for ana_type in ana.findall('el'):
-                _ana[ana_type.attrib['name']] = [x.text for x in ana_type.findall('el-group/el-atom')]
-        return _ana        
-
-    def __parse_docs(self, docs, analyses=True):
-            """
-            a generator over documents tree
-            """
-            # iter over docs
-            for i, doc in enumerate(docs):
-                _meta = doc.attrib['title']
-                # iter over examples in *doc*
-                for snip in doc.getchildren()[1:]:
-                    _text = str()
-                    _idx = 0
-                    _target_idxs = list()
-                    _ana = list()
-                    # iter over words in cur example
-                    for word in snip.getchildren():
-                        if word.tag == 'text':
-                            _text += word.text
-                            _idx += len(word.text)
-                        
-                        if len(word.attrib) > 0:
-                            _text += word.attrib['text']
-                            # process target
-                            if word.attrib.get('target') is not None:
-                                _target_idxs.append((_idx, _idx + len(word.attrib['text'])))
-                                if analyses:
-                                    _ana.append(self.__get_ana(word))
-                                    
-                            _idx += len(word.attrib['text'])
-                            
-                    if _target_idxs:
-                        for i, ixs in enumerate(_target_idxs):
-                            if analyses:
-                                yield _text, ixs, _meta, _ana[i]
-                            else:
-                                yield _text, ixs, _meta, _ana
-                    else:
-                        continue
+        """
+        Word's analysis parser
+        """
         
-    def get_page(self):
+        ana = dict()
+        for _ana in word.findall('ana'):
+
+            # iter over values of current ana of target (lex, sem, m, ...)
+            for ana_type in _ana.findall('el'):
+                ana[ana_type.attrib['name']] = [x.text for x in ana_type.findall('el-group/el-atom')]
+
+        return ana       
+
+    def __parse_docs(self, docs, analysis=True):
         """
-        return documents tree
+        A generator over etree of documents
         """
-        params = ('alpha',
-                  self.subcorpus,
-                  'lexform',
-                  'gr_tagging',
+        
+        # iter over docs
+        for doc in docs:
+            meta = doc.attrib['title']
+
+            # iter over snippets in *doc*
+            for snip in doc.getchildren()[1:]:
+                text = str()
+                _len = 0
+                target_idxs = list()
+                ana = list()
+
+                # iter over words in cur example
+                for word in snip.getchildren():
+                    
+                    # nonalpha and unknown tokens
+                    if word.tag == 'text':
+                        text += word.text
+                        _len += len(word.text)
+                        continue
+
+                    # lexical tokens
+                    if word.attrib:
+                        text += word.attrib['text']
+
+                        # process target
+                        if word.attrib.get('target') is not None:
+                            target_idxs.append((_len, _len + len(word.attrib['text'])))
+                            ana.append(self.__get_ana(word) if analysis else dict())
+
+                        _len += len(word.attrib['text'])
+
+                if target_idxs:
+                    for i, idxs in enumerate(target_idxs):
+                        yield text, idxs, meta, ana[i]
+
+                else:
+                    continue
+        
+    def __get_page(self, page_num):
+        """
+        return: etree of the page
+        """
+        params = (self.subcorpus,
                   self.__seed,
                   self.__dpp,
-                  ur.quote(self.query),
-                  self.__c_page,
-                  self.__nodia
+                  quote(self.query),
+                  page_num,
                  )
 
-        post = self.__post % (params)
-        ur.urlretrieve(self.__dom + post, self.__temp)
-        raw_tree = etree.parse(self.__temp)
-        os.remove(self.__temp)
-        return raw_tree
-
-    def get_results(self):
-        docs_tree = self.page.xpath(self.__xpath)
+        request = self.__request % (params)
         
-        if len(docs_tree) < 1:
-            raise EnvironmentError('empty page')
+        return parse(self.__url + request)
+
+    def __get_results(self, page):
+        docs_tree = page.xpath(self.__xpath)
+        
+        if not docs_tree:
+            raise EmptyPageException
     
-        for doc in self.__parse_docs(docs_tree, analyses=self.tag):
+        for doc in self.__parse_docs(docs_tree, self.tag):
             self.__targets_seen += 1
+            
             if self.__targets_seen <= self.numResults:
                 yield Target(*doc) 
+            
             else:
                 self.__stop_flag = True
                 return
     
     def extract(self):
         """
-        streamer to Query
+        A streamer to Corpus
         """
         while not self.__stop_flag:
             try:
-                self.page = self.get_page()
-                yield from self.get_results()
-
-            except EnvironmentError:
+                page = self.__get_page(self.__page_num)
+                yield from self.__get_results(page)
+                self.__page_num += 1
+                
+            except EmptyPageException:
                 self.__stop_flag = True
-            
-            self.__c_page += 1
             
