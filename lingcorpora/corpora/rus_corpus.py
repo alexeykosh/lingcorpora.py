@@ -22,7 +22,7 @@ Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
-    analysis: boolean: whether to collect grammatical tags for target word or not (False by default)
+    get_analysis: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('main' by default).
                     Valid: ['main', 'syntax', 'paper', 'regional', 'school',
                             'dialect', 'poetic', 'spoken', 'accent', 'murco',
@@ -247,7 +247,7 @@ class PageParser(Container):
         if not docs_tree:
             raise EmptyPageException
     
-        for doc in self.__parse_docs(docs_tree, self.analysis):
+        for doc in self.__parse_docs(docs_tree, self.get_analysis):
             self.__targets_seen += 1
             
             if self.__targets_seen <= self.n_results:

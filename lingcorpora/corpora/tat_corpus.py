@@ -23,7 +23,7 @@ Args:
     query: str or List([str]): query or queries
     n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
-    gr_tags: boolean: tags shown (True) or not (False)
+    get_analysis: boolean: tags shown (True) or not (False)
     
 Main function: extract
 Returns:
@@ -56,7 +56,7 @@ class PageParser(Container):
             "interface_language": "en",
             "sentences_per_enlarged_occurrence": "1",
             "contexts_layout": "basic",
-            "show_gram_info": int(self.gr_tags),
+            "show_gram_info": int(self.get_analysis),
             "subcorpus_query": ""
         }
         res = get(results_url, params)
@@ -91,7 +91,7 @@ class PageParser(Container):
         tags = []
         if idxs is None:
             return None
-        if self.gr_tags:
+        if self.get_analysis:
             tags = word['tag']
         return Target(res_text, idxs, '', tags)
 
