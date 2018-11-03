@@ -1,10 +1,11 @@
 # python3
 # coding=<UTF-8>
 
-from collections import Iterable, deque
 import warnings
+from collections import Iterable, deque
 from time import sleep
 from tqdm import tqdm
+
 from .result import Result
 from .corpora.functions import functions
 
