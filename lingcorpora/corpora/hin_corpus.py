@@ -17,7 +17,7 @@ API for Hindi corpus (http://www.cfilt.iitb.ac.in/~corpus/hindi/find.php).
     
 Args:
     query: str or List([str]): query or queries
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     start: int: index of the first query appearance to be shown (0 by default)
     
@@ -41,7 +41,7 @@ class PageParser(Container):
         create a query url and return a page with results
         """
         params = {'word': self.query,
-                  'limit': self.num_results,
+                  'limit': self.n_results,
                   'start': self.start,
                   'submit': 'Search'}
         s = get('http://www.cfilt.iitb.ac.in/~corpus/hindi/find.php', params=params)

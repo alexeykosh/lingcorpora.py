@@ -15,7 +15,7 @@ API for Danish corpus (https://ordnet.dk/korpusdk_en/concordance).
     
 Args:
     query: str or List([str]): query or queries (currently only search by forms of the word is available)
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     
 Main function: extract
 Returns:
@@ -83,7 +83,7 @@ class PageParser(Container):
         self.__page = self.get_first_page()
         if self.__page.status_code == 200:
             results = self.get_results_page()
-            final_total = min(self.num_results,self.__occurrences)
+            final_total = min(self.n_results,self.__occurrences)
             num_page = final_total // 50 + 1
             while n < final_total and n < len(results):
                 yield self.extract_one_res(results[n])

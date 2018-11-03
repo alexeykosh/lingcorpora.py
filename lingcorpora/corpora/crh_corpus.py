@@ -16,7 +16,7 @@ API for Crimean Tatar corpus (http://korpus.juls.savba.sk:8080/manatee.ks/do_que
     
 Args:
     query: str or List([str]): query or queries
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     start: int: index of the first query appearance to be shown (0 by default)
     
@@ -80,12 +80,12 @@ class PageParser(Container):
         all hits are collected or the maximum set by user is achieved
         """
         output_counter = 0
-        for i in range(0, self.num_results - 1, 10):
+        for i in range(0, self.n_results - 1, 10):
             try:
                 self.__pagenum = i
                 results = self.__extract_results()
                 j = 0
-                while output_counter < self.num_results and j < len(results):
+                while output_counter < self.n_results and j < len(results):
                     yield results[j]
                     output_counter += 1
                     j += 1

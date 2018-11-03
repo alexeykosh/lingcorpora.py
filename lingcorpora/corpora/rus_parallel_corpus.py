@@ -14,7 +14,7 @@ __doc__ = \
 API for parallel subcorpus of National Corpus of Russian (http://ruscorpora.ru/search-para-en.html)
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     gr_tags: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('rus' by default - search query over all subcorpora).
@@ -143,7 +143,7 @@ class PageParser(Container):
     
         for doc in self.__parse_docs(docs_tree, self.query_language, analyses=self.gr_tags):
             self.__targets_seen += 1
-            if self.__targets_seen <= self.num_results:
+            if self.__targets_seen <= self.n_results:
                 yield Target(*doc) 
             else:
                 self.__stop_flag = True

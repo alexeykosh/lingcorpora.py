@@ -16,7 +16,7 @@ API for Chinese corpus (http://ccl.pku.edu.cn:8080/ccl_corpus/).
     
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     subcorpus: str: subcorpus. Available options: 'xiandai' (modern Chinese) or 'dugai' (ancient Chinese) ('xiandai' by default)
     n_left, n_right: int: context lenght (in symbols, 30 by default)
     
@@ -46,7 +46,7 @@ class PageParser(Container):
         """
         params = {'q': self.query,
                   'start': self.__pagenum,
-                  'num': self.num_results,
+                  'num': self.n_results,
                   'index':'FullIndex',
                   'outputFormat':'HTML',
                   'encoding':'UTF-8',
@@ -71,7 +71,7 @@ class PageParser(Container):
         else:
             return []
         if self.__pagenum == 0:
-            self.num_results = min(self.num_results,int(soup.find('td',class_='totalright').find('b').text))
+            self.n_results = min(self.n_results,int(soup.find('td',class_='totalright').find('b').text))
         return res
 
         
@@ -89,13 +89,13 @@ class PageParser(Container):
         
     def extract(self):
         n = 0
-        while n < self.num_results:
+        while n < self.n_results:
             self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
             r = 0
-            while n < self.num_results and r < len(rows):
+            while n < self.n_results and r < len(rows):
                 yield self.parse_result(rows[r])
                 n += 1
                 r += 1

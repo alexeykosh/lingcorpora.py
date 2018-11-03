@@ -21,7 +21,7 @@ API for Tatar corpus (http://web-corpora.net/TatarCorpus/).
     
 Args:
     query: str or List([str]): query or queries
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     gr_tags: boolean: tags shown (True) or not (False)
     
@@ -146,11 +146,11 @@ class PageParser(Container):
 
     def extract(self):
         output_counter = 0
-        while (self.__occurences is None) or (output_counter < self.num_results and self.__occurences > output_counter):
+        while (self.__occurences is None) or (output_counter < self.n_results and self.__occurences > output_counter):
             self.__pagenum = output_counter / self.__per_page + 1
             parsed_results = self.extract_from_page()
             i = 0
-            while output_counter < self.num_results and i < len(parsed_results):
+            while output_counter < self.n_results and i < len(parsed_results):
                 yield parsed_results[i]
                 i += 1
                 output_counter += 1

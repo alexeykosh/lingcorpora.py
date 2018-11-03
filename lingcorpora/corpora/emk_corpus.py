@@ -15,7 +15,7 @@ API for Maninka corpus (http://maslinsky.spb.ru/emk/run.cgi/first_form).
     
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    num_results: int: number of results wanted (100 by default)
+    n_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     subcorpus: str: subcorpus. Available options: 'cormani-brut-lat', 'corbama-brut-nko' ('cormani-brut-lat' by default)
     writing_system: str: writing system for examples. Available options: 'nko', 'latin'. Bug: only 'latin' for 'corbama-brut-nko' subcorpus. 
@@ -73,7 +73,7 @@ class PageParser(Container):
         res = soup.find('table')
         res = res.find_all('tr')
         if self.__pagenum == 1:
-            self.num_results = min(int(soup.select('strong[data-num]')[0].text),self.num_results)
+            self.n_results = min(int(soup.select('strong[data-num]')[0].text),self.n_results)
         return res      
         
    
@@ -93,13 +93,13 @@ class PageParser(Container):
         
     def extract(self):
         n = 0
-        while n < self.num_results:
+        while n < self.n_results:
             self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
             r = 0
-            while n < self.num_results and r < len(rows):
+            while n < self.n_results and r < len(rows):
                 yield self.parse_result(rows[r])
                 n += 1
                 r += 1
