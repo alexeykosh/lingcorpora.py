@@ -16,7 +16,7 @@ Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
     num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
-    tag: boolean: whether to collect grammatical tags for target word or not (False by default)
+    gr_tags: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('rus' by default - search query over all subcorpora).
                     Valid: ['rus', 'eng', 'bel', 'bul', 'bua', 'esp', 'ita',
                             'zho', 'lav', 'ger', 'pol', 'ukr',
@@ -141,7 +141,7 @@ class PageParser(Container):
         if len(docs_tree) < 1:
             raise EnvironmentError('empty page')
     
-        for doc in self.__parse_docs(docs_tree, self.query_language, analyses=self.tag):
+        for doc in self.__parse_docs(docs_tree, self.query_language, analyses=self.gr_tags):
             self.__targets_seen += 1
             if self.__targets_seen <= self.num_results:
                 yield Target(*doc) 
