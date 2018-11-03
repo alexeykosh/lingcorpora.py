@@ -11,7 +11,7 @@ class Target:
                  idxs,
                  meta,
                  analysis,
-                 gr_tags,
+                 gr_tags=None,
                  transl=None,
                  lang=None
     ):
