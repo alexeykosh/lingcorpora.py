@@ -16,9 +16,9 @@ API for Chinese corpus (http://ccl.pku.edu.cn:8080/ccl_corpus/).
     
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     subcorpus: str: subcorpus. Available options: 'xiandai' (modern Chinese) or 'dugai' (ancient Chinese) ('xiandai' by default)
-    nLeft, nRight: int: context lenght (in symbols, 30 by default)
+    n_left, n_right: int: context lenght (in symbols, 30 by default)
     
 Main function: extract
 Returns:
@@ -34,10 +34,10 @@ class PageParser(Container):
         self.__pagenum = 0
         if self.subcorpus is None:
             self.subcorpus = 'xiandai'
-        if self.nLeft is None:
-            self.nLeft = 30
-        if self.nRight is None:
-            self.nRight = 30
+        if self.n_left is None:
+            self.n_left = 30
+        if self.n_right is None:
+            self.n_right = 30
 
             
     def get_results(self):
@@ -46,12 +46,12 @@ class PageParser(Container):
         """
         params = {'q': self.query,
                   'start': self.__pagenum,
-                  'num': self.numResults,
+                  'num': self.num_results,
                   'index':'FullIndex',
                   'outputFormat':'HTML',
                   'encoding':'UTF-8',
-                  'maxLeftLength':self.nLeft,
-                  'maxRightLength':self.nRight,
+                  'maxLeftLength':self.n_left,
+                  'maxRightLength':self.n_right,
                   'orderStyle':'score',
                   'dir':self.subcorpus,
                   'scopestr':'' # text selection: TO DO?
@@ -71,7 +71,7 @@ class PageParser(Container):
         else:
             return []
         if self.__pagenum == 0:
-            self.numResults = min(self.numResults,int(soup.find('td',class_='totalright').find('b').text))
+            self.num_results = min(self.num_results,int(soup.find('td',class_='totalright').find('b').text))
         return res
 
         
@@ -89,13 +89,13 @@ class PageParser(Container):
         
     def extract(self):
         n = 0
-        while n < self.numResults:
+        while n < self.num_results:
             self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
             r = 0
-            while n < self.numResults and r < len(rows):
+            while n < self.num_results and r < len(rows):
                 yield self.parse_result(rows[r])
                 n += 1
                 r += 1

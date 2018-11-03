@@ -15,7 +15,7 @@ API for Estonian corpus (http://www.cl.ut.ee/korpused/kasutajaliides/index.php).
     
 Args:
     query: str or List([str]): query or queries (currently only exact search by word is available)
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     subcorpus: str: subcorpus. Available options: see below values and their meanings ('1990_ajalehed_26_08_04' by default). To use several subcorpora, list them with semicolon, e.g. '1990_ajalehed_26_08_04;EE_10_09_2004'.
     
 Main function: extract
@@ -151,5 +151,5 @@ class PageParser(Container):
                 t = Target(text,idx,'',[])
                 yield t
                 s += 1
-                if s == self.numResults:
+                if s == self.num_results:
                     break

@@ -14,7 +14,7 @@ API for Slovak corpus (http://korpus.juls.savba.sk:8080/manatee.ks/do_query).
     
 Args:
     query: str or List([str]): query or queries
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     subcorpus: str: subcorpus. Available options:
                             'prim-6.0-public-all' (by default), 'r-mak-3.0'
@@ -78,12 +78,12 @@ class PageParser(Container):
 
     def extract(self):
         output_counter = 0
-        for i in range(0, self.numResults - 1, 10):
+        for i in range(0, self.num_results - 1, 10):
             try:
                 self.__pagenum = i
                 results = self.__extract_results()
                 j = 0
-                while output_counter < self.numResults and j < len(results):
+                while output_counter < self.num_results and j < len(results):
                     yield results[j]
                     output_counter += 1
                     j += 1

@@ -15,7 +15,7 @@ API for Bamana corpus (http://maslinsky.spb.ru/bonito/index.html).
     
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     tag: boolean: whether to collect grammatical tags for target word or not (False by default, available only for corbama-net-non-tonal subcorpus)
     subcorpus: str: subcorpus. Available options: 'corbama-net-non-tonal', 'corbama-net-tonal', 'corbama-brut' ('corbama-net-non-tonal' by default)
@@ -66,7 +66,7 @@ class PageParser(Container):
         res = soup.find('table')
         res = res.find_all('tr')
         if self.__pagenum == 1:
-            self.numResults = min(int(soup.select('strong.add_commas')[0].text.replace(',','')),self.numResults)
+            self.num_results = min(int(soup.select('strong.add_commas')[0].text.replace(',','')),self.num_results)
         return res
 
         
@@ -127,13 +127,13 @@ class PageParser(Container):
 
     def extract(self):
         n = 0
-        while n < self.numResults:
+        while n < self.num_results:
             self.__page = self.get_results()
             rows = self.parse_page()
             if not rows:
                 break
             r = 0
-            while n < self.numResults and r < len(rows):
+            while n < self.num_results and r < len(rows):
                 if self.kwic:
                     yield self.parse_kwic_result(rows[r])
                 else:

@@ -14,14 +14,14 @@ __doc__ = \
 API for parallel subcorpus of National Corpus of Russian (http://ruscorpora.ru/search-para-en.html)
 Args:
     query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     tag: boolean: whether to collect grammatical tags for target word or not (False by default)
     subcorpus: str: subcorpus ('rus' by default - search query over all subcorpora).
                     Valid: ['rus', 'eng', 'bel', 'bul', 'bua', 'esp', 'ita',
                             'zho', 'lav', 'ger', 'pol', 'ukr',
                             'fra', 'sve', 'est']
-    queryLanguage: str: language of the 'query'
+    query_language: str: language of the 'query'
     
 Main method: extract
 Returns:
@@ -29,8 +29,8 @@ Returns:
 """
 
 
-TEST_DATA = {'test_single_query': {'query': 'стул', 'queryLanguage': 'rus'},
-             'test_multi_query': {'query': ['стол', 'стул'], 'queryLanguage': 'rus'}
+TEST_DATA = {'test_single_query': {'query': 'стул', 'query_language': 'rus'},
+             'test_multi_query': {'query': ['стол', 'стул'], 'query_language': 'rus'}
             }
 
 
@@ -41,7 +41,7 @@ class PageParser(Container):
         if self.subcorpus is None:
             self.subcorpus = 'rus'
 
-        if self.queryLanguage is None:
+        if self.query_language is None:
             raise ValueError('Please specify query language')
 
         self.__seed = ''
@@ -141,9 +141,9 @@ class PageParser(Container):
         if len(docs_tree) < 1:
             raise EnvironmentError('empty page')
     
-        for doc in self.__parse_docs(docs_tree, self.queryLanguage, analyses=self.tag):
+        for doc in self.__parse_docs(docs_tree, self.query_language, analyses=self.tag):
             self.__targets_seen += 1
-            if self.__targets_seen <= self.numResults:
+            if self.__targets_seen <= self.num_results:
                 yield Target(*doc) 
             else:
                 self.__stop_flag = True

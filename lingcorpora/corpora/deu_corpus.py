@@ -14,7 +14,7 @@ API for German corpus (https://www.dwds.de).
     
 Args:
     query: str or List([str]): query or queries
-    numResults: int: number of results wanted (100 by default)
+    num_results: int: number of results wanted (100 by default)
     kwic: boolean: kwic format (True) or a sentence (False) (True by default)
     subcorpus: str: subcorpus. Available options: 'kern' (by default),
                                 'tagesspiegel', 'zeit', 'public', 'blogs',
@@ -46,7 +46,7 @@ class PageParser(Container):
                   'genre': 'Wissenschaft',
                   'genre': 'Gebrauchsliteratur',
                   'genre': 'Zeitung',
-                  'limit': self.numResults,
+                  'limit': self.num_results,
                   'q': self.query,
                   'sort': 'date_asc'}
         s = post('https://www.dwds.de/r', params=params)

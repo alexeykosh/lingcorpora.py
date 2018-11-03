@@ -13,7 +13,7 @@ __doc__ = \
     
     Args:
         query: str or List([str]): query or queries (currently only exact search by word or phrase is available)
-        numResults: int: number of results wanted (100 by default)
+        num_results: int: number of results wanted (100 by default)
         kwic: boolean: kwic format (True) or a sentence (False) (True by default)
         tag: boolean: whether to collect grammatical tags for target word or not (False by default)
         subcorpus: list: subcorpus (all of the mentioned below by default).
@@ -27,8 +27,8 @@ __doc__ = \
     """
 
 
-TEST_DATA = {'test_single_query': {'query': 'стул', 'queryLanguage': 'rus'},
-             'test_multi_query': {'query': ['стул', 'siadania'], 'queryLanguage': 'rus'}
+TEST_DATA = {'test_single_query': {'query': 'стул', 'query_language': 'rus'},
+             'test_multi_query': {'query': ['стул', 'siadania'], 'query_language': 'rus'}
             }
 
 
@@ -60,14 +60,14 @@ class PageParser(Container):
                                      ' \'russian\', \'foreign\', \'polish\'.')
             self.subcorpus = corpora
 
-        if self.queryLanguage is None:
+        if self.query_language is None:
             raise ValueError('Please specify query language. It migth be \'rus\' or \'pol\'.')
-        elif self.queryLanguage is 'pol':
-            self.queryLanguage = 'pl'
-        elif self.queryLanguage is 'rus':
-            self.queryLanguage = 'ru'
+        elif self.query_language is 'pol':
+            self.query_language = 'pl'
+        elif self.query_language is 'rus':
+            self.query_language = 'ru'
 
-        self.__dom = 'http://pol-ros.polon.uw.edu.pl/searchresults/searchw' + self.queryLanguage + '.php?'
+        self.__dom = 'http://pol-ros.polon.uw.edu.pl/searchresults/searchw' + self.query_language + '.php?'
         self.__post = ''
         self.__stop_flag = False
         self.__c_page = 0
@@ -78,8 +78,8 @@ class PageParser(Container):
         """
         return documents tree
         """
-        params = {'string' + self.queryLanguage: self.query,
-                  'limit' + self.queryLanguage.title(): str(self.numResults)}
+        params = {'string' + self.query_language: self.query,
+                  'limit' + self.query_language.title(): str(self.num_results)}
 
         for corpus in self.subcorpus:
             params[corpus] = 'on'
@@ -118,7 +118,7 @@ class PageParser(Container):
 
             _target_idxs.append([len(_text.split(self.query)[0]), len(_text.split(self.query)[0]) + len(self.query)])
 
-            if self.queryLanguage is 'ru':
+            if self.query_language is 'ru':
                 _lang = 'pol'
             else:
                 _lang = 'rus'
@@ -141,7 +141,7 @@ class PageParser(Container):
 
         for doc in self.__parse_docs(docs_tree):
             self.__targets_seen += 1
-            if self.__targets_seen <= self.numResults:
+            if self.__targets_seen <= self.num_results:
                 yield Target(*doc)
             else:
                 self.__stop_flag = True
