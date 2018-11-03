@@ -63,7 +63,7 @@ class TestLangFunc(unittest.TestCase):
 
     def test_single_query(self):
         _kwargs = self.fetch_data['test_single_query']
-        _kwargs['numResults'] = randint(1, 5)
+        _kwargs['n_results'] = randint(1, 5)
 
         parser = self.func.PageParser(**_kwargs)
         
@@ -78,22 +78,22 @@ class TestLangFunc(unittest.TestCase):
 
         del _kwargs, parser
 
-    def test_num_results(self):
+    def test_n_results(self):
         _kwargs = self.fetch_data['test_single_query']
-        _kwargs['numResults'] = randint(1, 5)
+        _kwargs['n_results'] = randint(1, 5)
 
         parser = self.func.PageParser(**_kwargs)
 
         res = list(parser.extract())
 
-        assert len(res) == _kwargs['numResults'], \
-            'expected %s, got %s' % (_kwargs['numResults'], len(res))
+        assert len(res) == _kwargs['n_results'], \
+            'expected %s, got %s' % (_kwargs['n_results'], len(res))
 
         del _kwargs, parser, res
 
     def test_multi_query(self):
         _kwargs = self.fetch_data['test_multi_query']
-        _kwargs['numResults'] = randint(1, 5)
+        _kwargs['n_results'] = randint(1, 5)
 
         R = self.corp.search(**_kwargs)
 
@@ -109,7 +109,7 @@ class TestLangFunc(unittest.TestCase):
 
     def test_local_scope_only(self):
         _kwargs = self.fetch_data['test_single_query']
-        _kwargs['numResults'] = randint(1, 5)
+        _kwargs['n_results'] = randint(1, 5)
 
         R = self.corp.search(**_kwargs)
 
@@ -194,9 +194,9 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
     stream.close()
 
 if __name__ == '__main__':
-    FUNCS_TO_TEST = functions
+    FUNCS_TO_TEST = {'rus': functions['rus']}
     TESTS_TO_RUN = ['test_single_query',
-                    'test_num_results',
+                    'test_n_results',
                     'test_multi_query',
                     'test_docstring',
                     'test_local_scope_only',
