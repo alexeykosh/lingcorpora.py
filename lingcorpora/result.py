@@ -77,11 +77,11 @@ class Result:
                 if header:
                     writer.writerow(self.__kwic_header)
                 
-                nLeft = self.params['nLeft'] if self.params['nLeft'] is not None else 10 
-                nRight = self.params['nRight'] if self.params['nRight'] is not None else 10
+                n_left = self.params['n_left'] if self.params['n_left'] is not None else 10 
+                n_right = self.params['n_right'] if self.params['n_right'] is not None else 10
                     
                 for i, t in enumerate(self.results):
-                    writer.writerow((i + 1, *t.kwic(nLeft, nRight)))
+                    writer.writerow((i + 1, *t.kwic(n_left, n_right)))
             
             else:
                 if header:

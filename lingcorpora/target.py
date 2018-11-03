@@ -6,20 +6,30 @@ import re
 
 class Target:
 
-    def __init__(self, text, idxs, meta, tags, transl=None, lang=None):
+    def __init__(self,
+                 text,
+                 idxs,
+                 meta,
+                 analysis,
+                 gr_tags,
+                 transl=None,
+                 lang=None
+    ):
         """
         text: str: full sentence / document
         idxs: tuple (l, r): target idxs in self.text -> self.text[l:r]
         meta: str: sentence / document info (if exists)
-        tags: dict?: target tags
-        transl: str: text translation (only for parallel corpora)
-        lang: str: translation language (only for parallel corpora)
+        analysis: dict?: target analysis (parsed)
+        gr_tags: str or None: grammatical tags passed by user
+        transl: str or None: text translation (only for parallel corpora)
+        lang: str or None: translation language (only for parallel corpora)
         """
         
         self.text = text
         self.idxs = idxs
         self.meta = meta
-        self.tags = tags
+        self.analysis = analysis
+        self.gr_tags = gr_tags
         self.transl = transl
         self.lang = lang
         

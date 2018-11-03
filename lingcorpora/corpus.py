@@ -6,24 +6,8 @@ import warnings
 from time import sleep
 from tqdm import tqdm
 from .result import Result
-from .corpora import *
+from .corpora.functions import functions
 
-
-functions = {'rus': rus_corpus,
-             'bam': bam_corpus,
-             'emk': emk_corpus,
-             'zho': zho_corpus,
-             'rus_parallel': rus_parallel_corpus,
-             'dan': dan_corpus,
-             'est': est_corpus,
-             'kat': kat_corpus,
-             'crh': crh_corpus,
-             'tat': tat_corpus,
-             'deu': deu_corpus,
-             'slk': slk_corpus,
-             'hin': hin_corpus,
-             'rus_pol': rus_pol_corpus
-}
 
 
 class Corpus:
@@ -42,7 +26,8 @@ class Corpus:
         self.verbose = verbose
         self.__corpus = functions[self.language] 
         self.doc = self.__corpus.__doc__
-        
+        self.gr_tags_info = self.__corpus.__dict__.get('GR_TAGS_INFO')
+
         self.results = list()
         self.failed = deque(list())
         
@@ -67,6 +52,9 @@ class Corpus:
         
         raise AttributeError("'Corpus' object has no attribute '%s'" % name)
 
+    def get_gr_tags_info(self):
+        print(self.gr_tags_info)
+
     def search(self, query, *args, **kwargs):
         """
         query: str: query
@@ -86,7 +74,7 @@ class Corpus:
             R = Result(self.language, parser.__dict__)
                 
             for t in tqdm(parser.extract(),
-                          total=parser.numResults,
+                          total=parser.n_results,
                           unit='docs',
                           desc=self.__pbar_desc % q,
                           disable=not self.verbose
