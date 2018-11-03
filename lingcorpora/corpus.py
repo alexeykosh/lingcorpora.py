@@ -9,7 +9,6 @@ from .result import Result
 from .corpora.functions import functions
 
 
-
 class Corpus:
     
     def __init__(self, language, verbose=True, sleep_time=1, sleep_each=5):
