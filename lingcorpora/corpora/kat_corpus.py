@@ -96,4 +96,5 @@ class PageParser(Container):
                     yield self.extract_one_res(results[r])
                     n += 1
                     r += 1
+        self.__session.close()
 
