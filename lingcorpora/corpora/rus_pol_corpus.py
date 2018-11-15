@@ -28,7 +28,7 @@ __doc__ = \
 
 
 TEST_DATA = {'test_single_query': {'query': 'стул', 'query_language': 'rus'},
-             'test_multi_query': {'query': ['стул', 'siadania'], 'query_language': 'rus'}
+             'test_multi_query': {'query': ['стул', 'стол'], 'query_language': 'rus'}
             }
 
 
