@@ -1,13 +1,13 @@
 # python3
 # coding=<UTF-8>
 
-import warnings
 from collections import Iterable, deque
+import warnings
 from time import sleep
 from tqdm import tqdm
-
 from .result import Result
 from .corpora.functions import functions
+
 
 
 class Corpus:
@@ -32,13 +32,10 @@ class Corpus:
         self.failed = deque(list())
         
         self.__warn = \
-        """
-        Nothing found for query "%s".\n
-        Call `retry_failed` method to retry failed queries
+        """Nothing found for query "%s".\nCall `retry_failed` method to retry failed queries
         """
 
         self.__pbar_desc = '"%s"'
-        self.__type_except = 'Argument `query` must be of type <str> or iterable, got <%s>'
 
         if sleep_each < 1:
             raise ValueError('Argument `sleep_each` must  be >= 1')
@@ -52,6 +49,22 @@ class Corpus:
         
         raise AttributeError("'Corpus' object has no attribute '%s'" % name)
 
+    def __to_multisearch_format(self, arg, arg_name, len_multiplier=1):
+        """
+        pack <str> or List[str] `arg` to multisearch format
+        """
+        
+        if isinstance(arg, str):
+            arg = [arg] * len_multiplier
+        
+        if not isinstance(arg, Iterable):
+            raise TypeError(
+                'Argument `%s` must be of type <str> or iterable[str], got <%s>'
+                % (arg_name, arg)
+            )
+            
+        return arg
+
     def get_gr_tags_info(self):
         print(self.gr_tags_info)
 
@@ -60,16 +73,17 @@ class Corpus:
         query: str: query
         for arguments see `params_container.Container`
         """
-        
-        if isinstance(query, str):
-            query = [query]
-        
-        if not isinstance(query, Iterable):
-            raise TypeError(self.__type_except % type(query))
-            
+
+        query = self.__to_multisearch_format(query, 'query')
+        gr_tags = self.__to_multisearch_format(kwargs['gr_tags'], 'gr_tags', len(query)) if kwargs.get('gr_tags') is not None else [None] * len(query)
+
+        if len(query) != len(gr_tags):
+            raise ValueError('`query`, `gr_tags` length mismatch')
+
         _results = list()
         
-        for q in query:
+        for q, c_gr_tags in zip(query, gr_tags):
+            kwargs['gr_tags'] = c_gr_tags            
             parser = self.__corpus.PageParser(q, *args, **kwargs)
             R = Result(self.language, parser.__dict__)
                 
