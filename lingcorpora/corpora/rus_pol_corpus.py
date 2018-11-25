@@ -137,8 +137,8 @@ class PageParser(Container):
         """
         docs_tree = self.page.xpath(self.__xpath)
 
-        if len(docs_tree) < 1:
-            raise EnvironmentError('empty page')
+        if not docs_tree:
+            raise EmptyPageException
 
         for doc in self.__parse_docs(docs_tree):
             self.__targets_seen += 1
