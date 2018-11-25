@@ -6,6 +6,7 @@ import urllib.request as ur
 
 from ..params_container import Container
 from ..target import Target
+from ..exceptions import EmptyPageException
 
 
 __author__ = 'akv_17, maria-terekhina'
@@ -158,7 +159,7 @@ class PageParser(Container):
                 self.page = self.get_page()
                 yield from self.get_results()
 
-            except EnvironmentError:
+            except EmptyPageException:
                 self.__stop_flag = True
             
             self.__c_page += 1
