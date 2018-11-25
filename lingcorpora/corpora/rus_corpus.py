@@ -209,7 +209,7 @@ class PageParser(Container):
 
                 if target_idxs:
                     for i, idxs in enumerate(target_idxs):
-                        yield text, idxs, meta, ana[i]
+                        yield text, idxs, meta, ana[i], self.gr_tags
 
                 else:
                     continue
