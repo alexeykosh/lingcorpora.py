@@ -2,10 +2,10 @@
 # coding=<UTF-8>
 
 from lxml import etree
-import urllib.request as ur
 
-from params_container import Container
-from target import Target
+from ..params_container import Container
+from ..target import Target
+from ..exceptions import EmptyPageException
 
 __author__ = 'maria-terekhina'
 __doc__ = \
