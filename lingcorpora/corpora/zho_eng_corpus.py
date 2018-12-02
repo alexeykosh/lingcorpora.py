@@ -20,8 +20,8 @@ __doc__ = \
         query_language: str: language of the 'query'
     '''
 
-TEST_DATA = {'test_single_query': {'query': 'table', 'query_language': 'rus'},
-             'test_multi_query': {'query': ['table', 'chair'], 'query_language': 'rus'}
+TEST_DATA = {'test_single_query': {'query': 'table', 'query_language': 'eng'},
+             'test_multi_query': {'query': ['table', 'chair'], 'query_language': 'eng'}
              }
 
 
