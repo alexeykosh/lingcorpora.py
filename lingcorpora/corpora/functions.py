@@ -20,6 +20,7 @@ from . import rus_pol_corpus
 from . import zho_eng_corpus
 from . import jpn_eng_corpus
 from . import jpn_zho_corpus
+from . import sl_dict
 
 functions = {'rus': rus_corpus,
              'bam': bam_corpus,
@@ -37,5 +38,6 @@ functions = {'rus': rus_corpus,
              'rus_pol': rus_pol_corpus,
              'zho_eng': zho_eng_corpus,
              'jpn_eng': jpn_eng_corpus,
-             'jpn_zho': jpn_zho_corpus
+             'jpn_zho': jpn_zho_corpus,
+             'sls': sl_dict
 }
