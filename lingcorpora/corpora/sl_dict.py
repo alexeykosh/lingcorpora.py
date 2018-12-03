@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Uses python 3.7.1
+# Uses python 3.5
 
 
 import re
@@ -45,6 +45,9 @@ TEST_DATA = {'test_single_query': {'query': 'собака', 'query_language': "r
 class PageParser(Container):
 
     def __init__(self, *args, **kwargs):
+        self.only_link = kwargs.pop("only_link", True)
+        self.variants = kwargs.pop("variants", False)
+        self.sentences = kwargs.pop("sentences", False)
         super().__init__(*args, **kwargs)
 
         if not isinstance(self.query, list) and not isinstance(self.query, str):
@@ -61,10 +64,6 @@ class PageParser(Container):
 
         if self.subcorpus is None:
             self.subcorpus = "ru.ru"
-
-        self.variants = False
-        self.only_link = True
-        self.sentences = False
 
     def get_page(self, lang, word):
         url_address = "http://www.spreadthesign.com/" + self.query_language + "/search/?cls=2&q=" + word
