@@ -82,10 +82,10 @@ class PageParser(Container):
             else:
                 _transl = "".join(el.getchildren()[1].itertext())
                 # print(_transl)
-                if el.getchildren()[1].attrib:  # ['class'] == 'e':
-                    _lang = 'eng'
-                else:
+                if el.attrib['class'] == 'e':
                     _lang = 'zho'
+                else:
+                    _lang = 'eng'
                 original = True
 
             if _target_idxs and (_transl != str()):
