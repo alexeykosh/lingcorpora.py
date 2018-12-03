@@ -17,7 +17,9 @@ from . import deu_corpus
 from . import slk_corpus
 from . import hin_corpus
 from . import rus_pol_corpus
-
+from . import zho_eng_corpus
+from . import jpn_eng_corpus
+from . import jpn_zho_corpus
 
 functions = {'rus': rus_corpus,
              'bam': bam_corpus,
