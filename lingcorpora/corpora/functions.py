@@ -32,5 +32,8 @@ functions = {'rus': rus_corpus,
              'deu': deu_corpus,
              'slk': slk_corpus,
              'hin': hin_corpus,
-             'rus_pol': rus_pol_corpus
+             'rus_pol': rus_pol_corpus,
+             'zho_eng': zho_eng_corpus,
+             'jpn_eng': jpn_eng_corpus,
+             'jpn_zho': jpn_zho_corpus
 }
