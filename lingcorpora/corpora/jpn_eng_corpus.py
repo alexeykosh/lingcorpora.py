@@ -72,7 +72,6 @@ class PageParser(Container):
         for el in docs_tree:
             if original:
                 _text = "".join(el.getchildren()[1].itertext())
-                # print(_text)
 
                 for k, sym in enumerate(_text):
                     if _text[k:k + lq] == self.query:
@@ -82,11 +81,10 @@ class PageParser(Container):
 
             else:
                 _transl = "".join(el.getchildren()[1].itertext())
-                # print(_transl)
-                if el.getchildren()[1].attrib:  # ['class'] == 'e':
-                    _lang = 'eng'
-                else:
+                if el.attrib['class'] == 'e':
                     _lang = 'jpn'
+                else:
+                    _lang = 'eng'
                 original = True
 
             if _target_idxs and (_transl != str()):
