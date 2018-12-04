@@ -21,8 +21,8 @@ class Target:
         meta: str: sentence / document info (if exists)
         analysis: dict?: target analysis (parsed)
         gr_tags: str or None: grammatical tags passed by user
-        transl: str or None: text translation (only for parallel corpora)
-        lang: str or None: translation language (only for parallel corpora)
+        transl: str or None: text translation (for parallel corporas and dictionaries)
+        lang: str or None: translation language (for parallel corporas and dictionaries)
         """
         
         self.text = text
