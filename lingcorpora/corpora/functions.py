@@ -21,6 +21,7 @@ from . import zho_eng_corpus
 from . import jpn_eng_corpus
 from . import jpn_zho_corpus
 from . import sl_dict
+from . import arm_corpus
 
 functions = {'rus': rus_corpus,
              'bam': bam_corpus,
@@ -39,5 +40,6 @@ functions = {'rus': rus_corpus,
              'zho_eng': zho_eng_corpus,
              'jpn_eng': jpn_eng_corpus,
              'jpn_zho': jpn_zho_corpus,
-             'sls': sl_dict
+             'sls': sl_dict,
+             'arm': arm_corpus
 }
