@@ -1,17 +1,17 @@
 from .arkhangelskiy_corpora import PageParser
 
-language = 'armenian1'
-results = 'http://eanc.net/EANC/search/results.php'
+language = 'kazakh'
+results = 'http://web-corpora.net/KazakhCorpus/search/results.php'
 
-TEST_DATA = {'test_single_query': {'query': 'կատու'},
-             'test_multi_query': {'query': ['կատու', 'սիրով']}
+TEST_DATA = {'test_single_query': {'query': 'мысық'},
+             'test_multi_query': {'query': ['мысық', 'сүю']}
              }
-
 
 __doc__ = \
     """
     
-API for Eastern Armenian corpus (http://eanc.net).
+API for Almaty corpus of the Kazakh language
+(http://web-corpora.net/KazakhCorpus/search/).
     
 Args:
     query: str or List([str]): query or queries
@@ -22,6 +22,7 @@ Args:
 Main function: extract
 Returns:
     A generator of Target objects.
+
 """
 
 

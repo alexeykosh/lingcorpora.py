@@ -22,6 +22,15 @@ from . import jpn_eng_corpus
 from . import jpn_zho_corpus
 from . import sl_dict
 from . import arm_corpus
+from . import grk_corpus
+from . import ady_corpus
+from . import mon_corpus
+from . import kaz_corpus
+from . import yid_corpus
+from . import kal_corpus
+from . import udm_corpus
+from . import bua_corpus
+from . import alb_corpus
 
 functions = {'rus': rus_corpus,
              'bam': bam_corpus,
@@ -41,5 +50,14 @@ functions = {'rus': rus_corpus,
              'jpn_eng': jpn_eng_corpus,
              'jpn_zho': jpn_zho_corpus,
              'sls': sl_dict,
-             'arm': arm_corpus
+             'arm': arm_corpus,
+             'grk': grk_corpus,
+             'ady': ady_corpus,
+             'mon': mon_corpus,
+             'kaz': kaz_corpus,
+             'yid': yid_corpus,
+             'kal': kal_corpus,
+             'udm': udm_corpus,
+             'bua': bua_corpus,
+             'alb': alb_corpus
 }

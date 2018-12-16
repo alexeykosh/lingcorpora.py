@@ -78,7 +78,7 @@ class PageParser(Container):
 
     def extract(self):
         output_counter = 0
-        for i in range(0, self.n_results - 1, 10):
+        for i in range(0, self.n_results, 10):
             try:
                 self.__pagenum = i
                 results = self.__extract_results()
