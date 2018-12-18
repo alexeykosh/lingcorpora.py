@@ -84,13 +84,14 @@ class PageParser(Container):
 
     def __parse_context(self, context):
         res_context = list(context.find_all('tr', recursive=False))[1]
+        meta = self.__get_meta(context)
         res_text, word, idxs = self.__get_text(res_context)
         tags = []
         if idxs is None:
             return None
         if self.get_analysis:
             tags = word['tag']
-        return Target(res_text, idxs, '', tags)
+        return Target(res_text, idxs, meta, tags)
 
     def __move_tags_from_pos(self, pos, tags):
         '''
@@ -149,6 +150,14 @@ class PageParser(Container):
         if word != {}:
             idxs = self.__get_idxs(res_text, word['word'])
         return res_text, word, idxs
+
+    def __get_meta(self, context):
+        header = context.find(class_='results_header')
+        text = header.find_all('td')[1].text
+        text = re.sub('\s{2,}', '\t', text)
+        text = re.sub('(^\s+|\s+$)', '', text)
+        text_as_list = text.split('\t')
+        return ', '.join(text_as_list)
 
     def extract_from_page(self):
         self.__page = self.get_results()
