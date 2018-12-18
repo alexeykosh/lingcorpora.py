@@ -92,6 +92,18 @@ class PageParser(Container):
             tags = word['tag']
         return Target(res_text, idxs, '', tags)
 
+    def __move_tags_from_pos(self, pos, tags):
+        '''
+        In some cases grammatical gender and animacy are in PoS tag.
+        '''
+        new_pos = []
+        new_tags = []
+        for p, t in zip(pos, tags):
+            res = re.search('^(.*?)(?:,|$)(.*?)$', p)
+            new_pos.append(res.group(1))
+            new_tags.append(','.join([res.group(2), t]))
+        return new_pos, new_tags
+
     def __get_tag(self, tag_text):
         '''
         tag_text: str, tag line
@@ -105,6 +117,7 @@ class PageParser(Container):
             lemmas = re.findall("'(.*?)'", regex.group(1))
             pos = re.findall("'(.*?)'", regex.group(2))
             tags_values = re.findall("'(.*?)'", regex.group(3))
+            pos, tags_values = self.__move_tags_from_pos(pos, tags_values)
         except AttributeError:
             lemmas = []
             pos = []
