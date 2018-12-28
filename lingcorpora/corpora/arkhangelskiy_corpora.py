@@ -6,6 +6,7 @@ from html import unescape
 from ..target import Target
 
 
+__author__ = 'ustya-k'
 __doc__ = \
     """
     

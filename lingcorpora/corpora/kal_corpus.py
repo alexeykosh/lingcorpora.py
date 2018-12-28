@@ -7,6 +7,7 @@ TEST_DATA = {'test_single_query': {'query': 'мис'},
              'test_multi_query': {'query': ['мис', 'бәәх']}
              }
 
+__author__ = 'ustya-k'
 __doc__ = \
     """
     

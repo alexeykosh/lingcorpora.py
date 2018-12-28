@@ -9,6 +9,7 @@ TEST_DATA = {'test_single_query': {'query': 'წელი'},
             }
             
 
+__author__ = 'Filaona, kategerasimenko'
 __doc__ = \
 """
     

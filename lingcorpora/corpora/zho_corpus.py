@@ -9,6 +9,7 @@ TEST_DATA = {'test_single_query': {'query': '代汉语'},
              'test_multi_query': {'query': ['古', '问题']}
             }
 
+__author__ = 'kategerasimenko'
 __doc__ = \
 """
     
