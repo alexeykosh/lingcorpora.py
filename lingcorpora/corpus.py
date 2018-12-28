@@ -6,7 +6,7 @@ import warnings
 from time import sleep
 from tqdm import tqdm
 from .result import Result
-from .corpora.functions import functions
+from .functions import functions
 
 
 
