@@ -60,7 +60,7 @@ class PageParser(Container):
             "attrs": self.writing_system,
             "ctxattrs": self.writing_system
         }
-        r = get('http://maslinsky.spb.ru/emk/run.cgi/first',params)
+        r = get('http://maslinsky.spb.ru/emk/run.cgi/first', params)
         return unescape(r.text)
 
 
@@ -85,10 +85,10 @@ class PageParser(Container):
         else:
             lc = result.select('span.nott')[0].string.strip()
             rc = result.select('span.nott')[-1].string.strip()
-        final_kws = result.select('td.kw div.token span.nott')[0].string.strip()
+        final_kws = result.select('div.token span.nott')[0].string.strip()
         idx = (len(lc) + 1, len(lc) + 1 + len(final_kws))
         text = lc + ' ' + final_kws + ' ' + rc
-        t = Target(text.strip(),idx,'',[])
+        t = Target(text.strip(), idx, '', [])
         return t
 
         
