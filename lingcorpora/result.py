@@ -28,9 +28,10 @@ class Result:
         
         self.lang = language
         self.query = query_params['query']
-        self.params = {k: query_params[k] \
-                       for k in query_params \
-                       if not k.startswith('_') and k not in ['page', 'query']
+        self.params = {
+            k: query_params[k] \
+                for k in query_params \
+                if not k.startswith('_') and k not in ['page', 'query']
         }
         
         self.results = list()
@@ -44,8 +45,7 @@ class Result:
         return 'Result(query=%s, N=%s, params=%s)' \
                 % (self.query,
                    self.N,
-                   self.params
-        )
+                   self.params)
     
     __repr__ = __str__
     
@@ -89,14 +89,16 @@ class Result:
                 Cell separator in the csv.
         """
         if filename is None:
-            filename = '%s_%s_results.csv' \
-                        % (self.lang,
-                           re.sub(self.__not_allowed, '', self.query)
+            filename = '{}_{}_results.csv'.format(
+                self.lang,
+                re.sub(self.__not_allowed, '', self.query)
             )
         
         with open(filename,'w',encoding='utf-8-sig') as f:
-            writer = csv.writer(f, delimiter=sep, quotechar='"',
-                                quoting=csv.QUOTE_MINIMAL, lineterminator='\n'
+            writer = csv.writer(
+                f, delimiter=sep, quotechar='"',
+                quoting=csv.QUOTE_MINIMAL,
+                lineterminator='\n'
             )
             
             if self.params['kwic']:

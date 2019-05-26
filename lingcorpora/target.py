@@ -6,14 +6,12 @@ import re
 
 class Target:
 
-    def __init__(self,
-                 text,
-                 idxs,
-                 meta,
-                 analysis,
-                 gr_tags=None,
-                 transl=None,
-                 lang=None
+    def __init__(
+        self, text, idxs,
+        meta, analysis,
+        gr_tags=None,
+        transl=None,
+        lang=None
     ):
         """
         text: str: full sentence / document
@@ -36,8 +34,7 @@ class Target:
     def __str__(self):
         return 'Target(%s, %s)' \
                 % (self.text[self.idxs[0]:self.idxs[1]],
-                   self.meta
-        )
+                   self.meta)
 
     __repr__ = __str__
             
@@ -81,13 +78,15 @@ class Target:
             tokens = self.text.split()
             idx = self.__get_kwic_wlvl_target_idx()
 
-            return self.__handle_punct(' '.join(tokens[max(0, idx-left):idx]),
-                                       tokens[idx],
-                                       ' '.join(tokens[idx+1:idx+right+1])
+            return self.__handle_punct(
+                ' '.join(tokens[max(0, idx-left):idx]),
+                tokens[idx],
+                ' '.join(tokens[idx+1:idx+right+1])
             )
 
         else:
-            return (self.text[max(0, self.idxs[0]-left):self.idxs[0]],
-                    self.text[self.idxs[0]:self.idxs[1]],
-                    self.text[self.idxs[1]:self.idxs[1]+right]
+            return (
+                self.text[max(0, self.idxs[0]-left):self.idxs[0]],
+                self.text[self.idxs[0]:self.idxs[1]],
+                self.text[self.idxs[1]:self.idxs[1]+right]
             )

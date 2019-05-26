@@ -6,7 +6,7 @@ from modulefinder import ModuleFinder
 from random import randint
 from collections import Iterable
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath(os.pardir))
 from lingcorpora.corpus import Corpus, functions
 
 

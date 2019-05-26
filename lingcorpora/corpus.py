@@ -62,9 +62,7 @@ class Corpus:
         self.results = list()
         self.failed = deque(list())
         
-        self.__warn = \
-        """Nothing found for query "%s".\nCall `retry_failed` method to retry failed queries
-        """
+        self.__warn = 'Nothing found for query "%s".\nCall `retry_failed` method to retry failed queries'
 
         self.__pbar_desc = '"%s"'
 
@@ -122,9 +120,7 @@ class Corpus:
                           total=parser.n_results,
                           unit='docs',
                           desc=self.__pbar_desc % q,
-                          disable=not self.verbose
-            ):
-                
+                          disable=not self.verbose):
                 R.add(t)
             
             if R:
