@@ -6,8 +6,10 @@ setup(
     version=__version__,
     description='API for text corpora',
     url='https://github.com/lingcorpora/lingcorpora.py',
-    author='Alexey Koshevoy, Artem Kopetsky, Ekaterina Gerasimenko, Maria Terekhina',
-    author_email='alexeykochevoy@gmail.com',
+    author='Ekaterina Gerasimenko, Artem Kopetsky, Alexey Koshevoy,' \
+        'Mark Sobolev, Anna Zueva, Diana Malyshok, Maria Terekhina,' \
+        'Ustinya Kosheleva and George Moroz',
+    author_email='katgerasimenko@gmail.com',
     license='MIT',
     packages=['lingcorpora', 'lingcorpora.corpora'],
     python_requires='>=3.5',
