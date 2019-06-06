@@ -11,7 +11,38 @@ from .functions import functions
 
 
 class Corpus:
+    """The object of this class should be instantiated for each corpus. Search is conducted via search method
     
+    Attributes:
+        language: str: in most cases,
+            Language ISO 639-3 code for the corpus with combined codes for parallel corpora.
+            List of available corpora with corresponding codes:
+           ┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+           ┃ Code         ┃   Corpus                                                      ┃
+           ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+           ┃ bam          ┃   Corpus Bambara de Reference                                 ┃
+           ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+           ┃ emk          ┃   Maninka Automatically Parsed corpus                         ┃
+           ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+           ┃ rus          ┃   National Corpus of Russian Language                         ┃
+           ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+           ┃ rus_parallel ┃   Parallel subcorpus of National Corpus of Russian Language   ┃
+           ┣━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+           ┃ zho          ┃   Center of Chinese Linguistics corpus                        ┃
+           ┗━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+        sleep_time: int, optional, default 1:
+            The length of pause between requests to the corpus (in seconds).
+            It is required to avoid blocking and corpus breakdown.
+        sleep_each: int, optional, default 5:
+            The number of requests after which a pause is required.
+        doc: str:
+            Documentation for chosen corpus (after instance creation).
+        results: list:
+            List of all Result objects, each returned by search method.
+        failed: list:
+            List of Result objects where nothing was found.
+    """
     def __init__(self, language, verbose=True, sleep_time=1, sleep_each=5):
         """
         language: str: language alias

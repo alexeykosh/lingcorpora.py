@@ -6,7 +6,20 @@ import csv
 
 
 class Result:
+    """The object of this class contains all results found. Result object is iterable and supports indexing
     
+    Attributes:
+        results: list[Target]:
+            List of results.
+        N: int:
+            Number of results.
+        lang: str:
+            Corpus language.
+        query: str:
+            Search query.
+        params: dict:
+            All other parameters of the search.
+    """
     def __init__(self, language, query_params):
         """
         language: str: language
@@ -62,6 +75,19 @@ class Result:
         self.N += 1
     
     def export_csv(self, filename=None, header=True, sep=';'):
+        """Save search result as CSV
+        
+        Parameters:
+            filename: str, optional, default None:
+                Name of the file. If None, filename is lang_query_results.csv
+                with omission of disallowed filename symbols.
+            header: boolean, optional, default True:
+                Whether to include a header in the table.
+                Header is stored in .__header:
+                    ('index', 'text')
+            sep: str, optional, default ';':
+                Cell separator in the csv.
+        """
         if filename is None:
             filename = '%s_%s_results.csv' \
                         % (self.lang,
@@ -91,5 +117,6 @@ class Result:
                     writer.writerow((i + 1, t.text))
                     
     def clear(self):
+        """Overwrites the results attribute to empty list"""
         del self.results
         self.results = list()
