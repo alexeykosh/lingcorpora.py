@@ -163,7 +163,8 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
                                   if None `sys.stderr` passed
         - verbosity: int: verbosity mode
     """
-    
+
+    failures = []
     funcs_to_test = FUNCS_TO_TEST if funcs_to_test is None else funcs_to_test
     tests_to_run = TESTS_TO_RUN if tests_to_run is None else tests_to_run
 
@@ -186,9 +187,13 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
             for test in tests_to_run:
                 suite.addTest(routine(test))
 
-            runner.run(suite)
+            test_res = runner.run(suite)
+            failures.extend(test_res.failures)
             
     stream.close()
+
+    return bool(failures)
+
 
 if __name__ == '__main__':
     FUNCS_TO_TEST = functions
@@ -201,4 +206,4 @@ if __name__ == '__main__':
         # 'test_dependencies'
     ]
 
-    run()
+    return run()
