@@ -125,7 +125,7 @@ class Corpus:
                 results.append(result_obj)
             
             else:
-                warnings.warn(self.warn % q)
+                warnings.warn(self.warn_str % q)
                 self.failed.append(result_obj)
         
         self.results.extend(results)
