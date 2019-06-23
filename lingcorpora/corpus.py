@@ -1,13 +1,14 @@
 # python3
 # coding=<UTF-8>
 
-from collections import Iterable, deque
 import warnings
+from collections import Iterable, deque
 from time import sleep
+
 from tqdm import tqdm
+
 from .result import Result
 from .functions import functions
-
 
 
 class Corpus:
@@ -43,42 +44,30 @@ class Corpus:
         failed: list:
             List of Result objects where nothing was found.
     """
-    def __init__(self, language, verbose=True, sleep_time=1, sleep_each=5):
+
+    def __init__(self, language, verbose=True):
         """
         language: str: language alias
         verbose: bool: enable tqdm progressbar
-
-        USELESS?
-        sleep_time: int: sleeping time in seconds
-        sleep_each: int: sleep after each `sleep_each` request
         """
         
         self.language = language
         self.verbose = verbose
-        self.__corpus = functions[self.language] 
-        self.doc = self.__corpus.__doc__
-        self.gr_tags_info = self.__corpus.__dict__.get('GR_TAGS_INFO')
+        self.corpus = functions[self.language] 
+        self.doc = self.corpus.__doc__
+        self.gr_tags_info = self.corpus.__dict__.get('GR_TAGS_INFO')
 
         self.results = list()
         self.failed = deque(list())
         
-        self.__warn = \
-        """Nothing found for query "%s".\nCall `retry_failed` method to retry failed queries
-        """
-
-        self.__pbar_desc = '"%s"'
-
-        if sleep_each < 1:
-            raise ValueError('Argument `sleep_each` must  be >= 1')
-            
-        self.sleep_each = sleep_each
-        self.sleep_time = sleep_time
-        
+        self.warn_str = 'Nothing found for query "%s"'
+        self.pbar_desc = '"%s"'
+    
     def __getattr__(self, name):
         if name.lower() == 'r':
             return self.results
         
-        raise AttributeError("'Corpus' object has no attribute '%s'" % name)
+        raise AttributeError("<Corpus> object has no attribute '%s'" % name)
 
     def __to_multisearch_format(self, arg, arg_name, len_multiplier=1):
         """
@@ -91,13 +80,13 @@ class Corpus:
         if not isinstance(arg, Iterable):
             raise TypeError(
                 'Argument `%s` must be of type <str> or iterable[str], got <%s>'
-                % (arg_name, arg)
+                % (arg_name, type(arg))
             )
             
         return arg
 
     def get_gr_tags_info(self):
-        print(self.gr_tags_info)
+        return self.gr_tags_info
 
     def search(self, query, *args, **kwargs):
         """
@@ -105,38 +94,43 @@ class Corpus:
         for arguments see `params_container.Container`
         """
 
-        query = self.__to_multisearch_format(query, 'query')
-        gr_tags = self.__to_multisearch_format(kwargs['gr_tags'], 'gr_tags', len(query)) if kwargs.get('gr_tags') is not None else [None] * len(query)
+        query = self.__to_multisearch_format(arg=query, arg_name='query')
+        gr_tags = kwargs.get('gr_tags', [None] * len(query))
+        gr_tags = self.__to_multisearch_format(
+            arg=gr_tags,
+            arg_name='gr_tags',
+            len_multiplier=len(query)
+        )
 
         if len(query) != len(gr_tags):
             raise ValueError('`query`, `gr_tags` length mismatch')
 
-        _results = list()
+        results = []
         
         for q, c_gr_tags in zip(query, gr_tags):
             kwargs['gr_tags'] = c_gr_tags            
-            parser = self.__corpus.PageParser(q, *args, **kwargs)
-            R = Result(self.language, parser.__dict__)
+            parser = self.corpus.PageParser(q, *args, **kwargs)
+            result_obj = Result(self.language, parser.__dict__)
                 
-            for t in tqdm(parser.extract(),
-                          total=parser.n_results,
-                          unit='docs',
-                          desc=self.__pbar_desc % q,
-                          disable=not self.verbose
+            for target in tqdm(
+                parser.extract(),
+                total=parser.n_results,
+                unit='docs',
+                desc=self.pbar_desc % q,
+                disable=not self.verbose
             ):
-                
-                R.add(t)
+                result_obj.add(target)
             
-            if R:
-                _results.append(R)
+            if result_obj:
+                results.append(result_obj)
             
             else:
-                warnings.warn(self.__warn % q)
-                self.failed.append(R)
+                warnings.warn(self.warn % q)
+                self.failed.append(result_obj)
         
-        self.results.extend(_results)
+        self.results.extend(results)
         
-        return _results
+        return results
 
     def retry_failed(self):
         """
@@ -145,14 +139,15 @@ class Corpus:
         
         if self.failed:
             n_rounds = len(self.failed)
-            retrieved = list()
+            retrieved = []
             
             for _ in range(n_rounds):
-                R_failed = self.failed.popleft()
+                r_failed = self.failed.popleft()
                 
                 # List[<Result>]
-                results_new = self.search(R_failed.query,
-                                          **R_failed.params
+                results_new = self.search(
+                    r_failed.query,
+                    **r_failed.params
                 )
                 
                 if results_new:

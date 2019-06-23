@@ -20,6 +20,7 @@ class Result:
         params: dict:
             All other parameters of the search.
     """
+
     def __init__(self, language, query_params):
         """
         language: str: language
@@ -28,29 +29,26 @@ class Result:
         
         self.lang = language
         self.query = query_params['query']
-        self.params = {k: query_params[k] \
-                       for k in query_params \
-                       if not k.startswith('_') and k not in ['page', 'query']
-        }
         
+        self.params = {
+            k: query_params[k]
+            for k in query_params
+            if not k.startswith('_') and k not in {'page', 'query'}
+        }
         self.results = list()
-        self.N = 0
-                      
-        self.__header = ('index', 'text')
-        self.__kwic_header = ('index', 'left', 'center', 'right')
-        self.__not_allowed = '/\\?%*:|"<>'
-    
+        self.n = 0
+        self.header = ('index', 'text')
+        self.kwic_header = ('index', 'left', 'center', 'right')
+        self.not_allowed_sub_regexp = re.compile('/\\?%*:|"<>')
+
     def __str__(self):
-        return 'Result(query=%s, N=%s, params=%s)' \
-                % (self.query,
-                   self.N,
-                   self.params
-        )
+        return 'Result(query=%s, N=%s, params=%s)' % \
+                (self.query, self.n, self.params)
     
     __repr__ = __str__
     
     def __bool__(self):
-        return True if self.N > 0 else False
+        return self.n > 0
     
     def __iter__(self):
         return iter(self.results)
@@ -72,7 +70,7 @@ class Result:
         
     def add(self, x):
         self.results.append(x)
-        self.N += 1
+        self.n += 1
     
     def export_csv(self, filename=None, header=True, sep=';'):
         """Save search result as CSV
@@ -88,20 +86,23 @@ class Result:
             sep: str, optional, default ';':
                 Cell separator in the csv.
         """
+
         if filename is None:
-            filename = '%s_%s_results.csv' \
-                        % (self.lang,
-                           re.sub(self.__not_allowed, '', self.query)
-            )
+            filename = '%s_%s_results.csv' % \
+                        (self.lang, self.not_allowed_sub_regexp('', self.query))
         
-        with open(filename,'w',encoding='utf-8-sig') as f:
-            writer = csv.writer(f, delimiter=sep, quotechar='"',
-                                quoting=csv.QUOTE_MINIMAL, lineterminator='\n'
+        with open(filename, 'w', encoding='utf-8-sig') as f:
+            writer = csv.writer(
+                f,
+                delimiter=sep,
+                quotechar='"',
+                quoting=csv.QUOTE_MINIMAL,
+                lineterminator='\n'
             )
             
             if self.params['kwic']:
                 if header:
-                    writer.writerow(self.__kwic_header)
+                    writer.writerow(self.kwic_header)
                 
                 n_left = self.params['n_left'] if self.params['n_left'] is not None else 10 
                 n_right = self.params['n_right'] if self.params['n_right'] is not None else 10
@@ -111,12 +112,12 @@ class Result:
             
             else:
                 if header:
-                    writer.writerow(self.__header)
+                    writer.writerow(self.header)
                 
                 for i, t in enumerate(self.results):
                     writer.writerow((i + 1, t.text))
                     
     def clear(self):
         """Overwrites the results attribute to empty list"""
-        del self.results
-        self.results = list()
+        
+        self.results = []
