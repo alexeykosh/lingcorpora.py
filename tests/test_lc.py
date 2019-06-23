@@ -149,7 +149,7 @@ class TestLangFunc(unittest.TestCase):
         del deps, legit_deps
             
 
-def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
+def run(funcs_to_test=None, tests_to_run=None, verbosity=2):
     """
     run testing routine
     
@@ -159,17 +159,13 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
                                       if None `corpus.functions` passed
         - tests_to_run: list[<str>]: list of tests to run
                                               if None `TESTS_TO_RUN` passed
-        - stream: file-like: stream to verbose to
-                                  if None `sys.stderr` passed
         - verbosity: int: verbosity mode
     """
 
     failures = []
     funcs_to_test = FUNCS_TO_TEST if funcs_to_test is None else funcs_to_test
     tests_to_run = TESTS_TO_RUN if tests_to_run is None else tests_to_run
-
-    stream = sys.stderr if stream is None else stream
-
+    stream = sys.stderr
     log_header = '\n%s\nTESTING: %s_corpus.py\n%s\n\n'
 
     runner = unittest.TextTestRunner(stream, verbosity=verbosity)
@@ -189,8 +185,7 @@ def run(funcs_to_test=None, tests_to_run=None, stream=None, verbosity=2):
 
             test_res = runner.run(suite)
             failures.extend(test_res.failures)
-            
-    stream.close()
+            failures.extend(test_res.errors)
 
     return bool(failures)
 
@@ -206,4 +201,8 @@ if __name__ == '__main__':
         # 'test_dependencies'
     ]
 
-    run()
+    exit_status = run()
+    
+    # travisci nonzero exit status trigger
+    if exit_status:
+        raise Exception('nonzero exit status')
