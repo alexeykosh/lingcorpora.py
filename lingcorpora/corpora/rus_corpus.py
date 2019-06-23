@@ -12,7 +12,7 @@ from ..target import Target
 from ..exceptions import EmptyPageException
 
 
-__author__ = 'akv_17'
+__author__ = 'akv17'
 
 __doc__ = \
 """

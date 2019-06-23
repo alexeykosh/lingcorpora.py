@@ -9,7 +9,7 @@ from ..target import Target
 from ..exceptions import EmptyPageException
 
 
-__author__ = 'akv_17, maria-terekhina'
+__author__ = 'akv17, maria-terekhina'
 __doc__ = \
 """
 API for parallel subcorpus of National Corpus of Russian (http://ruscorpora.ru/search-para-en.html)
