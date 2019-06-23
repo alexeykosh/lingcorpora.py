@@ -160,9 +160,11 @@ def run(funcs_to_test=None, tests_to_run=None, verbosity=2):
         - tests_to_run: list[<str>]: list of tests to run
                                               if None `TESTS_TO_RUN` passed
         - verbosity: int: verbosity mode
+
+    return: List[str]: list of failing langs
     """
 
-    failures = []
+    failing_langs = []
     funcs_to_test = FUNCS_TO_TEST if funcs_to_test is None else funcs_to_test
     tests_to_run = TESTS_TO_RUN if tests_to_run is None else tests_to_run
     stream = sys.stderr
@@ -173,21 +175,25 @@ def run(funcs_to_test=None, tests_to_run=None, verbosity=2):
     for lang, func in funcs_to_test.items():
         stream.write(log_header % ('*' * 20, lang, '*' * 20))
 
+        lang_fails = []
         suite = unittest.TestSuite()
         routine = TestLangFunc
         routine.set_env(routine, func, lang)
 
-        runner.run(routine('test_fetch_data'))
+        c_test_res = runner.run(routine('test_fetch_data'))
+        lang_fails.extend(c_test_res.failures + c_test_res.errors)
 
         if routine.fetch_data is not None:
             for test in tests_to_run:
                 suite.addTest(routine(test))
 
-            test_res = runner.run(suite)
-            failures.extend(test_res.failures)
-            failures.extend(test_res.errors)
+            c_test_res = runner.run(suite)
+            lang_fails.extend(c_test_res.failures + c_test_res.errors)
 
-    return bool(failures)
+        if lang_fails:
+            failing_langs.append(lang)
+
+    return failing_langs
 
 
 if __name__ == '__main__':
@@ -201,8 +207,8 @@ if __name__ == '__main__':
         # 'test_dependencies'
     ]
 
-    exit_status = run()
+    fails = run()
     
     # travisci nonzero exit status trigger
-    if exit_status:
-        raise Exception('nonzero exit status')
+    if fails:
+        raise Exception('nonzero exit status; failed: %s' % (fails))
